@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="github.lalyos.jfiglet" level="project" />
+    <orderEntry type="library" name="de.codeshelf.consoleui" level="project" />
   </component>
 </module>
