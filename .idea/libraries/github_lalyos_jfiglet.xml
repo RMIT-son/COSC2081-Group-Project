@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="github.lalyos.jfiglet" type="repository">
+    <properties maven-id="com.github.lalyos:jfiglet:0.0.9" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jfiglet-0.0.9.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

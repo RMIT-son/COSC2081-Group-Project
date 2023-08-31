@@ -1,17 +1,33 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.util.InputMismatchException;
+import java.util.Scanner;
 public class Main {
+    public static void printMenu(String[] options){
+        for (String option : options){
+            System.out.println(option);
+        }
+        System.out.print("Choose your option : ");
+    }
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
-
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
-
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+        String[] options = {"1- Option 1",
+                "2- Option 2",
+                "3- Option 3",
+                "4- Exit",
+        };
+        Scanner scanner = new Scanner(System.in);
+        int option = 1;
+        while (option!=4){
+            printMenu(options);
+            try {
+                option = scanner.nextInt();
+            }
+            catch (InputMismatchException ex){
+                System.out.println("Please enter an integer value between 1 and " + options.length);
+                scanner.next();
+            }
+            catch (Exception ex){
+                System.out.println("An unexpected error happened. Please try again");
+                scanner.next();
+            }
         }
     }
 }

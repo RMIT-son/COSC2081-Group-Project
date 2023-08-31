@@ -1,0 +1,7 @@
+I001-2001, Dell XPS 17,5.99, Laptop
+I002-1988, Macbook Pro 15, 8.99, Laptop
+I003-1992, Samsung Galaxy S22, 4.99, Phone
+I004-1999, Iphone 13 PM, 7.50, Phone
+I005-2015, Harman Kardon, 3.39, Earbud
+I006-2014, Marshall, 6.99, Headset
+I007-2022,Airpod Max,20.99,Headset
