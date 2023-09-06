@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="de.codeshelf.consoleui" type="repository">
+    <properties maven-id="de.codeshelf.consoleui:consoleui:0.0.13" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/consoleui-0.0.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jansi-1.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jline-2.14.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
