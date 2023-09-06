@@ -1,2 +1,2 @@
-public class Liquid extends Container{
+public class Liquid extends Container {
 }
