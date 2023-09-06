@@ -1,26 +1,24 @@
+import org.bson.types.ObjectId;
+
 import java.util.Collection;
 
 public class Port {
-	protected int pNumber;
+	protected ObjectId pNumber;
 	protected String name;
 	protected double latitude;
 	protected double longitude;
 	protected double storingCapacity;
-	protected int numOfContainers;
-	protected int numOfVehicles;
-	protected Collection<Trip> trips;
+	protected Collection<Trip> traffic;
 	protected Collection<Container> containers;
 	protected Collection<Vehicle> vehicles;
 
-	public Port(int pNumber, String name, double latitude, double longitude, double storingCapacity, int numOfContainers, int numOfVehicles, Collection<Trip> trips, Collection<Container> containers, Collection<Vehicle> vehicles) {
+	public Port(ObjectId pNumber, String name, double latitude, double longitude, double storingCapacity, Collection<Trip> trips, Collection<Container> containers, Collection<Vehicle> vehicles) {
 		this.pNumber = pNumber;
 		this.name = name;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.storingCapacity = storingCapacity;
-		this.numOfContainers = numOfContainers;
-		this.numOfVehicles = numOfVehicles;
-		this.trips = trips;
+		this.traffic = trips;
 		this.containers = containers;
 		this.vehicles = vehicles;
 	}
@@ -65,28 +63,12 @@ public class Port {
 		this.storingCapacity = storingCapacity;
 	}
 
-	public int getNumOfContainers() {
-		return numOfContainers;
+	public Collection<Trip> getTraffic() {
+		return traffic;
 	}
 
-	public void setNumOfContainers(int numOfContainers) {
-		this.numOfContainers = numOfContainers;
-	}
-
-	public int getNumOfVehicles() {
-		return numOfVehicles;
-	}
-
-	public void setNumOfVehicles(int numOfVehicles) {
-		this.numOfVehicles = numOfVehicles;
-	}
-
-	public Collection<Trip> getTrips() {
-		return trips;
-	}
-
-	public void setTrips(Collection<Trip> trips) {
-		this.trips = trips;
+	public void setTraffic(Collection<Trip> traffic) {
+		this.traffic = traffic;
 	}
 
 	public Collection<Container> getContainers() {
