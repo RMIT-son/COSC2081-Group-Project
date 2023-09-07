@@ -1,3 +1,4 @@
+package main;
 public class Container {
 	protected int cNumber;
 	protected double weight;
