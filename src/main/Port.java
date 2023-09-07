@@ -1,3 +1,4 @@
+package main;
 import org.bson.types.ObjectId;
 
 import java.util.Collection;
@@ -23,11 +24,11 @@ public class Port {
 		this.vehicles = vehicles;
 	}
 
-	public int getpNumber() {
+	public ObjectId getpNumber() {
 		return pNumber;
 	}
 
-	public void setpNumber(int pNumber) {
+	public void setpNumber(ObjectId pNumber) {
 		this.pNumber = pNumber;
 	}
 
