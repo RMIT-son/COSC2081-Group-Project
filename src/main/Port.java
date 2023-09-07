@@ -4,7 +4,7 @@ import org.bson.types.ObjectId;
 import java.util.Collection;
 
 public class Port {
-	protected ObjectId pNumber;
+	protected int pNumber;
 	protected String name;
 	protected double latitude;
 	protected double longitude;
@@ -13,7 +13,7 @@ public class Port {
 	protected Collection<Container> containers;
 	protected Collection<Vehicle> vehicles;
 
-	public Port(ObjectId pNumber, String name, double latitude, double longitude, double storingCapacity, Collection<Trip> trips, Collection<Container> containers, Collection<Vehicle> vehicles) {
+	public Port(int pNumber, String name, double latitude, double longitude, double storingCapacity, Collection<Trip> trips, Collection<Container> containers, Collection<Vehicle> vehicles) {
 		this.pNumber = pNumber;
 		this.name = name;
 		this.latitude = latitude;
@@ -24,11 +24,11 @@ public class Port {
 		this.vehicles = vehicles;
 	}
 
-	public ObjectId getpNumber() {
+	public int getpNumber() {
 		return pNumber;
 	}
 
-	public void setpNumber(ObjectId pNumber) {
+	public void setpNumber(int pNumber) {
 		this.pNumber = pNumber;
 	}
 
