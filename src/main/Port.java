@@ -6,6 +6,8 @@ import java.util.Collection;
 public class Port {
 	protected int pNumber;
 	protected String name;
+
+	protected boolean landingAbility;
 	protected double latitude;
 	protected double longitude;
 	protected double storingCapacity;
@@ -13,9 +15,10 @@ public class Port {
 	protected Collection<Container> containers;
 	protected Collection<Vehicle> vehicles;
 
-	public Port(int pNumber, String name, double latitude, double longitude, double storingCapacity, Collection<Trip> trips, Collection<Container> containers, Collection<Vehicle> vehicles) {
+	public Port(int pNumber, String name, boolean landingAbility,double latitude, double longitude, double storingCapacity, Collection<Trip> trips, Collection<Container> containers, Collection<Vehicle> vehicles) {
 		this.pNumber = pNumber;
 		this.name = name;
+		this.landingAbility = landingAbility;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.storingCapacity = storingCapacity;
@@ -38,6 +41,14 @@ public class Port {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isLandingAbility() {
+		return landingAbility;
+	}
+
+	public void setLandingAbility(boolean landingAbility) {
+		this.landingAbility = landingAbility;
 	}
 
 	public double getLatitude() {
