@@ -8,4 +8,3 @@ public class Ship extends Vehicle{
 		super(name, fuel, fuelCapacity, carryCapacity, currentPort, containers);
 		this.sNumber = sNumber;
 	}
-}

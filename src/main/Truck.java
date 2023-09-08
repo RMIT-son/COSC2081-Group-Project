@@ -8,4 +8,3 @@ public class Truck extends Vehicle {
 		super(name, fuel, fuelCapacity, carryCapacity, currentPort, containers);
 		this.tNumber = tNumber;
 	}
-}

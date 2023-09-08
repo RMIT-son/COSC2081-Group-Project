@@ -1,5 +1,4 @@
 package main;
-import org.bson.types.ObjectId;
 
 import java.util.Collection;
 
@@ -13,6 +12,7 @@ public class Port {
 	protected Collection<Container> containers;
 	protected Collection<Vehicle> vehicles;
 
+
 	public Port(int pNumber, String name, double latitude, double longitude, double storingCapacity, Collection<Trip> trips, Collection<Container> containers, Collection<Vehicle> vehicles) {
 		this.pNumber = pNumber;
 		this.name = name;
@@ -22,13 +22,14 @@ public class Port {
 		this.traffic = trips;
 		this.containers = containers;
 		this.vehicles = vehicles;
-	}
-
+}
+  
 	public int getpNumber() {
 		return pNumber;
 	}
 
 	public void setpNumber(int pNumber) {
+
 		this.pNumber = pNumber;
 	}
 
