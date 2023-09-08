@@ -1,4 +1,5 @@
 package main;
+
 import java.util.Collection;
 
 public class Vehicle {
