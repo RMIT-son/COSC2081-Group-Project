@@ -1,7 +1,5 @@
 package main;
 
-import javax.sound.sampled.Port;
-import java.awt.*;
 import java.util.Collection;
 
 public class Vehicle {
