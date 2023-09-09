@@ -1,4 +1,6 @@
 package main;
+import org.bson.codecs.pojo.annotations.BsonCreator;
+
 import java.time.LocalDate;
 
 public class Trip {
@@ -8,6 +10,9 @@ public class Trip {
 	protected Port departurePort;
 	protected Port arrivalPort;
 	protected boolean status;
+
+	@BsonCreator
+	public Trip() {}
 
 	public Trip(Vehicle vehicle, LocalDate departureDate, LocalDate arrivalDate, Port departurePort, Port arrivalPort, boolean status) {
 		this.vehicle = vehicle;
