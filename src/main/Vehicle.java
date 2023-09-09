@@ -11,7 +11,9 @@ public class Vehicle {
 	protected Port currentPort;
 	protected Collection<Container> containers;
 
-	public Vehicle(String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
+	public Vehicle() {}
+
+	public Vehicle(String name, String fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
 		this.name = name;
 		this.fuel = fuel;
 		this.fuelCapacity = fuelCapacity;
@@ -69,7 +71,12 @@ public class Vehicle {
 	}
 
 
+
 	public String display() {
+
+	@Override
+	public String toString() {
+
 		return "Vehicle{" +
 				"name='" + name + '\'' +
 				", fuel='" + fuel + '\'' +
@@ -79,7 +86,7 @@ public class Vehicle {
 				", containers=" + containers +
 				'}';
 	}
-
+    
 	// Searching container
 	public boolean find(int idNumber)
 	{
@@ -182,6 +189,5 @@ public class Vehicle {
 		// Display the state after loading containers
 		System.out.println(vehicle.display());
 	}
-
 }
 
