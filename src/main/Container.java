@@ -34,4 +34,13 @@ public class Container {
 	public void setRequiredFuel(double requiredFuel) {
 		this.requiredFuel = requiredFuel;
 	}
+
+	@Override
+	public String toString() {
+		return "Container{" +
+				"cNumber=" + cNumber +
+				", weight=" + weight +
+				", requiredFuel=" + requiredFuel +
+				'}';
+	}
 }
