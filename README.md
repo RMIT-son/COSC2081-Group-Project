@@ -3,7 +3,7 @@ Final Assignment for the course COSC2081 - Programming 1 at RMIT Vietnam:
 A Container Port Logistics Management system done by Group 16 
 
 ## Draft Diagram</h1>
-<iframe frameborder="0" style="width:100%;height:779px;" src="https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&nav=1#G1FASyFOazKLUvPloxsHQ4VSH5cfhjaLrI"></iframe>
+![Draft Diagram](logistics.png)
 
 ## Link to the diagram:
 [Diagram Link](https://drive.google.com/file/d/1FASyFOazKLUvPloxsHQ4VSH5cfhjaLrI/view?usp=sharing)
