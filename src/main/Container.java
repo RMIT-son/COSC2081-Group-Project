@@ -5,17 +5,19 @@ public class Container {
 	protected double weight;
 	protected double requiredFuel;
 
+	public Container() {}
+
 	public Container(int cNumber, double weight, double requiredFuel) {
 		this.cNumber = cNumber;
 		this.weight = weight;
 		this.requiredFuel = requiredFuel;
 	}
 
-	public int getcNumber() {
+	public int getCNumber() {
 		return cNumber;
 	}
 
-	public void setcNumber(int cNumber) {
+	public void setCNumber(int cNumber) {
 		this.cNumber = cNumber;
 	}
 
@@ -33,5 +35,14 @@ public class Container {
 
 	public void setRequiredFuel(double requiredFuel) {
 		this.requiredFuel = requiredFuel;
+	}
+
+	@Override
+	public String toString() {
+		return "Container{" +
+				"cNumber=" + cNumber +
+				", weight=" + weight +
+				", requiredFuel=" + requiredFuel +
+				'}';
 	}
 }
