@@ -5,30 +5,33 @@ import java.util.Collection;
 public class Port {
 	protected int pNumber;
 	protected String name;
+	protected boolean landingAbility;
 	protected double latitude;
 	protected double longitude;
 	protected double storingCapacity;
+	protected boolean landingAbility;
 	protected Collection<Trip> traffic;
 	protected Collection<Container> containers;
 	protected Collection<Vehicle> vehicles;
 
-
-	public Port(int pNumber, String name, double latitude, double longitude, double storingCapacity, Collection<Trip> trips, Collection<Container> containers, Collection<Vehicle> vehicles) {
+	public Port () {}
+	public Port(int pNumber, String name, boolean landingAbility, double latitude, double longitude, double storingCapacity, Collection<Trip> traffic, Collection<Container> containers, Collection<Vehicle> vehicles) {
 		this.pNumber = pNumber;
 		this.name = name;
+		this.landingAbility = landingAbility;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.storingCapacity = storingCapacity;
-		this.traffic = trips;
+		this.traffic = traffic;
 		this.containers = containers;
 		this.vehicles = vehicles;
-}
-  
-	public int getpNumber() {
+	}
+
+	public int getPNumber() {
 		return pNumber;
 	}
 
-	public void setpNumber(int pNumber) {
+	public void setPNumber(int pNumber) {
 
 		this.pNumber = pNumber;
 	}
@@ -39,6 +42,14 @@ public class Port {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isLandingAbility() {
+		return landingAbility;
+	}
+
+	public void setLandingAbility(boolean landingAbility) {
+		this.landingAbility = landingAbility;
 	}
 
 	public double getLatitude() {
@@ -65,6 +76,14 @@ public class Port {
 		this.storingCapacity = storingCapacity;
 	}
 
+	public boolean isLandingAbility() {
+		return landingAbility;
+	}
+
+	public void setLandingAbility(boolean landingCapacity) {
+		this.landingAbility = landingAbility;
+	}
+
 	public Collection<Trip> getTraffic() {
 		return traffic;
 	}
@@ -87,5 +106,43 @@ public class Port {
 
 	public void setVehicles(Collection<Vehicle> vehicles) {
 		this.vehicles = vehicles;
+	}
+
+
+	// Calculate current weight of containers
+	public double getCurrentContainerWeight() {
+		double totalWeight = 0;
+		for (Container container : containers) {
+			totalWeight += container.getWeight();
+		}
+		return totalWeight;
+	}
+
+	// Method to get the number of containers
+	public int getNumberOfContainers() {
+		return containers.size();
+	}
+
+	// Method to get the number of vehicles
+	public int getNumberOfVehicles() {
+		return vehicles.size();
+	}
+
+
+	public double distanceTo(Port otherPort) {
+		final double R = 6371; // Earth's radius in km
+
+		double latDistance = Math.toRadians(otherPort.latitude - this.latitude);
+		double lonDistance = Math.toRadians(otherPort.longitude - this.longitude);
+		double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+				+ Math.cos(Math.toRadians(this.latitude)) * Math.cos(Math.toRadians(otherPort.latitude))
+				* Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		return R * c;
+	}
+
+	// Check landing ability with another port
+	public boolean canMoveTo(Port otherPort) {
+		return this.landingAbility && otherPort.landingAbility;
 	}
 }

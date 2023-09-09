@@ -1,6 +1,8 @@
 package main;
 
+
 import java.time.LocalDate;
+import java.util.Collection;
 
 public class Trip {
 	protected Vehicle vehicle;
@@ -8,7 +10,9 @@ public class Trip {
 	protected LocalDate arrivalDate;
 	protected Port departurePort;
 	protected Port arrivalPort;
-	protected boolean status;
+	protected String status;
+
+	public Trip() {}
 
 	public Trip(Vehicle vehicle, LocalDate departureDate, LocalDate arrivalDate, Port departurePort, Port arrivalPort, boolean status) {
 		this.vehicle = vehicle;
@@ -16,7 +20,7 @@ public class Trip {
 		this.arrivalDate = arrivalDate;
 		this.departurePort = departurePort;
 		this.arrivalPort = arrivalPort;
-		this.status = status;
+		this.status = "Scheduled";  // default status
 	}
 
 	public Vehicle getVehicle() {
@@ -59,11 +63,34 @@ public class Trip {
 		this.arrivalPort = arrivalPort;
 	}
 
-	public boolean isStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
+	}
+
+//	Calculates the duration of the trip.
+	public long getDuration() {
+		if(arrivalDate != null) {
+			return arrivalDate.getDayOfYear() - departureDate.getDayOfYear();
+		}
+		return -1;
+	}
+
+//	Updates the status of the trip.
+	public void updateStatus(String newStatus) {
+		this.status = newStatus;
+	}
+
+//	Determines if the trip has been completed.
+	public boolean isTripCompleted() {
+		return "Completed".equals(status);
+	}
+
+//	Lists all containers onboard the vehicle during this trip.
+	public Collection<Container> getContainerOnTrips() {
+		return vehicle.getContainers();
 	}
 }

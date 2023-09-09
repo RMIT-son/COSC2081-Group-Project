@@ -10,6 +10,8 @@ public class Vehicle {
 	protected Port currentPort;
 	protected Collection<Container> containers;
 
+	public Vehicle() {}
+
 	public Vehicle(String name, String fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
 		this.name = name;
 		this.fuel = fuel;
@@ -65,5 +67,17 @@ public class Vehicle {
 
 	public void setContainers(Collection<Container> containers) {
 		this.containers = containers;
+	}
+
+	@Override
+	public String toString() {
+		return "Vehicle{" +
+				"name='" + name + '\'' +
+				", fuel='" + fuel + '\'' +
+				", fuelCapacity=" + fuelCapacity +
+				", carryCapacity=" + carryCapacity +
+				", currentPort=" + currentPort +
+				", containers=" + containers +
+				'}';
 	}
 }
