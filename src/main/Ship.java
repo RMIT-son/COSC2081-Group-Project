@@ -10,7 +10,6 @@ public class Ship extends Vehicle{
 		super(name, fuel, fuelCapacity, carryCapacity, currentPort, containers);
 		this.sNumber = sNumber;
 	}
-
 	public int getSNumber() {
 		return sNumber;
 	}
@@ -19,3 +18,4 @@ public class Ship extends Vehicle{
 		this.sNumber = sNumber;
 	}
 }
+

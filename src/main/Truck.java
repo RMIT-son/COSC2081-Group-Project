@@ -18,4 +18,3 @@ public class Truck extends Vehicle {
 		this.tNumber = tNumber;
 	}
 }
-
