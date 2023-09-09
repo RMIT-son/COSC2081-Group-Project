@@ -1,5 +1,6 @@
 package main;
 
+
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -10,6 +11,8 @@ public class Trip {
 	protected Port departurePort;
 	protected Port arrivalPort;
 	protected String status;
+
+	public Trip() {}
 
 	public Trip(Vehicle vehicle, LocalDate departureDate, LocalDate arrivalDate, Port departurePort, Port arrivalPort, boolean status) {
 		this.vehicle = vehicle;

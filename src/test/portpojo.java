@@ -4,10 +4,14 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import main.Container;
 import main.Port;
+import main.Truck;
+import main.Vehicle;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.types.ObjectId;
 
 import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
 import static com.mongodb.client.model.Filters.eq;
@@ -23,11 +27,13 @@ public class portpojo {
 		String uri = "mongodb+srv://root:pwd12345@cosc2081.vkez09i.mongodb.net/?retryWrites=true&w=majority";
 
 		try (MongoClient mongoClient = MongoClients.create(uri)) {
-			MongoDatabase database = mongoClient.getDatabase("sample_mflix").withCodecRegistry(pojoCodecRegistry);
-			MongoCollection<Port> collection = database.getCollection("movies", Port.class);
+			MongoDatabase database = mongoClient.getDatabase("PMS").withCodecRegistry(pojoCodecRegistry);
+			MongoCollection<Truck> collection = database.getCollection("Vehicle", Truck.class);
 
-			Port port = collection.find(eq("name", "Silvercreek")).first();
-			System.out.println(port);
+			Truck container = collection.find(eq("tNumber", 1)).first();
+
+
+			System.out.println(container);
 		}
 	}
 }
