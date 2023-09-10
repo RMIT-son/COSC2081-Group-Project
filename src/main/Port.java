@@ -9,7 +9,6 @@ public class Port {
 	protected double latitude;
 	protected double longitude;
 	protected double storingCapacity;
-	protected boolean landingAbility;
 	protected Collection<Trip> traffic;
 	protected Collection<Container> containers;
 	protected Collection<Vehicle> vehicles;
@@ -76,14 +75,6 @@ public class Port {
 		this.storingCapacity = storingCapacity;
 	}
 
-	public boolean isLandingAbility() {
-		return landingAbility;
-	}
-
-	public void setLandingAbility(boolean landingCapacity) {
-		this.landingAbility = landingAbility;
-	}
-
 	public Collection<Trip> getTraffic() {
 		return traffic;
 	}
@@ -128,6 +119,13 @@ public class Port {
 		return vehicles.size();
 	}
 
+	@Override
+	public String toString() {
+		return "Port{" +
+				"pNumber=" + pNumber +
+				", name='" + name + '\'' +
+				'}';
+	}
 
 	public double distanceTo(Port otherPort) {
 		final double R = 6371; // Earth's radius in km
