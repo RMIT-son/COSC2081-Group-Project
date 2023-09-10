@@ -24,4 +24,3 @@ public class TankerTruck extends Truck implements carryAble{
 		super.loadContainer(container);
 	}
 }
-
