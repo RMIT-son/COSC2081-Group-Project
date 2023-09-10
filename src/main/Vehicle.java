@@ -72,10 +72,9 @@ public class Vehicle {
 
 	@Override
 	public String toString() {
-
 		return "Vehicle{" +
 				"name='" + name + '\'' +
-				", fuel='" + fuel + '\'' +
+				", fuel=" + fuel +
 				", fuelCapacity=" + fuelCapacity +
 				", carryCapacity=" + carryCapacity +
 				", currentPort=" + currentPort +
@@ -84,7 +83,7 @@ public class Vehicle {
 	}
 
 	// Searching container
-	public boolean find(int idNumber)
+	public boolean find(int cNumber)
 	{
 
 		// Iterating record list
@@ -92,8 +91,8 @@ public class Vehicle {
 		for (Container c : containers) {
 
 			// Checking record by id Number
-			if (c.getCNumber() == idNumber) {
 
+			if (c.getCNumber() == cNumber) {
 				System.out.println(c);
 				return true;
 			}
@@ -160,6 +159,10 @@ public class Vehicle {
 			System.out.println("The fuel is full");
 		}
 	}
+	//number of container
+	public int checkConNumb(Vehicle vehicle){
+		return vehicle.getContainers().size();
+	}
 
 	public static void main(String[] args) {
 		// Mock some data for Containers and Ports
@@ -174,6 +177,7 @@ public class Vehicle {
 		Vehicle vehicle = new Vehicle("Vehicle1", 200, 300, 250, null, new ArrayList<>());
 
 		// Display initial state
+
 		System.out.println(vehicle);
 
 		// Load containers to the vehicle
@@ -184,6 +188,7 @@ public class Vehicle {
 
 		// Display the state after loading containers
 		System.out.println(vehicle);
+
 	}
 }
 
