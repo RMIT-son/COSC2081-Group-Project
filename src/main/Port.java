@@ -1,5 +1,13 @@
 package main;
 
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.*;
+import org.bson.Document;
+
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Sorts.descending;
+
 import java.util.Collection;
 
 public class Port {
@@ -66,6 +74,7 @@ public class Port {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
+
 
 	public double getStoringCapacity() {
 		return storingCapacity;
@@ -143,4 +152,61 @@ public class Port {
 	public boolean canMoveTo(Port otherPort) {
 		return this.landingAbility && otherPort.landingAbility;
 	}
+
+	// Create
+	public void createPort() {
+		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
+		Document doc = new Document("pNumber", pNumber)
+				.append("name", name)
+				.append("latitude", latitude)
+				.append("longtitude", longitude)
+				.append("strongCapicity", storingCapacity)
+				.append("landingAbility", landingAbility)
+				.append("traffic", Trip.class)
+				.append("vehicles", Vehicle.class)
+				.append("containers", Container.class);
+
+		collection.insertOne(doc);
+	}
+
+	// Read
+	public static Port getPortByNumber(int pNumber) {
+		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
+		Document portDoc = collection.find(Filters.eq("pNumber", pNumber)).first();
+		if (portDoc == null) {
+			System.out.println("Port: not exist");
+			return null;
+		}
+		System.out.println("Port: "+ portDoc.toJson());
+		String name = portDoc.getString("name");
+		boolean landingAbility = portDoc.getBoolean("landingAbility");
+		double latitude = portDoc.getDouble("latitude");
+		double longitude = portDoc.getDouble("longitude");
+		double storingCapacity = portDoc.getDouble("storingCapacity");
+		Collection<Trip> trips = portDoc.getList("traffic", Trip.class);
+		Collection<Vehicle> vehicles = portDoc.getList("vehicles", Vehicle.class);
+		Collection<Container> containers = portDoc.getList("containers", Container.class);
+
+		Port port = new Port(pNumber, name, landingAbility, latitude, longitude, storingCapacity, trips, containers, vehicles);
+		return port;
+	}
+
+	// Update
+	public void updatePortName(String newName) {
+		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
+		collection.updateOne(
+				Filters.eq("pNumber", pNumber),
+				Updates.set("name", newName));
+	}
+
+	// Delete
+	public void deletePort() {
+		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
+		collection.deleteOne(Filters.eq("pNumber", pNumber));
+	}
+
 }

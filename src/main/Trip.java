@@ -1,8 +1,16 @@
 package main;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import org.bson.Document;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collection;
+import java.util.Date;
 
 public class Trip {
 	protected Vehicle vehicle;
@@ -14,7 +22,8 @@ public class Trip {
 
 	public Trip() {}
 
-	public Trip(Vehicle vehicle, LocalDate departureDate, LocalDate arrivalDate, Port departurePort, Port arrivalPort, boolean status) {
+	public Trip(Vehicle vehicle, LocalDate departureDate, LocalDate arrivalDate, Port departurePort, Port arrivalPort, String status) {
+
 		this.vehicle = vehicle;
 		this.departureDate = departureDate;
 		this.arrivalDate = arrivalDate;
@@ -35,15 +44,16 @@ public class Trip {
 		return departureDate;
 	}
 
-	public void setDepartureDate(LocalDate departureDate) {
-		this.departureDate = departureDate;
-	}
-
 	public LocalDate getArrivalDate() {
 		return arrivalDate;
 	}
 
-	public void setArrivalDate(LocalDate arrivalDate) {
+	public void setDates(LocalDate departureDate, LocalDate arrivalDate) throws IllegalArgumentException {
+		if (departureDate.isAfter(arrivalDate)) {
+			throw new IllegalArgumentException("Departure date cannot be after arrival date");
+		}
+
+		this.departureDate = departureDate;
 		this.arrivalDate = arrivalDate;
 	}
 
@@ -79,10 +89,6 @@ public class Trip {
 		return -1;
 	}
 
-//	Updates the status of the trip.
-	public void updateStatus(String newStatus) {
-		this.status = newStatus;
-	}
 
 //	Determines if the trip has been completed.
 	public boolean isTripCompleted() {
@@ -93,4 +99,75 @@ public class Trip {
 	public Collection<Container> getContainerOnTrips() {
 		return vehicle.getContainers();
 	}
+
+	public static LocalDate convertDateToLocalDate(Date date) {
+		if (date == null) {
+			return null;
+		}
+		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	}
+
+	// Create
+	public void createTrip() {
+		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("trips");
+		Document doc = new Document("vehicle", vehicle)
+				.append("departureDate", departureDate)
+				.append("arrivalDate", arrivalDate)
+				.append("departurePort", departurePort)
+				.append("arrivalPort", arrivalPort)
+				.append("status", status);
+
+		collection.insertOne(doc);
+	}
+
+	// Read
+	public static Trip getTripByVehicle(Vehicle vehicle) {
+		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("trips");
+		Document tripDoc = collection.find(Filters.eq("vehicle", vehicle)).first();
+		if (tripDoc == null) {
+			System.out.println("Trip: not exist");
+			return null;
+		}
+		System.out.println("Trip: " + tripDoc.toJson());
+
+		LocalDate departureDate = convertDateToLocalDate(tripDoc.getDate("departureDate"));
+		LocalDate arrivalDate = convertDateToLocalDate(tripDoc.getDate("arrivalDate"));
+		Port departurePort = (Port) tripDoc.get("departurePort");
+		Port arrivalPort = (Port) tripDoc.get("arrivalPort");
+		String status = tripDoc.getString("status");
+		Trip trip = new Trip(vehicle, departureDate, arrivalDate, departurePort, arrivalPort, status);
+		return trip;
+	}
+
+	// Update
+	public void updateTripStatus(String newStatus) {
+		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("trips");
+		collection.updateOne(
+				Filters.eq("vehicle", vehicle),
+				Updates.set("status", newStatus));
+	}
+
+	// Delete
+	public void deleteTrip() {
+		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("trips");
+		collection.deleteOne(Filters.eq("vehicle", vehicle));
+	}
+
+//	private static void deleteOldTrips() {
+//		try (MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"))) {
+//			MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("trips");
+//
+//			// Calculate the cutoff date for deletion
+//			Date cutoffDate = Date.from(
+//					LocalDate.now().minusDays(7).atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()
+//			);
+//
+//			// Delete trips older than 7 days based on arrivalDate
+//			collection.deleteMany(Filters.lt("arrivalDate", cutoffDate));
+//		}
+//	}
 }
