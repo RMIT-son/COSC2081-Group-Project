@@ -7,4 +7,3 @@ public class TankerTruck extends Truck {
 		super(tNumber, name, fuel, fuelCapacity, carryCapacity, currentPort, containers);
 	}
 }
-

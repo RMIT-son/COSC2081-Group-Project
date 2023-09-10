@@ -70,11 +70,16 @@ public class Vehicle {
 		this.containers = containers;
 	}
 
+
+
+	public String display() {}
+
 	@Override
 	public String toString() {
+
 		return "Vehicle{" +
 				"name='" + name + '\'' +
-				", fuel=" + fuel +
+				", fuel='" + fuel + '\'' +
 				", fuelCapacity=" + fuelCapacity +
 				", carryCapacity=" + carryCapacity +
 				", currentPort=" + currentPort +
@@ -83,7 +88,7 @@ public class Vehicle {
 	}
 
 	// Searching container
-	public boolean find(int cNumber)
+	public boolean find(int idNumber)
 	{
 
 		// Iterating record list
@@ -91,8 +96,8 @@ public class Vehicle {
 		for (Container c : containers) {
 
 			// Checking record by id Number
+			if (c.getcNumber() == idNumber) {
 
-			if (c.getCNumber() == cNumber) {
 				System.out.println(c);
 				return true;
 			}
@@ -102,7 +107,7 @@ public class Vehicle {
 
 	// Load container (Similar to create C)
 	public void loadContainer(Container container){
-		if(!find(container.getCNumber())){
+		if(!find(container.getcNumber())){
 			containers.add(container);
 		}else {
 			System.out.println("The container already on the vehicle");
@@ -113,7 +118,7 @@ public class Vehicle {
 	public void unloadContainer(int cNumber){
 		Container condel = null;
 		for (Container c : containers){
-			if(c.getCNumber() == cNumber){
+			if(c.getcNumber() == cNumber){
 				condel = c;
 			}
 		}
@@ -128,7 +133,7 @@ public class Vehicle {
 	// finding container R
 	public Container findingContainer(int cNumber){
 		for(Container c : containers){
-			if(c.getCNumber() == cNumber){
+			if(c.getcNumber() == cNumber){
 				return c;
 			}
 		}
@@ -159,10 +164,6 @@ public class Vehicle {
 			System.out.println("The fuel is full");
 		}
 	}
-	//number of container
-	public int checkConNumb(Vehicle vehicle){
-		return vehicle.getContainers().size();
-	}
 
 	public static void main(String[] args) {
 		// Mock some data for Containers and Ports
@@ -177,8 +178,7 @@ public class Vehicle {
 		Vehicle vehicle = new Vehicle("Vehicle1", 200, 300, 250, null, new ArrayList<>());
 
 		// Display initial state
-
-		System.out.println(vehicle);
+		System.out.println(vehicle.display());
 
 		// Load containers to the vehicle
 		System.out.println("\nLoading Containers...");
@@ -187,8 +187,7 @@ public class Vehicle {
 		vehicle.loadContainer(container3);
 
 		// Display the state after loading containers
-		System.out.println(vehicle);
-
+		System.out.println(vehicle.display());
 	}
 }
 
