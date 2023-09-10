@@ -13,7 +13,7 @@ public class Vehicle {
 
 	public Vehicle() {}
 
-	public Vehicle(String name, String fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
+	public Vehicle(String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
 		this.name = name;
 		this.fuel = fuel;
 		this.fuelCapacity = fuelCapacity;
@@ -71,24 +71,20 @@ public class Vehicle {
 	}
 
 
-
-	public String display() {
-
 	@Override
 	public String toString() {
-
 		return "Vehicle{" +
 				"name='" + name + '\'' +
-				", fuel='" + fuel + '\'' +
+				", fuel=" + fuel +
 				", fuelCapacity=" + fuelCapacity +
 				", carryCapacity=" + carryCapacity +
 				", currentPort=" + currentPort +
 				", containers=" + containers +
 				'}';
 	}
-    
+
 	// Searching container
-	public boolean find(int idNumber)
+	public boolean find(int cNumber)
 	{
 
 		// Iterating record list
@@ -96,7 +92,7 @@ public class Vehicle {
 		for (Container c : containers) {
 
 			// Checking record by id Number
-			if (c.getcNumber() == idNumber) {
+			if (c.getCNumber() == cNumber) {
 
 				System.out.println(c);
 				return true;
@@ -107,7 +103,7 @@ public class Vehicle {
 
 	// Load container (Similar to create C)
 	public void loadContainer(Container container){
-		if(!find(container.getcNumber())){
+		if(!find(container.getCNumber())){
 			containers.add(container);
 		}else {
 			System.out.println("The container already on the vehicle");
@@ -118,7 +114,7 @@ public class Vehicle {
 	public void unloadContainer(int cNumber){
 		Container condel = null;
 		for (Container c : containers){
-			if(c.getcNumber() == cNumber){
+			if(c.getCNumber() == cNumber){
 				condel = c;
 			}
 		}
@@ -133,7 +129,7 @@ public class Vehicle {
 	// finding container R
 	public Container findingContainer(int cNumber){
 		for(Container c : containers){
-			if(c.getcNumber() == cNumber){
+			if(c.getCNumber() == cNumber){
 				return c;
 			}
 		}
@@ -164,6 +160,10 @@ public class Vehicle {
 			System.out.println("The fuel is full");
 		}
 	}
+	//number of container
+	public int checkConNumb(Vehicle vehicle){
+		return vehicle.getContainers().size();
+	}
 
 	public static void main(String[] args) {
 		// Mock some data for Containers and Ports
@@ -178,7 +178,7 @@ public class Vehicle {
 		Vehicle vehicle = new Vehicle("Vehicle1", 200, 300, 250, null, new ArrayList<>());
 
 		// Display initial state
-		System.out.println(vehicle.display());
+		System.out.println(vehicle.toString());
 
 		// Load containers to the vehicle
 		System.out.println("\nLoading Containers...");
@@ -187,7 +187,7 @@ public class Vehicle {
 		vehicle.loadContainer(container3);
 
 		// Display the state after loading containers
-		System.out.println(vehicle.display());
+		System.out.println(vehicle.toString());
 	}
 }
 
