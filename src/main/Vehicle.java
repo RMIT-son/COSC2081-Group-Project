@@ -70,7 +70,6 @@ public class Vehicle {
 		this.containers = containers;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Vehicle{" +
@@ -92,8 +91,8 @@ public class Vehicle {
 		for (Container c : containers) {
 
 			// Checking record by id Number
-			if (c.getCNumber() == cNumber) {
 
+			if (c.getCNumber() == cNumber) {
 				System.out.println(c);
 				return true;
 			}
@@ -178,7 +177,8 @@ public class Vehicle {
 		Vehicle vehicle = new Vehicle("Vehicle1", 200, 300, 250, null, new ArrayList<>());
 
 		// Display initial state
-		System.out.println(vehicle.toString());
+
+		System.out.println(vehicle);
 
 		// Load containers to the vehicle
 		System.out.println("\nLoading Containers...");
@@ -187,7 +187,8 @@ public class Vehicle {
 		vehicle.loadContainer(container3);
 
 		// Display the state after loading containers
-		System.out.println(vehicle.toString());
+		System.out.println(vehicle);
+
 	}
 }
 

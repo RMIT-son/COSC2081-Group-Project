@@ -75,14 +75,6 @@ public class Port {
 		this.storingCapacity = storingCapacity;
 	}
 
-	public int getpNumber() {
-		return pNumber;
-	}
-
-	public void setpNumber(int pNumber) {
-		this.pNumber = pNumber;
-	}
-
 	public Collection<Trip> getTraffic() {
 		return traffic;
 	}
