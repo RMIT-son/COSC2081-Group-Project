@@ -17,4 +17,19 @@ public class Truck extends Vehicle {
 	public void setTNumber(int tNumber) {
 		this.tNumber = tNumber;
 	}
+	//check landing ability
+	public boolean truckLandingAbility(Port port){
+		return port.isLandingAbility();
+	}
+	// with truck need to check 2 times beofre move to port
+	@Override
+	public void movePort(Port port){
+		if (!this.truckLandingAbility(port)){
+			System.out.println("Not available landing");
+			return;
+		}
+		super.movePort(port);
+	}
+
+
 }
