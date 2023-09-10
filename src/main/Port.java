@@ -75,6 +75,7 @@ public class Port {
 		this.longitude = longitude;
 	}
 
+
 	public double getStoringCapacity() {
 		return storingCapacity;
 	}
