@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class Vehicle {
@@ -72,7 +73,9 @@ public class Vehicle {
 
 
 
-	public String display() {}
+	public String display() {
+		return null;
+	};
 
 	@Override
 	public String toString() {
@@ -96,7 +99,7 @@ public class Vehicle {
 		for (Container c : containers) {
 
 			// Checking record by id Number
-			if (c.getcNumber() == idNumber) {
+			if (c.getCNumber() == idNumber) {
 
 				System.out.println(c);
 				return true;
@@ -104,11 +107,24 @@ public class Vehicle {
 		}
 		return false;
 	}
+	//loadable container
+	public boolean loadableContainer(Container container){
+		double totalIfWeight = this.countWeight() + container.getWeight();
+		if (totalIfWeight <= this.getCarryCapacity()){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	// Load container (Similar to create C)
 	public void loadContainer(Container container){
-		if(!find(container.getcNumber())){
-			containers.add(container);
+		if(!find(container.getCNumber())){
+			if(this.loadableContainer(container)){
+				containers.add(container);
+			}else{
+				System.out.println("The capicity is overdosed");
+			}
 		}else {
 			System.out.println("The container already on the vehicle");
 		}
@@ -118,7 +134,7 @@ public class Vehicle {
 	public void unloadContainer(int cNumber){
 		Container condel = null;
 		for (Container c : containers){
-			if(c.getcNumber() == cNumber){
+			if(c.getCNumber() == cNumber){
 				condel = c;
 			}
 		}
@@ -133,52 +149,63 @@ public class Vehicle {
 	// finding container R
 	public Container findingContainer(int cNumber){
 		for(Container c : containers){
-			if(c.getcNumber() == cNumber){
+			if(c.getCNumber() == cNumber){
 				return c;
 			}
 		}
 		return null;
 	}
-	// checking ability move to a port
-	public boolean checkPortAvailibity(Vehicle vehicle, Port port){
+
+	// calculate weight
+	public double countWeight(){
 		int totalWeight = 0;
 		for (Container con : containers){
-			totalWeight +=con.getWeight();
+			totalWeight += con.getWeight();
 		}
-		return totalWeight <= port.getStoringCapacity();
+		return  totalWeight;
+	}
+	// checking ability move to a port
+	public boolean checkPortWeightAvailibity(Port port){
+		double total = this.countWeight();
+		return total <= port.getStoringCapacity();
 	}
 
 	//move to the port
-	public void movePort(Vehicle vehicle, Port port){
-		if (vehicle.checkPortAvailibity(vehicle, port)){
-			vehicle.setCurrentPort(port);
+	public void movePort(Port port){
+		if (this.checkPortWeightAvailibity(port)){
+			this.setCurrentPort(port);
 		}else{
 			System.out.println("Unable to move here");
 		}
 	}
 	//refuel
-	public void refuel(Vehicle vehicle){
-		if (vehicle.getFuel() < vehicle.getFuelCapacity()){
-			vehicle.setFuel(vehicle.getFuelCapacity());
+	public void refuel(){
+		if (this.getFuel() < this.getFuelCapacity()){
+			this.setFuel(this.getFuelCapacity());
 		}else{
 			System.out.println("The fuel is full");
 		}
 	}
+  
+	//number of container
+	public int checkConNumb(){
+		return this.getContainers().size();
+	}
 
 	public static void main(String[] args) {
 		// Mock some data for Containers and Ports
-		Container container1 = new Container(1, 10, 50);
+		Container container1 = new Container(1, 100, 50);
 		Container container2 = new Container(2, 20, 60);
 		Container container3 = new Container(3, 30, 80);
-		Container container4 = new Container(4, 40, 100);
-
+		Container container4 = new Container(4, 110, 100);
 
 
 		// Create a Vehicle with some initial data
 		Vehicle vehicle = new Vehicle("Vehicle1", 200, 300, 250, null, new ArrayList<>());
-
+		Vehicle vehicle1 = new Vehicle("Vehicle1", 200, 300, 250, null, new ArrayList<>());
 		// Display initial state
-		System.out.println(vehicle.display());
+
+		//System.out.println(vehicle);
 
 		// Load containers to the vehicle
 		System.out.println("\nLoading Containers...");
@@ -186,8 +213,12 @@ public class Vehicle {
 		vehicle.loadContainer(container2);
 		vehicle.loadContainer(container3);
 
+		vehicle1.loadContainer(container1);
+		vehicle1.loadContainer(container2);
+		vehicle1.loadContainer(container4);
 		// Display the state after loading containers
-		System.out.println(vehicle.display());
+		System.out.println(vehicle.countWeight());
+		System.out.println(vehicle1.countWeight());
 	}
 }
 
