@@ -119,6 +119,13 @@ public class Port {
 		return vehicles.size();
 	}
 
+	@Override
+	public String toString() {
+		return "Port{" +
+				"pNumber=" + pNumber +
+				", name='" + name + '\'' +
+				'}';
+	}
 
 	public double distanceTo(Port otherPort) {
 		final double R = 6371; // Earth's radius in km
