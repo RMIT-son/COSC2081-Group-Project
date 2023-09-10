@@ -73,7 +73,9 @@ public class Vehicle {
 
 
 
-	public String display() {}
+	public String display() {
+		return null;
+	};
 
 	@Override
 	public String toString() {
@@ -97,7 +99,7 @@ public class Vehicle {
 		for (Container c : containers) {
 
 			// Checking record by id Number
-			if (c.getcNumber() == idNumber) {
+			if (c.getCNumber() == idNumber) {
 
 				System.out.println(c);
 				return true;
@@ -132,7 +134,7 @@ public class Vehicle {
 	public void unloadContainer(int cNumber){
 		Container condel = null;
 		for (Container c : containers){
-			if(c.getcNumber() == cNumber){
+			if(c.getCNumber() == cNumber){
 				condel = c;
 			}
 		}
@@ -147,7 +149,7 @@ public class Vehicle {
 	// finding container R
 	public Container findingContainer(int cNumber){
 		for(Container c : containers){
-			if(c.getcNumber() == cNumber){
+			if(c.getCNumber() == cNumber){
 				return c;
 			}
 		}
