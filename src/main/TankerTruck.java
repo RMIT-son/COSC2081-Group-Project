@@ -8,11 +8,7 @@ public class TankerTruck extends Truck implements carryAble{
 	}
 	@Override
 	public boolean carryAble(Container container) {
-		if (container instanceof DryStorage || container instanceof OpenTop || container instanceof  OpenSide || container instanceof Liquid){
-			return true;
-		}else{
-			return false;
-		}
+		return container instanceof DryStorage || container instanceof OpenTop || container instanceof OpenSide || container instanceof Liquid;
 	}
 	@Override
 	public void loadContainer(Container container){
