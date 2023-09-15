@@ -1,50 +1,33 @@
 package main;
 
-public class Container {
-	protected int cNumber;
-	protected double weight;
-	protected double requiredFuel;
+import java.util.HashMap;
+import java.util.Map;
 
-	public Container() {}
+public abstract class Container {
+    protected int cNumber;
+    protected double weight;
 
-	public Container(int cNumber, double weight, double requiredFuel) {
-		this.cNumber = cNumber;
-		this.weight = weight;
-		this.requiredFuel = requiredFuel;
-	}
+    public Container(int cNumber, double weight) {
+        this.cNumber = cNumber;
+        this.weight = weight;
+    }
 
-	public int getCNumber() {
-		return cNumber;
-	}
+    public enum Vehicle {
+        Ship, Truck
+    }
 
-	public void setCNumber(int cNumber) {
-		this.cNumber = cNumber;
-	}
-
-	public double getWeight() {
-		return weight;
-	}
-
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
-
-	public double getRequiredFuel() {
-		return requiredFuel;
-	}
-
-	public void setRequiredFuel(double requiredFuel) {
-		this.requiredFuel = requiredFuel;
-	}
-
-	@Override
-	public String toString() {
-		return "Container{" +
-				"cNumber=" + cNumber +
-				", weight=" + weight +
-				", requiredFuel=" + requiredFuel +
-				'}';
-	}
-
-
+    public abstract double calculateFuel(Vehicle vehicle, double distance);
 }
+
+// This is the example of using class Container.java
+// public class Main {
+//     public static void main(String[] args) {
+//         DryStorage container = new DryStorage(1, 1000);
+//         double distance = 10;
+//         double fuelForShip = container.calculateFuel(Container.Vehicle.Ship, distance);
+//         double fuelForTruck = container.calculateFuel(Container.Vehicle.Truck, distance);
+
+//         System.out.println("Fuel required for Ship: " + fuelForShip + " gallons");
+//         System.out.println("Fuel required for Truck: " + fuelForTruck + " gallons");
+//     }
+// }
