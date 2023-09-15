@@ -9,7 +9,6 @@ public class Port {
 	protected double latitude;
 	protected double longitude;
 	protected double storingCapacity;
-	protected boolean landingAbility;
 	protected Collection<Trip> traffic;
 	protected Collection<Container> containers;
 	protected Collection<Vehicle> vehicles;
@@ -68,20 +67,13 @@ public class Port {
 		this.longitude = longitude;
 	}
 
+
 	public double getStoringCapacity() {
 		return storingCapacity;
 	}
 
 	public void setStoringCapacity(double storingCapacity) {
 		this.storingCapacity = storingCapacity;
-	}
-
-	public boolean isLandingAbility() {
-		return landingAbility;
-	}
-
-	public void setLandingAbility(boolean landingCapacity) {
-		this.landingAbility = landingAbility;
 	}
 
 	public Collection<Trip> getTraffic() {
@@ -128,6 +120,13 @@ public class Port {
 		return vehicles.size();
 	}
 
+	@Override
+	public String toString() {
+		return "Port{" +
+				"pNumber=" + pNumber +
+				", name='" + name + '\'' +
+				'}';
+	}
 
 	public double distanceTo(Port otherPort) {
 		final double R = 6371; // Earth's radius in km
@@ -145,4 +144,61 @@ public class Port {
 	public boolean canMoveTo(Port otherPort) {
 		return this.landingAbility && otherPort.landingAbility;
 	}
+
+	// Create
+//	public void createPort() {
+//		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+//		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
+//		Document doc = new Document("pNumber", pNumber)
+//				.append("name", name)
+//				.append("latitude", latitude)
+//				.append("longtitude", longitude)
+//				.append("strongCapicity", storingCapacity)
+//				.append("landingAbility", landingAbility)
+//				.append("traffic", Trip.class)
+//				.append("vehicles", Vehicle.class)
+//				.append("containers", Container.class);
+//
+//		collection.insertOne(doc);
+//	}
+//
+//	// Read
+//	public static Port getPortByNumber(int pNumber) {
+//		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+//		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
+//		Document portDoc = collection.find(Filters.eq("pNumber", pNumber)).first();
+//		if (portDoc == null) {
+//			System.out.println("Port: not exist");
+//			return null;
+//		}
+//		System.out.println("Port: "+ portDoc.toJson());
+//		String name = portDoc.getString("name");
+//		boolean landingAbility = portDoc.getBoolean("landingAbility");
+//		double latitude = portDoc.getDouble("latitude");
+//		double longitude = portDoc.getDouble("longitude");
+//		double storingCapacity = portDoc.getDouble("storingCapacity");
+//		Collection<Trip> trips = portDoc.getList("traffic", Trip.class);
+//		Collection<Vehicle> vehicles = portDoc.getList("vehicles", Vehicle.class);
+//		Collection<Container> containers = portDoc.getList("containers", Container.class);
+//
+//		Port port = new Port(pNumber, name, landingAbility, latitude, longitude, storingCapacity, trips, containers, vehicles);
+//		return port;
+//	}
+//
+//	// Update
+//	public void updatePortName(String newName) {
+//		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+//		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
+//		collection.updateOne(
+//				Filters.eq("pNumber", pNumber),
+//				Updates.set("name", newName));
+//	}
+//
+//	// Delete
+//	public void deletePort() {
+//		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
+//		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
+//		collection.deleteOne(Filters.eq("pNumber", pNumber));
+//	}
+
 }
