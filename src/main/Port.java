@@ -1,8 +1,12 @@
 package main;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.io.Serializable;
 import java.util.Collection;
 
-public class Port {
+public class Port implements Serializable, PortOperations {
 	protected int pNumber;
 	protected String name;
 	protected boolean landingAbility;
@@ -12,8 +16,11 @@ public class Port {
 	protected Collection<Trip> traffic;
 	protected Collection<Container> containers;
 	protected Collection<Vehicle> vehicles;
+	private final String FILENAME = "ports.obj";
 
-	public Port () {}
+	public Port() {
+	}
+
 	public Port(int pNumber, String name, boolean landingAbility, double latitude, double longitude, double storingCapacity, Collection<Trip> traffic, Collection<Container> containers, Collection<Vehicle> vehicles) {
 		this.pNumber = pNumber;
 		this.name = name;
@@ -120,11 +127,29 @@ public class Port {
 		return vehicles.size();
 	}
 
+	// Add a container with weight check
+	public boolean addContainer(Container container) {
+		if (getCurrentContainerWeight() + container.getWeight() <= storingCapacity) {
+			containers.add(container);
+			return true;
+		} else {
+			System.out.println("Exceeds storage capacity!");
+			return false;
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Port{" +
 				"pNumber=" + pNumber +
 				", name='" + name + '\'' +
+				", landingAbility=" + landingAbility +
+				", latitude=" + latitude +
+				", longitude=" + longitude +
+				", storingCapacity=" + storingCapacity +
+				 ", traffic=" + traffic +
+				 ", containers=" + containers +
+				 ", vehicles=" + vehicles +
 				'}';
 	}
 
@@ -146,59 +171,127 @@ public class Port {
 	}
 
 	// Create
-//	public void createPort() {
-//		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
-//		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
-//		Document doc = new Document("pNumber", pNumber)
-//				.append("name", name)
-//				.append("latitude", latitude)
-//				.append("longtitude", longitude)
-//				.append("strongCapicity", storingCapacity)
-//				.append("landingAbility", landingAbility)
-//				.append("traffic", Trip.class)
-//				.append("vehicles", Vehicle.class)
-//				.append("containers", Container.class);
-//
-//		collection.insertOne(doc);
-//	}
-//
-//	// Read
-//	public static Port getPortByNumber(int pNumber) {
-//		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
-//		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
-//		Document portDoc = collection.find(Filters.eq("pNumber", pNumber)).first();
-//		if (portDoc == null) {
-//			System.out.println("Port: not exist");
-//			return null;
-//		}
-//		System.out.println("Port: "+ portDoc.toJson());
-//		String name = portDoc.getString("name");
-//		boolean landingAbility = portDoc.getBoolean("landingAbility");
-//		double latitude = portDoc.getDouble("latitude");
-//		double longitude = portDoc.getDouble("longitude");
-//		double storingCapacity = portDoc.getDouble("storingCapacity");
-//		Collection<Trip> trips = portDoc.getList("traffic", Trip.class);
-//		Collection<Vehicle> vehicles = portDoc.getList("vehicles", Vehicle.class);
-//		Collection<Container> containers = portDoc.getList("containers", Container.class);
-//
-//		Port port = new Port(pNumber, name, landingAbility, latitude, longitude, storingCapacity, trips, containers, vehicles);
-//		return port;
-//	}
-//
-//	// Update
-//	public void updatePortName(String newName) {
-//		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
-//		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
-//		collection.updateOne(
-//				Filters.eq("pNumber", pNumber),
-//				Updates.set("name", newName));
-//	}
-//
-//	// Delete
-//	public void deletePort() {
-//		MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"));
-//		MongoCollection<Document> collection = mongoClient.getDatabase("PMS").getCollection("ports");
-//		collection.deleteOne(Filters.eq("pNumber", pNumber));
-//	}
+	public void createPort(Port port) {
+		List<Port> ports = readPort();
+		ports.add(port);
+		savePort(ports);
+	}
 
+	// Read
+	public List<Port> readPort() {
+		try {
+			FileInputStream fileIn = new FileInputStream(FILENAME);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			List<Port> ports = (List<Port>) in.readObject();
+			in.close();
+			fileIn.close();
+			return ports;
+		} catch (IOException i) {
+			return new ArrayList<>();
+		} catch (ClassNotFoundException c) {
+			System.out.println("Port class not found");
+			return new ArrayList<>();
+		}
+	}
+
+	// Update
+	public void updatePort(Port updatedPort) {
+		List<Port> ports = readPort();
+		for (int i = 0; i < ports.size(); i++) {
+			if (ports.get(i).getPNumber() == updatedPort.getPNumber()) {
+				ports.set(i, updatedPort);
+				break;
+			}
+		}
+		savePort(ports);
+	}
+
+	// Delete
+	public void deletePort(Port portToDelete) {
+		List<Port> ports = readPort();
+		ports.removeIf(port -> port.getPNumber() == portToDelete.getPNumber());
+		savePort(ports);
+	}
+
+	private void savePort(Collection<Port> ports) {
+		try {
+			FileOutputStream fileOut = new FileOutputStream(FILENAME);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(ports);
+			out.close();
+			fileOut.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		// Creating instance of the CRUD class
+		Port portCRUD = new Port();
+
+		// Creating some test data
+		Port port1 = new Port(1, "PortA", true, 34.0522, -118.2437, 5000, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+		Port port2 = new Port(2, "PortB", true, 36.7783, -119.4179, 5500, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+		// Testing Create
+		portCRUD.createPort(port1);
+		portCRUD.createPort(port2);
+
+		// Testing Read
+		List<Port> ports = portCRUD.readPort();
+		for (Port port : ports) {
+			System.out.println(port);
+		}
+
+		// Updating port1's name and then saving it
+		port1.setStoringCapacity(6000);
+		portCRUD.updatePort(port1);
+
+		// Testing if the name got updated
+		ports = portCRUD.readPort();
+		for (Port port : ports) {
+			System.out.println(port);
+		}
+
+		// Creating Container instances
+		Container container1 = new Container(101, 1000, 50);
+		Container container2 = new Container(102, 1500, 75);
+
+		// Test adding containers
+		System.out.println("Adding container1 to port1: " + port2.addContainer(container1));
+		System.out.println("Adding container2 to port1: " + port2.addContainer(container2));
+
+		// Test getting current container weight
+		System.out.println("Current weight of containers in port1: " + port2.getCurrentContainerWeight());
+
+		// Test getNumberOfContainers
+		System.out.println("Number of containers in port1: " + port2.getNumberOfContainers());
+
+		// Let's assume you also have a Vehicle class with a default constructor
+		Vehicle vehicle1 = new Vehicle();
+		Vehicle vehicle2 = new Vehicle();
+
+		port2.getVehicles().add(vehicle1);
+		port2.getVehicles().add(vehicle2);
+
+		// Test getNumberOfVehicles
+		System.out.println("Number of vehicles in port1: " + port2.getNumberOfVehicles());
+
+		// Test distanceTo
+		System.out.println("Distance from port1 to port2: " + port2.distanceTo(port1) + " km");
+
+		// Test canMoveTo
+		System.out.println("Can move from port1 to port2: " + port2.canMoveTo(port1));
+
+		// Testing Delete
+		ports = portCRUD.readPort();
+		for (Port port : ports) {
+			portCRUD.deletePort(port);
+		}
+
+		ports = portCRUD.readPort();
+		for (Port port : ports) {
+			System.out.println(port);
+		}
+	}
 }
