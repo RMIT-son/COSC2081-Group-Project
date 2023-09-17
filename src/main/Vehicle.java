@@ -1,10 +1,11 @@
 package main;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class Vehicle {
+public class Vehicle implements Serializable {
 	protected String name;
 	protected double fuel;
 	protected double fuelCapacity;
@@ -109,12 +110,7 @@ public class Vehicle {
 	}
 	//loadable container
 	public boolean loadableContainer(Container container){
-		double totalIfWeight = this.countWeight() + container.getWeight();
-		if (totalIfWeight <= this.getCarryCapacity()){
-			return true;
-		}else{
-			return false;
-		}
+		double totalIfWeight = this.countWeight() + container.getWeight();return totalIfWeight <= this.getCarryCapacity();
 	}
 
 	// Load container (Similar to create C)

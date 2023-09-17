@@ -9,11 +9,7 @@ public class ReeferTruck extends Truck  implements carryAble{
 	}
 	@Override
 	public boolean carryAble(Container container) {
-		if (container instanceof DryStorage || container instanceof OpenTop || container instanceof  OpenSide|| container instanceof  Refrigerated){
-			return true;
-		}else{
-			return false;
-		}
+		return container instanceof DryStorage || container instanceof OpenTop || container instanceof OpenSide || container instanceof Refrigerated;
 	}
 	@Override
 	public void loadContainer(Container container){
