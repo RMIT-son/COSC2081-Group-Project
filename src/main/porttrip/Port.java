@@ -1,4 +1,7 @@
-package main;
+package main.porttrip;
+
+import main.vehicle.Vehicle;
+import main.container.Container;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ public class Port implements Serializable, PortOperations {
 	protected Collection<Trip> traffic;
 	protected Collection<Container> containers;
 	protected Collection<Vehicle> vehicles;
-	private final String FILENAME = "ports.obj";
+	private final String FILENAME = "resources/ports.obj";
 
 	public Port() {
 	}

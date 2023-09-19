@@ -1,4 +1,7 @@
-package main;
+package main.vehicle;
+
+import main.container.Container;
+import main.porttrip.Port;
 
 import java.util.Collection;
 
