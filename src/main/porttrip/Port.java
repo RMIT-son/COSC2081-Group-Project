@@ -228,7 +228,7 @@ public class Port implements Serializable, PortOperations {
 		}
 	}
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		// Creating instance of the CRUD class
 		Port portCRUD = new Port();
 
@@ -296,5 +296,5 @@ public class Port implements Serializable, PortOperations {
 		for (Port port : ports) {
 			System.out.println(port);
 		}
-	}*/
+	}
 }
