@@ -1,20 +1,31 @@
 package main.container;
 
+import main.vehicle.Ship;
+import main.vehicle.Truck;
 import main.vehicle.Vehicle;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class OpenSide extends Container {
-    private static final Map<Vehicle, Double> fuelConsumption = new HashMap<>();
+    private static final Map<Class<? extends Vehicle>, Double> fuelConsumption = new HashMap<>();
 
     static {
-        fuelConsumption.put(Vehicle.Ship, 2.7);
-        fuelConsumption.put(Vehicle.Truck, 3.2);
+        fuelConsumption.put(Ship.class, 2.7);
+        fuelConsumption.put(Truck.class, 3.2);
     }
 
-    public OpenSide(int cNumber, double weight) {
-        super(cNumber, weight);
+//    static {
+//        fuelConsumption.put(Vehicle.Ship, 2.7);
+//        fuelConsumption.put(Vehicle.Truck, 3.2);
+//    }
+
+    public OpenSide() {
+        super();
+    }
+
+    public OpenSide(int cNumber, double weight, double requiredFuel) {
+        super(cNumber, weight, requiredFuel);
     }
 
     @Override
