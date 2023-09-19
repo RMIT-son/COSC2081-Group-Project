@@ -1,4 +1,6 @@
-package main;
+package main.vehicle;
+
+import main.container.Container;
 
 import java.util.HashMap;
 import java.util.Map;

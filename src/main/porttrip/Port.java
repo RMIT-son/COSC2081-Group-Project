@@ -1,4 +1,7 @@
-package main;
+package main.porttrip;
+
+import main.vehicle.Vehicle;
+import main.container.Container;
 
 import java.io.*;
 import java.util.ArrayList;

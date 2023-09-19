@@ -1,8 +1,10 @@
-package main;
+package main.vehicle;
+
+import main.container.Container;
+import main.porttrip.Port;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 public class Vehicle implements Serializable {

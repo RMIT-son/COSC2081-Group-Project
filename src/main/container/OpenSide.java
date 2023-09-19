@@ -1,17 +1,19 @@
-package main;
+package main.container;
+
+import main.vehicle.Vehicle;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class OpenTop extends Container {
+public class OpenSide extends Container {
     private static final Map<Vehicle, Double> FUEL_CONSUMPTION = new HashMap<>();
 
     static {
-        FUEL_CONSUMPTION.put(Vehicle.Ship, 2.8);
+        FUEL_CONSUMPTION.put(Vehicle.Ship, 2.7);
         FUEL_CONSUMPTION.put(Vehicle.Truck, 3.2);
     }
 
-    public OpenTop(int cNumber, double weight) {
+    public OpenSide(int cNumber, double weight) {
         super(cNumber, weight);
     }
 

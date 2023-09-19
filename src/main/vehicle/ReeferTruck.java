@@ -1,9 +1,15 @@
-package main;
+package main.vehicle;
+
+import main.container.Container;
+import main.container.DryStorage;
+import main.container.OpenSide;
+import main.container.OpenTop;
+import main.porttrip.Port;
 
 import java.util.Collection;
 
 
-public class ReeferTruck extends Truck  implements carryAble{
+public class ReeferTruck extends Truck implements carryAble {
 	public ReeferTruck(int tNumber, String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
 		super(tNumber, name, fuel, fuelCapacity, carryCapacity, currentPort, containers);
 	}
