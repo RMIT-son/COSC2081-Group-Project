@@ -112,7 +112,8 @@ public class Vehicle implements Serializable {
 	}
 	//loadable container
 	public boolean loadableContainer(Container container){
-		double totalIfWeight = this.countWeight() + container.getWeight();return totalIfWeight <= this.getCarryCapacity();
+		double totalIfWeight = this.countWeight() + container.getWeight();
+		return totalIfWeight <= this.getCarryCapacity();
 	}
 
 	// Load container (Similar to create C)
