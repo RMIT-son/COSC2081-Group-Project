@@ -2,7 +2,9 @@ package main.container;
 
 import main.vehicle.Vehicle;
 
-public class Container {
+import java.io.Serializable;
+
+public class Container implements Serializable {
 	protected int cNumber;
 	protected double weight;
 	protected double requiredFuel;
