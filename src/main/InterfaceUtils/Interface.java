@@ -1,42 +1,59 @@
-package main;
+package main.InterfaceUtils;
 
+import main.Users.PortManager;
+import main.Users.SystemAdmin;
+import main.Users.User;
 import de.codeshelf.consoleui.prompt.ConsolePrompt;
 import de.codeshelf.consoleui.prompt.InputResult;
 import de.codeshelf.consoleui.prompt.ListResult;
 import de.codeshelf.consoleui.prompt.PromtResultItemIF;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
+import jline.console.completer.StringsCompleter;
+import main.InterfaceUtils.AdminOps.AdminInterface;
+import main.InterfaceUtils.PortManagerOps.PMInterface;
+import main.porttrip.Port;
+import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class Interface {
+	public static User currentUser = null;
 	public static void run() {
-		AnsiConsole.systemInstall();                                      // #1
-		System.out.println(ansi().eraseScreen().render("Welcome to the Port Management System"));
+		// Setup
+		AnsiConsole.systemInstall();
+		System.out.println(ansi().fg(Ansi.Color.CYAN).eraseScreen().render("Welcome to the Port Management System"));
 		System.out.println(ansi().render("Please login to continue"));
-		boolean loginState = true;
 
-		// TODO temp for testing
-		boolean uCondition = true;
-		boolean pCondition = true;
-		User user = new PortManager();
+
+		// temp for testing for prototyping
+		Port port = new Port();
+		User mana = new PortManager("manager", "pwd12345", port);
+		User admin = new SystemAdmin("admin", "pwd@12345");
+		ArrayList<User> users = new ArrayList<>();
+		users.add(mana);
+		users.add(admin);
+
 
 		// LOGIN
-		while (loginState) {
+		while (true) {
 			try {
+				boolean loginState = true;
 				ConsolePrompt prompt = new ConsolePrompt();
 				PromptBuilder promptBuilder = prompt.getPromptBuilder();
+
+				// create a prompt for username and password
 				promptBuilder.createInputPrompt()
 						.name("Username")
 						.message("Please enter your username")
 						.defaultValue("John Doe")
-//						.addCompleter(new StringsCompleter("Jim", "Jack", "John"))
+						.addCompleter(new StringsCompleter("manager", "admin"))
 						.addPrompt();
-
 				promptBuilder.createInputPrompt()
 						.name("Password")
 						.message("Please enter your Password")
@@ -44,18 +61,33 @@ public class Interface {
 						.mask('*')
 						.addPrompt();
 
+				// getting result of the prompt and casting it to usable type
 				HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
-				System.out.println("result = " + result);
-				InputResult username = (InputResult) result.get("Username");
-				InputResult password = (InputResult) result.get("Password");
-				System.out.println("username = " + username.getInput());
-				System.out.println("password = " + password.getInput());
+				InputResult userInput = (InputResult) result.get("Username");
+				InputResult passInput = (InputResult) result.get("Password");
+				String username = userInput.getInput().trim();
+				String password = passInput.getInput().trim();
 
-				if (uCondition && pCondition) {
-					System.out.println(ansi().render("Login successful"));
-					loginState = false;
+				// logging for testing
+				System.out.println("username={"+username+"}");
+				System.out.println("password={"+password+"}");
+				System.out.println("result = " + result);
+
+
+				for (User user : users) {
+					// validate user credentials
+					boolean valid = username.equals(user.getUsername()) && password.equals(user.getPassword());
+					if (valid) {
+						System.out.println(ansi().eraseScreen().render("Login successful"));
+						currentUser = user;  // set the current user to the user that logged in
+						loginState = false;  // exit the login loop
+					}
+				}
+				// if login failed, print error message
+				if (!loginState) {
+					break; // Exit the outer loop (loginState)
 				} else {
-					System.out.println(ansi().render("Login failed"));
+					System.out.println(ansi().fg(Ansi.Color.RED).render("Login failed"));
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -68,11 +100,11 @@ public class Interface {
 			}
 		}
 
-		if (user instanceof SystemAdmin) {
-			System.out.println(ansi().render("Welcome, System Admin"));
+		if (currentUser instanceof SystemAdmin) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Welcome, System Admin"));
 			mainMenuAdmin();
-		} else if (user instanceof PortManager) {
-			System.out.println(ansi().render("Welcome, Port Manager"));
+		} else if (currentUser instanceof PortManager) {
+			System.out.println(ansi().fg(Ansi.Color.BLUE).render("Welcome, Port Manager"));
 			mainMenuPortManager();
 		}
 	}
@@ -81,12 +113,12 @@ public class Interface {
 		boolean menuState = true;
 		while (menuState) {
 			try {
-				ConsolePrompt prompt = new ConsolePrompt();                     // #2
+				ConsolePrompt prompt = new ConsolePrompt();
 				PromptBuilder promptBuilder = prompt.getPromptBuilder();
-				promptBuilder.createListPrompt()                                // #4
+				promptBuilder.createListPrompt()
 						.name("Main")
-						.message("Choose an option?")
-						.newItem("Ports").text("Ports").add()  // without name (name defaults to text)
+						.message("Which component would you like to manage")
+						.newItem("Ports").text("Ports").add()
 						.newItem("Vehicles").text("Vehicles").add()
 						.newItem("Containers").text("Containers").add()
 						.newItem("Users").text("Users").add()
@@ -98,21 +130,26 @@ public class Interface {
 				switch (mainResult.getSelectedId()) {
 					case "Ports":
 						System.out.println("Ports has been chosen");
+						AdminInterface.portsOPS();
 						break;
 					case "Vehicles":
 						System.out.println("Vehicles has been chosen");
+						AdminInterface.vehiclesOPS();
 						break;
 					case "Containers":
 						System.out.println("Containers has been chosen");
+						AdminInterface.containersOPS();
 						break;
 					case "Users":
-						System.out.println("Users has been chosen");
+						System.out.println("main.Users has been chosen");
+						AdminInterface.usersOPS();
 						break;
 					case "Statistics":
 						System.out.println("Statistics has been chosen");
+						AdminInterface.statOPS();
 						break;
 					case "Exit":
-						System.out.println("Exiting");
+						System.out.println("Exiting...");
 						menuState = false;
 						break;
 				}
@@ -136,7 +173,7 @@ public class Interface {
 				PromptBuilder promptBuilder = prompt.getPromptBuilder();
 				promptBuilder.createListPrompt()
 						.name("Main")
-						.message("Choose an option?")
+						.message("Which component would you like to manage")
 						.newItem("Port").text("Port").add()
 						.newItem("Vehicles").text("Vehicles").add()
 						.newItem("Containers").text("Containers").add()
@@ -148,18 +185,22 @@ public class Interface {
 				switch (mainResult.getSelectedId()) {
 					case "Port":
 						System.out.println("Port has been chosen");
+						PMInterface.portOPS();
 						break;
 					case "Vehicles":
 						System.out.println("Vehicles has been chosen");
+						PMInterface.vehiclesOPS();
 						break;
 					case "Containers":
 						System.out.println("Containers has been chosen");
+						PMInterface.containersOPS();
 						break;
 					case "Statistics":
 						System.out.println("Statistics has been chosen");
+						PMInterface.statOPS();
 						break;
 					case "Exit":
-						System.out.println("Exiting");
+						System.out.println("Exiting...");
 						menuState = false;
 						break;
 				}

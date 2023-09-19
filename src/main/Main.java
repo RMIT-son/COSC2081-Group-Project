@@ -1,8 +1,9 @@
 package main;
 
+import main.InterfaceUtils.Interface;
+
 public class Main {
     public static void main(String[] args) {
-	    Interface PMSInterface = new Interface();
         Interface.run();
     }
 }

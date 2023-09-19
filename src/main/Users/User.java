@@ -1,6 +1,4 @@
-package main;
-
-import main.porttrip.Port;
+package main.Users;
 
 public abstract class User {
 	protected String username;
@@ -35,33 +33,3 @@ public abstract class User {
 	}
 }
 
-class SystemAdmin extends User {
-
-	public SystemAdmin() {
-		super();
-	}
-
-	public SystemAdmin(String username, String password) {
-		super(username, password);
-	}
-}
-
-class PortManager extends User {
-	private Port portManaging;
-
-	public PortManager() {
-	}
-
-	public PortManager(String username, String password, Port portManaging) {
-		super(username, password);
-		this.portManaging = portManaging;
-	}
-
-	public Port getPortManaging() {
-		return portManaging;
-	}
-
-	public void setPortManaging(Port portManaging) {
-		this.portManaging = portManaging;
-	}
-}
