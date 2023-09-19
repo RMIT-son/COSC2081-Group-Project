@@ -1,9 +1,6 @@
 package main.vehicle;
 
-import main.container.Container;
-import main.container.DryStorage;
-import main.container.OpenSide;
-import main.container.OpenTop;
+import main.container.*;
 import main.porttrip.Port;
 
 import java.util.Collection;
