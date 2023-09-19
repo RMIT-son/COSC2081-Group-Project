@@ -6,7 +6,7 @@ import main.porttrip.Port;
 import java.io.*;
 import java.util.*;
 
-public class Vehicle implements Serializable {
+public class Vehicle implements Serializable, VehicleOperations {
 
 	protected String name;
 	protected double fuel;
@@ -255,7 +255,6 @@ public class Vehicle implements Serializable {
 			port1.setStoringCapacity(1000);  // Assuming setter method.
 
 
-
 			// Create a Vehicle instance
 			Vehicle vehicle1 = new Vehicle("Truck1", 50, 100, 500, port1, null);
 
@@ -282,20 +281,30 @@ public class Vehicle implements Serializable {
 				System.out.println(v);
 			}
 
-			// Delete
-			vehicle1.deleteVehicle(vehicle1);
-			System.out.println("Vehicle deleted!");
+			List<Vehicle> readVehicles = vehicle1.readVehicle();
 
-			// Read to verify deletion
-			System.out.println("All vehicles after deletion: ");
-			for (Vehicle v : vehicle1.readVehicle()) {
-				System.out.println(v);
+			// Display the read vehicles
+			if (readVehicles.isEmpty()) {
+				System.out.println("No vehicles found in the file.");
+			} else {
+				System.out.println("Vehicles read from the file:");
+				for (Vehicle vehicle : readVehicles) {
+					System.out.println(vehicle);
+				}
+
+				// Delete
+				vehicle1.deleteVehicle(vehicle1);
+				System.out.println("Vehicle deleted!");
+
+				// Read to verify deletion
+				System.out.println("All vehicles after deletion: ");
+				for (Vehicle v : vehicle1.readVehicle()) {
+					System.out.println(v);
+				}
+
 			}
 
-	}
 
-
-
-
+		}
 }
 
