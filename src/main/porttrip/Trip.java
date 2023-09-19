@@ -217,72 +217,72 @@ public class Trip implements Serializable {
 			}
 		}
 
-		public static void main (String[] args){
-			Trip tripCRUD = new Trip();  // Assuming you have a separate CRUD class for trips, otherwise use Trip class directly
-
-			// Creating some test data
-			// You'll need to initialize Vehicle, Port and other classes/objects used here appropriately
-			Port port1 = new Port(1, "PortA", true, 34.0522, -118.2437, 5000, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-			Port port2 = new Port(2, "PortB", true, 36.7783, -119.4179, 5500, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
-			Container container1 = new Container(101, 1000, 50);
-			Collection<Container> shipContainers = new ArrayList<>();
-			shipContainers.add(container1);
-			Vehicle vehicle1 = new Ship(5, "Cargo Ship", 3000, 5000, 2000, port1, shipContainers);
-
-			LocalDate tenDaysAgo = LocalDate.now().minusDays(10);
-			LocalDate eightDaysAgo = LocalDate.now().minusDays(8);
-			Trip oldTrip = new Trip(vehicle1, tenDaysAgo, eightDaysAgo, port1, port2, "Completed");
-
-			LocalDate today = LocalDate.now();
-			Trip recentTrip = new Trip(vehicle1, today, today.plusDays(1), port1, port2, "Scheduled");
-
-			// Testing setDates method
-			// Test Update
-			try {
-				recentTrip.setDates(today.minusDays(7), today.minusDays(6));
-				recentTrip.setStatus("Completed");
-				tripCRUD.updateTrip(recentTrip);
-				System.out.println("Dates updated successfully for trip.");
-			} catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-
-//			Testing getFuelConsumptionADay
-			System.out.println("Fuel consumption in the departure day of old trip: " + oldTrip.getFuelConsumptionADay(vehicle1, 3000));
-
-			// Testing isTripCompleted method
-			System.out.println("Is trip1 completed? " + recentTrip.isTripCompleted());
-
-			// Testing getDuration method
-			System.out.println("Duration of trip1: " + recentTrip.getDuration() + " days");
-
-			// Testing getContainerOnTrips method
-			System.out.println("Containers on trip1: " + recentTrip.getContainerOnTrips());
-
-			// Display the trip
-			System.out.println(recentTrip);
-
-			// Test Create
-			tripCRUD.createTrip(oldTrip);
-			tripCRUD.createTrip(recentTrip);
-
-			// Test Read
-			List<Trip> trips = tripCRUD.readTrip();
-			System.out.println("Trips before cleanup:");
-			trips.forEach(System.out::println);
+//		public static void main (String[] args){
+//			Trip tripCRUD = new Trip();  // Assuming you have a separate CRUD class for trips, otherwise use Trip class directly
+//
+//			// Creating some test data
+//			// You'll need to initialize Vehicle, Port and other classes/objects used here appropriately
+//			Port port1 = new Port(1, "PortA", true, 34.0522, -118.2437, 5000, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+//			Port port2 = new Port(2, "PortB", true, 36.7783, -119.4179, 5500, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+//			Container container1 = new Container(101, 1000, 50);
+//			Collection<Container> shipContainers = new ArrayList<>();
+//			shipContainers.add(container1);
+//			Vehicle vehicle1 = new Ship(5, "Cargo Ship", 3000, 5000, 2000, port1, shipContainers);
+//
+//			LocalDate tenDaysAgo = LocalDate.now().minusDays(10);
+//			LocalDate eightDaysAgo = LocalDate.now().minusDays(8);
+//			Trip oldTrip = new Trip(vehicle1, tenDaysAgo, eightDaysAgo, port1, port2, "Completed");
+//
+//			LocalDate today = LocalDate.now();
+//			Trip recentTrip = new Trip(vehicle1, today, today.plusDays(1), port1, port2, "Scheduled");
+//
+//			// Testing setDates method
+//			// Test Update
+//			try {
+//				recentTrip.setDates(today.minusDays(7), today.minusDays(6));
+//				recentTrip.setStatus("Completed");
+//				tripCRUD.updateTrip(recentTrip);
+//				System.out.println("Dates updated successfully for trip.");
+//			} catch (IllegalArgumentException e) {
+//				System.out.println(e.getMessage());
+//			}
+//
+////			Testing getFuelConsumptionADay
+//			System.out.println("Fuel consumption in the departure day of old trip: " + oldTrip.getFuelConsumptionADay(vehicle1, 3000));
+//
+//			// Testing isTripCompleted method
+//			System.out.println("Is trip1 completed? " + recentTrip.isTripCompleted());
+//
+//			// Testing getDuration method
+//			System.out.println("Duration of trip1: " + recentTrip.getDuration() + " days");
+//
+//			// Testing getContainerOnTrips method
+//			System.out.println("Containers on trip1: " + recentTrip.getContainerOnTrips());
+//
+//			// Display the trip
+//			System.out.println(recentTrip);
+//
+//			// Test Create
+//			tripCRUD.createTrip(oldTrip);
+//			tripCRUD.createTrip(recentTrip);
+//
+//			// Test Read
+//			List<Trip> trips = tripCRUD.readTrip();
+//			System.out.println("Trips before cleanup:");
+//			trips.forEach(System.out::println);
 
 			// Test Delete trips completed after 7 days
-			tripCRUD.deleteTripsCompletedAfter7Days();
+//			tripCRUD.deleteTripsCompletedAfter7Days();
 //		tripCRUD.listTripsBetweenDates(2023-09-07, 2023-09-10);
 //		tripCRUD.listTripsOnDate(2023-09-09);
-
-			for (Trip trip : trips) {
-				tripCRUD.deleteTrip(trip);
-			}
-
-			trips = tripCRUD.readTrip();
-			System.out.println("\nTrips after cleanup:");
-			trips.forEach(System.out::println);
-
-		}
+//
+//			for (Trip trip : trips) {
+//				tripCRUD.deleteTrip(trip);
+//			}
+//
+//			trips = tripCRUD.readTrip();
+//			System.out.println("\nTrips after cleanup:");
+//			trips.forEach(System.out::println);
+//
+//		}
 	}
