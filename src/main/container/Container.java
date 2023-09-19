@@ -2,7 +2,7 @@ package main.container;
 
 import main.vehicle.Vehicle;
 
-public abstract class Container {
+public class Container {
 	protected int cNumber;
 	protected double weight;
 	protected double requiredFuel;
@@ -48,7 +48,9 @@ public abstract class Container {
 				'}';
 	}
 
-	public abstract double calculateFuel(Vehicle vehicle, double distance);
+	public double calculateFuel(Vehicle vehicle, double distance) {
+		return 0;
+	}
 
 
 }
