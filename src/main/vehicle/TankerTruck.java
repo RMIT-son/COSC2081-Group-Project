@@ -1,8 +1,11 @@
-package main;
+package main.vehicle;
+
+import main.container.*;
+import main.porttrip.Port;
 
 import java.util.Collection;
 
-public class TankerTruck extends Truck implements carryAble{
+public class TankerTruck extends Truck implements carryAble {
 	public TankerTruck(int tNumber, String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
 		super(tNumber, name, fuel, fuelCapacity, carryCapacity, currentPort, containers);
 	}

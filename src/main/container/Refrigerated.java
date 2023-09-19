@@ -1,14 +1,16 @@
-package main;
+package main.container;
+
+import main.vehicle.Vehicle;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Refrigerated extends Container {
-	private static final Map<Vehicle, Double> FUEL_CONSUMPTION = new HashMap<>();
+	private static final Map<Vehicle, Double> fuelConsumption = new HashMap<>();
 
     static {
-        FUEL_CONSUMPTION.put(Vehicle.Ship, 4.5);
-        FUEL_CONSUMPTION.put(Vehicle.Truck, 5.4);
+        fuelConsumption.put(Vehicle.Ship, 4.5);
+        fuelConsumption.put(Vehicle.Truck, 5.4);
     }
 
     public Refrigerated(int cNumber, double weight) {
@@ -17,6 +19,6 @@ public class Refrigerated extends Container {
 
     @Override
     public double calculateFuel(Vehicle vehicle, double distance) {
-        return FUEL_CONSUMPTION.get(vehicle) * weight * distance;
+        return fuelConsumption.get(vehicle) * weight * distance;
     }
 }
