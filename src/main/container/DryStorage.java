@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DryStorage extends Container {
-	private static final Map<Vehicle, Double> FUEL_CONSUMPTION = new HashMap<>();
+	private static final Map<Vehicle, Double> fuelConsumption = new HashMap<>();
 
     static {
-        FUEL_CONSUMPTION.put(Vehicle.Ship, 3.5);
-        FUEL_CONSUMPTION.put(Vehicle.Truck, 4.6);
+        fuelConsumption.put(Vehicle.Ship, 3.5);
+        fuelConsumption.put(Vehicle.Truck, 4.6);
     }
 
     public DryStorage(int cNumber, double weight) {
@@ -18,6 +18,6 @@ public class DryStorage extends Container {
 
     @Override
     public double calculateFuel(Vehicle vehicle, double distance) {
-        return FUEL_CONSUMPTION.get(vehicle) * weight * distance;
+        return fuelConsumption.get(vehicle) * weight * distance;
     }
 }
