@@ -84,14 +84,7 @@ public class Trip implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Trip{" +
-				"vehicle=" + vehicle +
-				", departureDate=" + departureDate +
-				", arrivalDate=" + arrivalDate +
-				", departurePort=" + departurePort +
-				", arrivalPort=" + arrivalPort +
-				", status='" + status + '\'' +
-				'}';
+		return vehicle + "from" + departurePort + "to" + arrivalPort + "on" + departureDate + "to" + arrivalDate;
 	}
 
 	//	Calculates the duration of the trip.

@@ -84,15 +84,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 
 	@Override
 	public String toString() {
-
-		return "Vehicle{" +
-				"name='" + name + '\'' +
-				", fuel='" + fuel + '\'' +
-				", fuelCapacity=" + fuelCapacity +
-				", carryCapacity=" + carryCapacity +
-				", currentPort=" + currentPort +
-				", containers=" + containers +
-				'}';
+		return name;
 	}
 
 	// Searching container

@@ -271,8 +271,8 @@ public class AdminInterface {
                 promptBuilder.createListPrompt()
                         .name("StatOptions")
                         .message("Which would you like to see?")
-                        .newItem("").text("Placeholder 1").add()
-                        .newItem("").text("Placeholder 2").add()
+                        .newItem().text("Placeholder 1").add()
+                        .newItem().text("Placeholder 2").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
