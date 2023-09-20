@@ -207,9 +207,9 @@ public class Vehicle implements Serializable, VehicleOperations {
 	//CRUD vehicle
 
 	//Create vehicle
-	public void createVehicle(Vehicle vehicle){
+	public void createVehicle(){
 		List<Vehicle> vehicles = readVehicle();
-		vehicles.add(vehicle);
+		vehicles.add(this);
 		saveVechicle(vehicles);
 	}
 	// save all vehicles
@@ -238,11 +238,11 @@ public class Vehicle implements Serializable, VehicleOperations {
 	}
 
 	// Update
-	public void updatePort(Vehicle updatedVehicle) {
+	public void updatePort() {
 		List<Vehicle> vehicles = readVehicle();
 		for (int i = 0; i < vehicles.size(); i++) {
-			if (Objects.equals(vehicles.get(i).getName(), updatedVehicle.getName())) {
-				vehicles.set(i, updatedVehicle);
+			if (Objects.equals(vehicles.get(i).getName(), this.getName())) {
+				vehicles.set(i, this);
 				break;
 			}
 		}
@@ -251,9 +251,9 @@ public class Vehicle implements Serializable, VehicleOperations {
 
 
 	//Delete vehicle
-	public void deleteVehicle(Vehicle deletedVehicle) {
+	public void deleteVehicle() {
 		List<Vehicle> vehicles = readVehicle();
-		vehicles.removeIf(vehicle -> Objects.equals(vehicle.getName(), deletedVehicle.getName()));
+		vehicles.removeIf(vehicle -> Objects.equals(vehicle.getName(), this.getName()));
 		saveVechicle(vehicles);
 	}
 
@@ -272,7 +272,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 			// Testing CRUD operations
 
 			// Create
-			vehicle1.createVehicle(vehicle1);
+			vehicle1.createVehicle();
 			System.out.println("Vehicle created!");
 
 			// Read
@@ -283,7 +283,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 
 			// Update: just for demonstration, updating the current port
 			vehicle1.setCurrentPort(new Port());  // Moving to a new port (for the sake of testing).
-			vehicle1.updatePort(vehicle1);
+			vehicle1.updatePort();
 			System.out.println("Vehicle updated!");
 
 			// Read to verify update
@@ -304,7 +304,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 				}
 
 				// Delete
-				vehicle1.deleteVehicle(vehicle1);
+				vehicle1.deleteVehicle();
 				System.out.println("Vehicle deleted!");
 
 				// Read to verify deletion

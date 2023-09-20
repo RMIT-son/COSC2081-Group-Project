@@ -19,15 +19,15 @@ public interface VehicleOperations {
     void movePort(Port port);
     void refuel();
     int checkConNumb();
-    void createVehicle(Vehicle vehicle);
+    void createVehicle();
 
     void saveVechicle(Collection<Vehicle> vehicles);
 
     List<Vehicle> readVehicle();
 
-    void updatePort(Vehicle updatedVehicle);
+    void updatePort();
 
-    void deleteVehicle(Vehicle deletedVehicle);
+    void deleteVehicle();
 
 
 }
