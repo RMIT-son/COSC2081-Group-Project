@@ -1,5 +1,6 @@
 package main.container;
 
+import main.porttrip.Port;
 import main.vehicle.Ship;
 import main.vehicle.Truck;
 import main.vehicle.Vehicle;
@@ -24,8 +25,8 @@ public class OpenSide extends Container {
         super();
     }
 
-    public OpenSide(int cNumber, double weight, double requiredFuel) {
-        super(cNumber, weight, requiredFuel);
+    public OpenSide(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort, ContainerState state) {
+        super(cNumber, weight, requiredFuel, currentVehicle, currentPort, state);
     }
 
     @Override
