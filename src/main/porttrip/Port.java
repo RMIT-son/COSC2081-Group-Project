@@ -55,6 +55,7 @@ public class Port implements Serializable, PortOperations {
 
 	public void setName(String name) {
 		this.name = name;
+		this.updatePort();
 	}
 
 	public boolean isLandingAbility() {
@@ -63,6 +64,7 @@ public class Port implements Serializable, PortOperations {
 
 	public void setLandingAbility(boolean landingAbility) {
 		this.landingAbility = landingAbility;
+		this.updatePort();
 	}
 
 	public double getLatitude() {
@@ -71,6 +73,7 @@ public class Port implements Serializable, PortOperations {
 
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
+		this.updatePort();
 	}
 
 	public double getLongitude() {
@@ -79,6 +82,7 @@ public class Port implements Serializable, PortOperations {
 
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+		this.updatePort();
 	}
 
 
@@ -88,6 +92,7 @@ public class Port implements Serializable, PortOperations {
 
 	public void setStoringCapacity(double storingCapacity) {
 		this.storingCapacity = storingCapacity;
+		this.updatePort();
 	}
 
 	public Collection<Trip> getTraffic() {
@@ -96,6 +101,7 @@ public class Port implements Serializable, PortOperations {
 
 	public void setTraffic(Collection<Trip> traffic) {
 		this.traffic = traffic;
+		this.updatePort();
 	}
 
 	public Collection<Container> getContainers() {
@@ -104,6 +110,7 @@ public class Port implements Serializable, PortOperations {
 
 	public void setContainers(Collection<Container> containers) {
 		this.containers = containers;
+		this.updatePort();
 	}
 
 	public Collection<Vehicle> getVehicles() {
@@ -112,6 +119,7 @@ public class Port implements Serializable, PortOperations {
 
 	public void setVehicles(Collection<Vehicle> vehicles) {
 		this.vehicles = vehicles;
+		this.updatePort();
 	}
 
 
@@ -183,6 +191,7 @@ public class Port implements Serializable, PortOperations {
 				if (container.getState() == Container.ContainerState.Neither) {
 					containers.add(container);
 					container.setCurrentPort(this);
+					this.updatePort();
 				} else {
 					System.out.println("The capicity is overdosed");
 				}
@@ -206,6 +215,7 @@ public class Port implements Serializable, PortOperations {
 				System.out.println("Remove successfully from port");
 				container.setCurrentPort(null);
 				container.setState(Container.ContainerState.Neither);
+				this.updatePort();
 			}
 
 		}else {
@@ -218,6 +228,7 @@ public class Port implements Serializable, PortOperations {
 	public Collection<Vehicle> addVehicle(Vehicle vehicle) {
 		if (!findVehicle(vehicle.getId())) {
 			this.getVehicles().add(vehicle);
+			this.updatePort();
 		}
 		else {
 			System.out.println("The container already in the port");
@@ -234,6 +245,7 @@ public class Port implements Serializable, PortOperations {
 		}
 		if (vehicle != null) {
 			this.getVehicles().remove(vehicle);
+			this.updatePort();
 		}
 		else {
 			System.out.print("Invalid id");
@@ -243,17 +255,7 @@ public class Port implements Serializable, PortOperations {
 
 	@Override
 	public String toString() {
-		return "Port{" +
-				"pNumber=" + pNumber +
-				", name='" + name + '\'' +
-				", landingAbility=" + landingAbility +
-				", latitude=" + latitude +
-				", longitude=" + longitude +
-				", storingCapacity=" + storingCapacity +
-				 ", traffic=" + traffic +
-				 ", containers=" + containers +
-				 ", vehicles=" + vehicles +
-				'}';
+		return name;
 	}
 
 	public double distanceTo(Port otherPort) {
@@ -368,7 +370,7 @@ public class Port implements Serializable, PortOperations {
 			shipContainers.add(container1);
 
 		// Test adding containers
-		portCRUD.loadContainerToPort(container1, 101);
+		portCRUD.loadContainerToPort(container1);
 		portCRUD.unloadContainerFromPort(container2);
 
 //		// Test getting current container weight

@@ -12,7 +12,7 @@ public interface PortOperations {
     int getNumberOfVehicles();
     boolean findContainer(int idNumber);
     boolean findVehicle(int idNumber);
-    Collection<Container> loadContainerToPort(Container container, int idNumber);
+    Collection<Container> loadContainerToPort(Container container);
     Collection<Container> unloadContainerFromPort(Container container);
     double distanceTo(Port otherPort);
     boolean canMoveTo(Port otherPort);
