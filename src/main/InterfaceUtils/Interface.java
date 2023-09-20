@@ -25,6 +25,7 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class Interface {
 	public static User currentUser = null;
 	public static void run() {
+		// ArrayList<Port> ports = new ArrayList<>();
 		// Setup
 		AnsiConsole.systemInstall();
 		System.out.println(ansi().fg(Ansi.Color.CYAN).eraseScreen().render("Welcome to the Port Management System"));
@@ -32,7 +33,7 @@ public class Interface {
 
 
 		// temp for testing for prototyping
-		Port port = new Port();
+		Port port = new Port(1, "Hamburg", true, 53.551086, 9.993682, 1000000, null, null, null);
 		User mana = new PortManager("manager", "pwd12345", port);
 		User admin = new SystemAdmin("admin", "pwd@12345");
 		ArrayList<User> users = new ArrayList<>();
@@ -78,7 +79,7 @@ public class Interface {
 					// validate user credentials
 					boolean valid = username.equals(user.getUsername()) && password.equals(user.getPassword());
 					if (valid) {
-						System.out.println(ansi().eraseScreen().render("Login successful"));
+						System.out.println(ansi().fg(Ansi.Color.GREEN).eraseScreen().render("Login successful"));
 						currentUser = user;  // set the current user to the user that logged in
 						loginState = false;  // exit the login loop
 					}
@@ -121,6 +122,7 @@ public class Interface {
 						.newItem("Ports").text("Ports").add()
 						.newItem("Vehicles").text("Vehicles").add()
 						.newItem("Containers").text("Containers").add()
+						.newItem("Trips").text("Trips").add()
 						.newItem("Users").text("Users").add()
 						.newItem("Statistics").text("Statistics").add()
 						.newItem("Exit").text("Exit").add()
@@ -139,6 +141,10 @@ public class Interface {
 					case "Containers":
 						System.out.println("Containers has been chosen");
 						AdminInterface.containersOPS();
+						break;
+					case "Trips":
+						System.out.println("Trips has been chosen");
+						AdminInterface.tripsOPS();
 						break;
 					case "Users":
 						System.out.println("main.Users has been chosen");
@@ -177,6 +183,7 @@ public class Interface {
 						.newItem("Port").text("Port").add()
 						.newItem("Vehicles").text("Vehicles").add()
 						.newItem("Containers").text("Containers").add()
+						.newItem("Trips").text("Trips").add()
 						.newItem("Statistics").text("Statistics").add()
 						.newItem("Exit").text("Exit").add()
 						.addPrompt();
@@ -194,6 +201,10 @@ public class Interface {
 					case "Containers":
 						System.out.println("Containers has been chosen");
 						PMInterface.containersOPS();
+						break;
+					case "Trips":
+						System.out.println("Trips has been chosen");
+						PMInterface.tripsOPS();
 						break;
 					case "Statistics":
 						System.out.println("Statistics has been chosen");
