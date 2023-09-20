@@ -11,8 +11,8 @@ public interface VehicleOperations {
     boolean loadableContainer(Container container);
 
     public void loadContainer(Container container);
-    public void unloadContainer(int cNumber);
-    Container findingContainer(int cNumber);
+    public void unloadContainer(Container container);
+    Container findingContainer(Container container);
 
     double countWeight();
     boolean checkPortWeightAvailibity(Port port);
