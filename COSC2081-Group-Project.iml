@@ -10,5 +10,6 @@
     <orderEntry type="library" name="github.lalyos.jfiglet" level="project" />
     <orderEntry type="library" name="de.codeshelf.consoleui" level="project" />
     <orderEntry type="library" name="junit.jupiter" level="project" />
+    <orderEntry type="library" name="github.freva.ascii.table" level="project" />
   </component>
 </module>
