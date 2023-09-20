@@ -28,13 +28,14 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class PMInterface {
     static PortManager currentPortMana = (PortManager) currentUser;
     static Port portManaging = currentPortMana.getPortManaging();
-    public static boolean portMenuState = true;
-    public static boolean containersMenuState = true;
-    public static boolean tripsMenuState = true;
-    public static boolean statMenuState = true;
+    public static boolean portMenuState;
+    public static boolean containersMenuState;
+    public static boolean tripsMenuState;
+    public static boolean statMenuState;
 
 
     public static void portOPS() {
+        portMenuState = true;
         while (portMenuState) {
             try {
                 System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Port CRUD Manager Menu"));
@@ -141,6 +142,7 @@ public class PMInterface {
     }
 
     public static void containersOPS() {
+        containersMenuState = true;
         while (containersMenuState) {
             try {
                 System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Containers CRUD Manager Menu"));
@@ -187,6 +189,7 @@ public class PMInterface {
     }
 
     public static void tripsOPS() {
+        tripsMenuState = true;
         while (tripsMenuState) {
             try {
                 System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Trips Manager Menu"));
@@ -234,6 +237,7 @@ public class PMInterface {
 
     public static void statOPS() {
         //TODO: implement display statistics and let users choose what to do
+        statMenuState = true;
         while (statMenuState) {
             try {
                 System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Statistics Manager Menu"));
@@ -244,7 +248,7 @@ public class PMInterface {
                         .message("Which would you like to see?")
                         .newItem().text("Placeholder 1").add()
                         .newItem().text("Placeholder 2").add()
-                        .newItem().text("Back").add()
+                        .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult SResult = (ListResult) result.get("StatOptions");

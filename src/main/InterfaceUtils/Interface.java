@@ -1,5 +1,6 @@
 package main.InterfaceUtils;
 
+import com.github.lalyos.jfiglet.FigletFont;
 import main.Users.PortManager;
 import main.Users.SystemAdmin;
 import main.Users.User;
@@ -25,10 +26,15 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class Interface {
 	public static User currentUser = null;
 	public static void run() {
-		// ArrayList<Port> ports = new ArrayList<>();
 		// Setup
+		String PMS;
 		AnsiConsole.systemInstall();
-		System.out.println(ansi().fg(Ansi.Color.CYAN).eraseScreen().render("Welcome to the Port Management System"));
+		try {
+			PMS = FigletFont.convertOneLine("Port Management System");
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		System.out.println(ansi().fg(Ansi.Color.CYAN).eraseScreen().render(PMS + "Ver 1.0.0"));
 		System.out.println(ansi().render("Please login to continue"));
 
 
