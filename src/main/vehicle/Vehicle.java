@@ -122,7 +122,11 @@ public class Vehicle implements Serializable, VehicleOperations {
 	public void loadContainer(Container container){
 		if(!find(container.getCNumber())){
 			if(this.loadableContainer(container)){
-				containers.add(container);
+				if(container.getState() == Container.ContainerState.Neither){
+					containers.add(container);
+					container.setCurrentVehicle(this);
+				}
+
 			}else{
 				System.out.println("The capicity is overdosed");
 			}
@@ -132,25 +136,30 @@ public class Vehicle implements Serializable, VehicleOperations {
 	}
 
 	//unload container(user input container id)(similar to delete D)
-	public void unloadContainer(int cNumber){
+	public void unloadContainer(Container container){
 		Container condel = null;
 		for (Container c : containers){
-			if(c.getCNumber() == cNumber){
+			if(c.getCNumber() == container.getCNumber()){
 				condel = c;
 			}
 		}
 		if (condel != null){
-			containers.remove(condel);
-			System.out.println("Remove successfully");
+			if(container.getState() == Container.ContainerState.AtVehicle){
+				containers.remove(condel);
+				System.out.println("Remove successfully");
+				container.setCurrentVehicle(null);
+				container.setState(Container.ContainerState.Neither);
+			}
+
 		}else {
 			System.out.print("Invalid id");
 		}
 	}
 
 	// finding container R
-	public Container findingContainer(int cNumber){
+	public Container findingContainer(Container container){
 		for(Container c : containers){
-			if(c.getCNumber() == cNumber){
+			if(c.getCNumber() == container.getCNumber()){
 				return c;
 			}
 		}
@@ -192,6 +201,8 @@ public class Vehicle implements Serializable, VehicleOperations {
 	public int checkConNumb(){
 		return this.getContainers().size();
 	}
+
+
 
 	//CRUD vehicle
 
