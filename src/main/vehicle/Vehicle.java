@@ -114,7 +114,12 @@ public class Vehicle implements Serializable, VehicleOperations {
 	public void loadContainer(Container container){
 		if(!find(container.getCNumber())){
 			if(this.loadableContainer(container)){
-				containers.add(container);
+				if(container.getState() == Container.ContainerState.Neither){
+					containers.add(container);
+					container.setCurrentVehicle(this);
+					updateVehicle(this);
+				}
+
 			}else{
 				System.out.println("The capicity is overdosed");
 			}
@@ -124,25 +129,31 @@ public class Vehicle implements Serializable, VehicleOperations {
 	}
 
 	//unload container(user input container id)(similar to delete D)
-	public void unloadContainer(int cNumber){
+	public void unloadContainer(Container container){
 		Container condel = null;
 		for (Container c : containers){
-			if(c.getCNumber() == cNumber){
+			if(c.getCNumber() == container.getCNumber()){
 				condel = c;
 			}
 		}
 		if (condel != null){
-			containers.remove(condel);
-			System.out.println("Remove successfully");
+			if(container.getState() == Container.ContainerState.AtVehicle){
+				containers.remove(condel);
+				System.out.println("Remove successfully");
+				container.setCurrentVehicle(null);
+				updateVehicle(this);
+
+			}
+
 		}else {
 			System.out.print("Invalid id");
 		}
 	}
 
 	// finding container R
-	public Container findingContainer(int cNumber){
+	public Container findingContainer(Container container){
 		for(Container c : containers){
-			if(c.getCNumber() == cNumber){
+			if(c.getCNumber() == container.getCNumber()){
 				return c;
 			}
 		}
@@ -167,6 +178,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 	public void movePort(Port port){
 		if (this.checkPortWeightAvailibity(port)){
 			this.setCurrentPort(port);
+			updateVehicle(this);
 		}else{
 			System.out.println("Unable to move here");
 		}
@@ -175,6 +187,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 	public void refuel(){
 		if (this.getFuel() < this.getFuelCapacity()){
 			this.setFuel(this.getFuelCapacity());
+			updateVehicle(this);
 		}else{
 			System.out.println("The fuel is full");
 		}
@@ -184,6 +197,8 @@ public class Vehicle implements Serializable, VehicleOperations {
 	public int checkConNumb(){
 		return this.getContainers().size();
 	}
+
+
 
 	//CRUD vehicle
 
@@ -219,7 +234,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 	}
 
 	// Update
-	public void updatePort(Vehicle updatedVehicle) {
+	public void updateVehicle(Vehicle updatedVehicle) {
 		List<Vehicle> vehicles = readVehicle();
 		for (int i = 0; i < vehicles.size(); i++) {
 			if (Objects.equals(vehicles.get(i).getName(), updatedVehicle.getName())) {
@@ -240,63 +255,71 @@ public class Vehicle implements Serializable, VehicleOperations {
 
 
 
-
+		//main test crud
 		public static void main(String[] args) {
-			// Create a Port instance
-			Port port1 = new Port(); // Assuming Port class has a default constructor and necessary setters.
+			System.out.println("Starting tests...");
+
+			// Initialize a port
+			Port port1 = new Port();
 			port1.setStoringCapacity(1000);  // Assuming setter method.
 
+			// Create a Vehicle
+			Vehicle vehicle1 = new Vehicle("Truck1", 50, 100, 500, port1, new ArrayList<>());
 
-			// Create a Vehicle instance
-			Vehicle vehicle1 = new Vehicle("Truck1", 50, 100, 500, port1, null);
-
-			// Testing CRUD operations
-
-			// Create
+			// CRU[D] operations on Vehicle
 			vehicle1.createVehicle(vehicle1);
 			System.out.println("Vehicle created!");
+			displayAllVehicles(vehicle1);
 
-			// Read
-			System.out.println("All vehicles: ");
-			for (Vehicle v : vehicle1.readVehicle()) {
-				System.out.println(v);
-			}
+			// Update Vehicle
+			vehicle1.setFuel(90); // For demonstration purposes
 
-			// Update: just for demonstration, updating the current port
-			vehicle1.setCurrentPort(new Port());  // Moving to a new port (for the sake of testing).
-			vehicle1.updatePort(vehicle1);
 			System.out.println("Vehicle updated!");
+			displayAllVehicles(vehicle1);
 
-			// Read to verify update
-			System.out.println("All vehicles after update: ");
-			for (Vehicle v : vehicle1.readVehicle()) {
+			// Create Containers and Load them onto Vehicle
+			Container container1 = new Container(1, 100, 5, null, null, Container.ContainerState.Neither);
+			Container container2 = new Container(2, 150, 8, null, null, Container.ContainerState.Neither);
+
+			vehicle1.loadContainer(container1);
+			vehicle1.loadContainer(container2);
+
+
+			System.out.println("Containers loaded!");
+			displayAllVehicles(vehicle1);
+
+			// Unload Container
+			vehicle1.unloadContainer(container2);
+			System.out.println("Container 2 unloaded!");
+			displayAllVehicles(vehicle1);
+
+			// Refuel the Vehicle
+			vehicle1.refuel();
+			System.out.println("Vehicle refueled!");
+			displayAllVehicles(vehicle1);
+
+			// [D]elete Vehicle
+			vehicle1.deleteVehicle(vehicle1);
+			System.out.println("Vehicle deleted!");
+			displayAllVehicles(vehicle1);
+
+			System.out.println("Tests completed!");
+		}
+
+		private static void displayAllVehicles(Vehicle vehicle) {
+			System.out.println("All vehicles: ");
+			for (Vehicle v : vehicle.readVehicle()) {
 				System.out.println(v);
 			}
-
-			List<Vehicle> readVehicles = vehicle1.readVehicle();
-
-			// Display the read vehicles
-			if (readVehicles.isEmpty()) {
-				System.out.println("No vehicles found in the file.");
-			} else {
-				System.out.println("Vehicles read from the file:");
-				for (Vehicle vehicle : readVehicles) {
-					System.out.println(vehicle);
-				}
-
-				// Delete
-				vehicle1.deleteVehicle(vehicle1);
-				System.out.println("Vehicle deleted!");
-
-				// Read to verify deletion
-				System.out.println("All vehicles after deletion: ");
-				for (Vehicle v : vehicle1.readVehicle()) {
-					System.out.println(v);
-				}
-
-			}
-
-
 		}
+
+
+
+
+
+
+
+
+
 }
 
