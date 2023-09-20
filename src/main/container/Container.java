@@ -98,11 +98,7 @@ public class Container implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Container{" +
-				"cNumber=" + cNumber +
-				", weight=" + weight +
-				", requiredFuel=" + requiredFuel +
-				'}';
+		return Integer.toString(cNumber);
 	}
 
 	public double calculateFuel(Vehicle vehicle, double distance) {

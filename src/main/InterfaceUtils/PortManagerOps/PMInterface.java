@@ -96,37 +96,24 @@ public class PMInterface {
             PromptBuilder promptBuilder = prompt.getPromptBuilder();
             promptBuilder.createInputPrompt()
                     .name("VehiclesSelect")
-                    .message("Enter the Vehicle ID you would like Edit")
-                    .defaultValue("1")
+                    .message("Enter the Vehicle Name you would like Edit: ")
+                    .defaultValue("Honda")
                     .addPrompt();
             HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
             InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
-            int selectedVehicleId = Integer.parseInt(vehiclesInput.getInput().trim());
+            String selectedVehicleName = vehiclesInput.getInput().trim();
+            Vehicle selectedVehicle = null;
 
-            // Check if the selectedVehicleId is within the valid range.
-            if (selectedVehicleId >= 1 && selectedVehicleId <= vehiclesInPort.size()) {
-                // Iterate through the list to find the selected vehicle.
-                Vehicle selectedVehicle = null;
                 for (Vehicle vehicle : vehiclesInPort) {
-                    if (vehicle instanceof Truck && ((Truck) vehicle).getTNumber() == selectedVehicleId) {
-                        selectedVehicle = vehicle;
-                        PMVehiclesUtils.edit(selectedVehicle);
-                        break;
-                    } else if (vehicle instanceof Ship && ((Ship) vehicle).getSNumber() == selectedVehicleId) {
+                    if (vehicle instanceof Truck && vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
                         selectedVehicle = vehicle;
                         PMVehiclesUtils.edit(selectedVehicle);
                         break;
                     }
                 }
-
-                if (selectedVehicle != null) {
-                    PMVehiclesUtils.edit(selectedVehicle);
-                } else {
-                    System.out.println("The selected vehicle no longer exists.");
+                if (selectedVehicle == null) {
+                    System.out.println(ansi().fg(Ansi.Color.RED).render("Vehicle not found"));
                 }
-            } else {
-                System.out.println("Invalid vehicle ID. Please enter a valid ID.");
-            }
             // May have to add more code here for menu logic
         } catch (IOException e) {
             e.printStackTrace();
