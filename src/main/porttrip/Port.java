@@ -143,17 +143,7 @@ public class Port implements Serializable, PortOperations {
 
 	@Override
 	public String toString() {
-		return "Port{" +
-				"pNumber=" + pNumber +
-				", name='" + name + '\'' +
-				", landingAbility=" + landingAbility +
-				", latitude=" + latitude +
-				", longitude=" + longitude +
-				", storingCapacity=" + storingCapacity +
-				 ", traffic=" + traffic +
-				 ", containers=" + containers +
-				 ", vehicles=" + vehicles +
-				'}';
+		return name;
 	}
 
 	public double distanceTo(Port otherPort) {

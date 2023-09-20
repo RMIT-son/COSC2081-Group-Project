@@ -3,7 +3,11 @@ package main.container;
 import main.porttrip.Port;
 import main.vehicle.Vehicle;
 
-import java.io.Serializable;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 public class Container implements Serializable {
 	protected int cNumber;
@@ -13,6 +17,7 @@ public class Container implements Serializable {
 	protected Vehicle currentVehicle;
 
 	protected Port currentPort;
+	private final String FILENAME = "resources/container.obj";
 
 	public enum ContainerState{
 		AtPort,
@@ -98,16 +103,65 @@ public class Container implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Container{" +
-				"cNumber=" + cNumber +
-				", weight=" + weight +
-				", requiredFuel=" + requiredFuel +
-				'}';
+		return Integer.toString(cNumber);
 	}
 
 	public double calculateFuel(Vehicle vehicle, double distance) {
 		return 0;
 	}
 
+
+	//CRUD
+
+	//Create
+	public void createContainer(Container container){
+		List<Container> containers = readContainer();
+		containers.add(container);
+		saveContainer(containers);
+	}
+	// save
+	public void saveContainer(Collection<Container> containers) {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
+			oos.writeObject(containers);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	//Read
+	public List<Container> readContainer() {
+		try {
+			FileInputStream fileIn = new FileInputStream(FILENAME);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			List<Container> containers = (List<Container>) in.readObject();
+			in.close();
+			fileIn.close();
+			return containers;
+		} catch (IOException i) {
+			return new ArrayList<>();
+		} catch (ClassNotFoundException c) {
+			System.out.println("Container class not found");
+			return new ArrayList<>();
+		}
+	}
+
+	// Update
+	public void updateContainer(Container updatedContainer) {
+		List<Container> containers = readContainer();
+		for (int i = 0; i < containers.size(); i++) {
+			if (Objects.equals(containers.get(i).getCNumber(), updatedContainer.getCNumber())) {
+				containers.set(i, updatedContainer);
+				break;
+			}
+		}
+		saveContainer(containers);
+	}
+
+
+	//Delete
+	public void deleteContainer(Container deletedContainer) {
+		List<Container> containers = readContainer();
+		containers.removeIf(container -> Objects.equals(container.getCNumber(), deletedContainer.getCNumber()));
+		saveContainer(containers);
+	}
 
 }
