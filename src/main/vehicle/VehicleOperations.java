@@ -25,7 +25,7 @@ public interface VehicleOperations {
 
     List<Vehicle> readVehicle();
 
-    void updatePort(Vehicle updatedVehicle);
+    void updateVehicle(Vehicle updatedVehicle);
 
     void deleteVehicle(Vehicle deletedVehicle);
 
