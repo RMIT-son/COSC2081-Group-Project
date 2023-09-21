@@ -191,7 +191,7 @@ public class Trip implements Serializable {
 			for (Container c : vehicle.getContainers()) {
 				c.setState(Container.ContainerState.Neither);
 			}
-			departurePort.removeVehicle(vehicle); // Remove the vehicle from the current port's list of vehicles
+//			departurePort.removeVehicle(vehicle); // Remove the vehicle from the current port's list of vehicles
 			System.out.println(vehicle.getName() + " is currently in transit...");
 		}
 
@@ -201,7 +201,7 @@ public class Trip implements Serializable {
 			for (Container c : vehicle.getContainers()) {
 				c.setState(Container.ContainerState.AtPort);
 			}
-			arrivalPort.addVehicle(vehicle);  // Add the vehicle to the arrival port's list of vehicles
+//			arrivalPort.addVehicle(vehicle);  // Add the vehicle to the arrival port's list of vehicles
 			setStatus("Completed");
 			System.out.println(vehicle.getName() + " has completed its trip and arrived at " + arrivalPort.getName() + " on " + arrivalDate);
 		}

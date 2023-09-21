@@ -28,7 +28,7 @@ public class AdminInterface {
         portsMenuState = true;
         while (portsMenuState) {
 	        try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Ports CRUD Admin Menu"));
+                System.out.println(ansi().fg(Ansi.Color.RED).render("Ports CRUD Admin Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
@@ -48,7 +48,7 @@ public class AdminInterface {
                         break;
                     case "Edit":
                         System.out.println("Edit a Port has been chosen");
-                        AdminPortUtils.edit();
+                        AdminPortUtils.editChoose();
                         break;
                     case "Delete":
                         System.out.println("Delete a Port has been chosen");
@@ -122,7 +122,7 @@ public class AdminInterface {
         containersMenuState = true;
         while (containersMenuState) {
             try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Containers CRUD Admin Menu"));
+                System.out.println(ansi().fg(Ansi.Color.RED).render("Containers CRUD Admin Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
@@ -169,7 +169,7 @@ public class AdminInterface {
         tripsMenuState = true;
         while (tripsMenuState) {
             try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Trips Admin Menu"));
+                System.out.println(ansi().fg(Ansi.Color.RED).render("Trips Admin Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
@@ -217,7 +217,7 @@ public class AdminInterface {
         usersMenuState = true;
         while (usersMenuState) {
             try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Users CRUD Admin Menu"));
+                System.out.println(ansi().fg(Ansi.Color.RED).render("Users CRUD Admin Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
@@ -265,7 +265,7 @@ public class AdminInterface {
         statMenuState = true;
         while (statMenuState) {
             try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Statistics Admin Menu"));
+                System.out.println(ansi().fg(Ansi.Color.RED).render("Statistics Admin Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
