@@ -40,10 +40,11 @@ public class tableTest {
 		));
 
 		ArrayList<Container> containers1 = new ArrayList<>(Arrays.asList(
-				new Container(1, 12, 29),
-				new Container(2, 12, 29),
-				new Container(3, 12, 29),
-				new Container(4, 12, 29)
+
+				new Container(1, 12, 29, null, null, null),
+				new Container(2, 12, 29, null, null, null),
+				new Container(3, 12, 29, null, null, null),
+				new Container(4, 12, 29, null, null, null)
 		));
 
 		ArrayList<Port> ports = new ArrayList<>(Arrays.asList(
@@ -54,9 +55,9 @@ public class tableTest {
 				new Port(5, "Adelaide", true, -34.928499, 138.600746, 1000000, null, null, vehicles1)
 		));
 
-//		displayUtils.displayPorts(ports);
-//		displayUtils.displayVehicles(vehicles1);
-//		displayUtils.displayContainers(containers1);
+		displayUtils.displayPorts(ports);
+		displayUtils.displayVehicles(vehicles1);
+		displayUtils.displayContainers(containers1);
 		displayUtils.displayTrips(trips1);
 		displayUtils.displayUsers(users);
 	}
