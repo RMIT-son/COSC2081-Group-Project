@@ -45,6 +45,7 @@ public class Container implements Serializable {
 
 	public void setState(ContainerState state) {
 		this.state = state;
+		this.updateContainer();
 	}
 
 
@@ -62,6 +63,7 @@ public class Container implements Serializable {
 		}
 		this.currentVehicle = currentVehicle;
 		this.state = (currentVehicle == null) ? ContainerState.Neither : ContainerState.AtVehicle;
+		this.updateContainer();
 	}
 
 	public Port getCurrentPort() {
@@ -75,6 +77,7 @@ public class Container implements Serializable {
 		}
 		this.currentPort = currentPort;
 		this.state = (currentPort == null) ? ContainerState.Neither : ContainerState.AtPort;
+		this.updateContainer();
 	}
 
 	public int getCNumber() {
@@ -83,6 +86,7 @@ public class Container implements Serializable {
 
 	public void setCNumber(int cNumber) {
 		this.cNumber = cNumber;
+		this.updateContainer();
 	}
 
 	public double getWeight() {
@@ -91,6 +95,7 @@ public class Container implements Serializable {
 
 	public void setWeight(double weight) {
 		this.weight = weight;
+		this.updateContainer();
 	}
 
 	public double getRequiredFuel() {
@@ -99,15 +104,12 @@ public class Container implements Serializable {
 
 	public void setRequiredFuel(double requiredFuel) {
 		this.requiredFuel = requiredFuel;
+		this.updateContainer();
 	}
 
 	@Override
 	public String toString() {
-		return "Container{" +
-				"cNumber=" + cNumber +
-				", weight=" + weight +
-				", requiredFuel=" + requiredFuel +
-				'}';
+		return Integer.toString(cNumber);
 	}
 
 	public double calculateFuel(Vehicle vehicle, double distance) {
@@ -118,9 +120,9 @@ public class Container implements Serializable {
 	//CRUD
 
 	//Create
-	public void createContainer(Container container){
+	public void createContainer(){
 		List<Container> containers = readContainer();
-		containers.add(container);
+		containers.add(this);
 		saveContainer(containers);
 	}
 	// save
@@ -149,11 +151,11 @@ public class Container implements Serializable {
 	}
 
 	// Update
-	public void updateContainer(Container updatedContainer) {
+	public void updateContainer() {
 		List<Container> containers = readContainer();
 		for (int i = 0; i < containers.size(); i++) {
-			if (Objects.equals(containers.get(i).getCNumber(), updatedContainer.getCNumber())) {
-				containers.set(i, updatedContainer);
+			if (Objects.equals(containers.get(i).getCNumber(), this.getCNumber())) {
+				containers.set(i, this);
 				break;
 			}
 		}
@@ -162,9 +164,9 @@ public class Container implements Serializable {
 
 
 	//Delete
-	public void deleteContainer(Container deletedContainer) {
+	public void deleteContainer() {
 		List<Container> containers = readContainer();
-		containers.removeIf(container -> Objects.equals(container.getCNumber(), deletedContainer.getCNumber()));
+		containers.removeIf(container -> Objects.equals(container.getCNumber(), this.getCNumber()));
 		saveContainer(containers);
 	}
 

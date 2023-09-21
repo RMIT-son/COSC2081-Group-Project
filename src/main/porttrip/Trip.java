@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class Trip implements Serializable {
 	protected Vehicle vehicle;
@@ -39,6 +40,7 @@ public class Trip implements Serializable {
 
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
+		this.updateTrip();
 	}
 
 	public LocalDate getDepartureDate() {
@@ -56,6 +58,7 @@ public class Trip implements Serializable {
 
 		this.departureDate = departureDate;
 		this.arrivalDate = arrivalDate;
+		this.updateTrip();
 	}
 
 	public Port getDeparturePort() {
@@ -64,6 +67,7 @@ public class Trip implements Serializable {
 
 	public void setDeparturePort(Port departurePort) {
 		this.departurePort = departurePort;
+		this.updateTrip();
 	}
 
 	public Port getArrivalPort() {
@@ -72,6 +76,7 @@ public class Trip implements Serializable {
 
 	public void setArrivalPort(Port arrivalPort) {
 		this.arrivalPort = arrivalPort;
+		this.updateTrip();
 	}
 
 	public String getStatus() {
@@ -80,18 +85,12 @@ public class Trip implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+		this.updateTrip();
 	}
 
 	@Override
 	public String toString() {
-		return "Trip{" +
-				"vehicle=" + vehicle +
-				", departureDate=" + departureDate +
-				", arrivalDate=" + arrivalDate +
-				", departurePort=" + departurePort +
-				", arrivalPort=" + arrivalPort +
-				", status='" + status + '\'' +
-				'}';
+		return vehicle + " from " + departurePort + " to " + arrivalPort + " on " + departureDate + " to " + arrivalDate;
 	}
 
 	//	Calculates the duration of the trip.
@@ -150,6 +149,63 @@ public class Trip implements Serializable {
 			return result;
 		}
 
+	public void scheduleTrip(Vehicle vehicle, Port departurePort, Port arrivalPort, LocalDate departureDate, LocalDate arrivalDate) {
+
+		// Check if the provided vehicle is currently at the departure port
+		if (vehicle.getCurrentPort() == null || !vehicle.getCurrentPort().equals(departurePort)) {
+			System.out.println("The vehicle is not at the departure port.");
+			return;
+		}
+
+		// Check if the vehicle can move to the arrival port
+		if (!departurePort.canMoveTo(arrivalPort)) {
+			System.out.println("The vehicle cannot move to the destination port.");
+			return;
+		}
+
+		// Check if the total weight of all containers inside the vehicle is loadable at the arrival port
+		if (vehicle.countWeight() + arrivalPort.getCurrentContainerWeightAtPort()> arrivalPort.getStoringCapacity()) {
+			System.out.println("The weight of the vehicle exceeds the destination port's storing capacity.");
+			return;
+		}
+
+		// Update the trip details with provided parameters
+		this.vehicle = vehicle;
+		this.departurePort = departurePort;
+		this.arrivalPort = arrivalPort;
+		this.departureDate = departureDate;
+		this.arrivalDate = arrivalDate;
+
+		LocalDate currentDate = LocalDate.now();
+
+		if (currentDate.isBefore(departureDate)) {
+			System.out.println("The trip is in the future and hasn't started yet.");
+			setStatus("Scheduled");
+			return;
+		}
+
+		if (currentDate.equals(departureDate) || (currentDate.isAfter(departureDate) && currentDate.isBefore(arrivalDate))) {
+			// In transit phase
+			setStatus("In Transit");
+			vehicle.setCurrentPort(null);
+			for (Container c : vehicle.getContainers()) {
+				c.setState(Container.ContainerState.Neither);
+			}
+			departurePort.removeVehicle(vehicle); // Remove the vehicle from the current port's list of vehicles
+			System.out.println(vehicle.getName() + " is currently in transit...");
+		}
+
+		if (currentDate.equals(arrivalDate) || currentDate.isAfter(arrivalDate)) {
+			// Arrival phase
+			vehicle.setCurrentPort(arrivalPort);
+			for (Container c : vehicle.getContainers()) {
+				c.setState(Container.ContainerState.AtPort);
+			}
+			arrivalPort.addVehicle(vehicle);  // Add the vehicle to the arrival port's list of vehicles
+			setStatus("Completed");
+			System.out.println(vehicle.getName() + " has completed its trip and arrived at " + arrivalPort.getName() + " on " + arrivalDate);
+		}
+	}
 
 		// Deletes the history of trips that have been completed for over 7 days
 		public void deleteTripsCompletedAfter7Days() {
@@ -163,9 +219,9 @@ public class Trip implements Serializable {
 		}
 
 		// Create
-		public void createTrip (Trip trip){
+		public void createTrip (){
 			List<Trip> trips = readTrip();
-			trips.add(trip);
+			trips.add(this);
 			saveTrip(trips);
 		}
 
@@ -187,11 +243,11 @@ public class Trip implements Serializable {
 		}
 
 		// Update
-		public void updateTrip (Trip updatedTrip){
+		public void updateTrip (){
 			List<Trip> trips = readTrip();
 			for (int i = 0; i < trips.size(); i++) {
-				if (trips.get(i).getVehicle() == updatedTrip.getVehicle()) {
-					trips.set(i, updatedTrip);
+				if (Objects.equals(trips.get(i).getVehicle(), this.getVehicle())) {
+					trips.set(i, this);
 					break;
 				}
 			}
@@ -199,9 +255,9 @@ public class Trip implements Serializable {
 		}
 
 		// Delete
-		public void deleteTrip (Trip tripToDelete){
+		public void deleteTrip (){
 			List<Trip> trips = readTrip();
-			trips.removeIf(trip -> trip.getVehicle() == tripToDelete.getVehicle());
+			trips.removeIf(trip -> Objects.equals(trip.getVehicle(), this.getVehicle()));
 			saveTrip(trips);
 		}
 
