@@ -11,7 +11,7 @@ public interface PortOperations {
     int getNumberOfContainers();
     int getNumberOfVehicles();
     boolean findContainer(int idNumber);
-    boolean findVehicle(int idNumber);
+    boolean findVehicle(String vname);
     Collection<Container> loadContainerToPort(Container container);
     Collection<Container> unloadContainerFromPort(Container container);
     double distanceTo(Port otherPort);
