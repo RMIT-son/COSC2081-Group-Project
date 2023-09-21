@@ -3,6 +3,7 @@ package main.porttrip;
 import main.container.Liquid;
 import main.container.OpenSide;
 import main.vehicle.Ship;
+import main.vehicle.Truck;
 import main.vehicle.Vehicle;
 import main.container.Container;
 
@@ -169,8 +170,10 @@ public class Port implements Serializable, PortOperations {
 		for (Vehicle v : vehicles) {
 
 			// Checking record by id Number
-			if (v.getId() == idNumber) {
-
+			if (v instanceof Truck && ((Truck) v).getTNumber() == idNumber) {
+				System.out.println(v);
+				return true;
+			} else if (v instanceof Ship && ((Ship) v).getSNumber() == idNumber) {
 				System.out.println(v);
 				return true;
 			}
@@ -225,33 +228,33 @@ public class Port implements Serializable, PortOperations {
 	}
 
 //	Add a vehicle to the port
-	public Collection<Vehicle> addVehicle(Vehicle vehicle) {
-		if (!findVehicle(vehicle.getId())) {
-			this.getVehicles().add(vehicle);
-			this.updatePort();
-		}
-		else {
-			System.out.println("The container already in the port");
-		}
-		return vehicles;
-	}
+//	public Collection<Vehicle> addVehicle(Vehicle vehicle) {
+//		if (!findVehicle(vehicle.getId())) {
+//			this.getVehicles().add(vehicle);
+//			this.updatePort();
+//		}
+//		else {
+//			System.out.println("The container already in the port");
+//		}
+//		return vehicles;
+//	}
 
 //	Remove a vehicle from the port
-	public Collection<Vehicle> removeVehicle(Vehicle vehicle) {
-		for (Vehicle v : vehicles) {
-			if(v.getId() == vehicle.getId()) {
-				vehicle = v;
-			}
-		}
-		if (vehicle != null) {
-			this.getVehicles().remove(vehicle);
-			this.updatePort();
-		}
-		else {
-			System.out.print("Invalid id");
-		}
-		return vehicles;
-	}
+//	public Collection<Vehicle> removeVehicle(Vehicle vehicle) {
+//		for (Vehicle v : vehicles) {
+//			if(v.getId() == vehicle.getId()) {
+//				vehicle = v;
+//			}
+//		}
+//		if (vehicle != null) {
+//			this.getVehicles().remove(vehicle);
+//			this.updatePort();
+//		}
+//		else {
+//			System.out.print("Invalid id");
+//		}
+//		return vehicles;
+//	}
 
 	@Override
 	public String toString() {
