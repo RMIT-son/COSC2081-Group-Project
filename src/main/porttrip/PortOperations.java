@@ -7,14 +7,17 @@ import java.util.Collection;
 
 public interface PortOperations {
 
-    double getCurrentContainerWeight();
+    double getCurrentContainerWeightAtPort();
     int getNumberOfContainers();
     int getNumberOfVehicles();
-    boolean addContainer(Container container);
+    boolean findContainer(int idNumber);
+    boolean findVehicle(int idNumber);
+    Collection<Container> loadContainerToPort(Container container);
+    Collection<Container> unloadContainerFromPort(Container container);
     double distanceTo(Port otherPort);
     boolean canMoveTo(Port otherPort);
-    void createPort(Port port);
+    void createPort();
     Collection<Port> readPort();
-    void updatePort(Port updatedPort);
-    void deletePort(Port portToDelete);
+    void updatePort();
+    void deletePort();
 }
