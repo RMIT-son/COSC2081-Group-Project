@@ -19,6 +19,9 @@ public class Container implements Serializable {
 	protected Port currentPort;
 	private final String FILENAME = "resources/container.obj";
 
+	public Container(int i, int i1, int i2) {
+	}
+
 	public enum ContainerState{
 		AtPort,
 		AtVehicle,

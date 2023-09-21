@@ -162,7 +162,7 @@ public class Port implements Serializable, PortOperations {
 	}
 
 	// Searching vehicle in the port
-	public boolean findVehicle(int idNumber)
+	public boolean findVehicle(String vname)
 	{
 
 		// Iterating record list
@@ -170,12 +170,10 @@ public class Port implements Serializable, PortOperations {
 		for (Vehicle v : vehicles) {
 
 			// Checking record by id Number
-			if (v instanceof Truck && ((Truck) v).getTNumber() == idNumber) {
+			if (Objects.equals(v.getName(), vname)) {
 				System.out.println(v);
 				return true;
-			} else if (v instanceof Ship && ((Ship) v).getSNumber() == idNumber) {
-				System.out.println(v);
-				return true;
+
 			}
 		}
 		return false;
@@ -227,34 +225,34 @@ public class Port implements Serializable, PortOperations {
 		return containers;
 	}
 
-//	Add a vehicle to the port
-//	public Collection<Vehicle> addVehicle(Vehicle vehicle) {
-//		if (!findVehicle(vehicle.getId())) {
-//			this.getVehicles().add(vehicle);
-//			this.updatePort();
-//		}
-//		else {
-//			System.out.println("The container already in the port");
-//		}
-//		return vehicles;
-//	}
 
-//	Remove a vehicle from the port
-//	public Collection<Vehicle> removeVehicle(Vehicle vehicle) {
-//		for (Vehicle v : vehicles) {
-//			if(v.getId() == vehicle.getId()) {
-//				vehicle = v;
-//			}
-//		}
-//		if (vehicle != null) {
-//			this.getVehicles().remove(vehicle);
-//			this.updatePort();
-//		}
-//		else {
-//			System.out.print("Invalid id");
-//		}
-//		return vehicles;
-//	}
+	public Collection<Vehicle> addVehicle(Vehicle vehicle) {
+		if (!findVehicle(vehicle.getName())) {
+			this.getVehicles().add(vehicle);
+			this.updatePort();
+		}
+		else {
+			System.out.println("The container already in the port");
+		}
+		return vehicles;
+	}
+
+
+	public Collection<Vehicle> removeVehicle(Vehicle vehicle) {
+		for (Vehicle v : vehicles) {
+			if(Objects.equals(v.getName(), vehicle.getName())) {
+				vehicle = v;
+			}
+		}
+		if (vehicle != null) {
+			this.getVehicles().remove(vehicle);
+			this.updatePort();
+		}
+		else {
+			System.out.print("Invalid id");
+		}
+		return vehicles;
+	}
 
 	@Override
 	public String toString() {

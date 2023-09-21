@@ -185,6 +185,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 		if (this.checkPortWeightAvailibity(port)){
 			this.setCurrentPort(port);
 			this.updateVehicle();
+
 		}else{
 			System.out.println("Unable to move here");
 		}
