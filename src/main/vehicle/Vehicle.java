@@ -19,13 +19,13 @@ public class Vehicle implements Serializable, VehicleOperations {
 
 	public Vehicle() {}
 
-	public Vehicle(String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
+	public Vehicle(String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort) {
 		this.name = name;
 		this.fuel = fuel;
 		this.fuelCapacity = fuelCapacity;
 		this.carryCapacity = carryCapacity;
 		this.currentPort = currentPort;
-		this.containers = containers;
+		this.containers = new ArrayList<>();
 	}
 
 	public String getName() {
@@ -272,7 +272,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 		port1.setStoringCapacity(1000);  // Assuming setter method.
 
 		// Create a Vehicle
-		Vehicle vehicle1 = new Vehicle("Truck1", 50, 100, 500, port1, new ArrayList<>());
+		Vehicle vehicle1 = new Vehicle("Truck1", 50, 100, 500, port1);
 
 
 		// Testing CRUD operations

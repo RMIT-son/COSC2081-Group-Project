@@ -13,7 +13,7 @@ public class Ship extends Vehicle {
 	}
 
 	public Ship(int sNumber, String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
-		super(name, fuel, fuelCapacity, carryCapacity, currentPort, containers);
+		super(name, fuel, fuelCapacity, carryCapacity, currentPort);
 		this.sNumber = sNumber;
 	}
 
