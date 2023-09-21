@@ -11,7 +11,7 @@ public class Truck extends Vehicle {
 	public Truck() {}
 
 	public Truck(int tNumber, String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
-		super(name, fuel, fuelCapacity, carryCapacity, currentPort, containers);
+		super(name, fuel, fuelCapacity, carryCapacity, currentPort);
 		this.tNumber = tNumber;
 	}
   

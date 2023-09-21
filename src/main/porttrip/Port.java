@@ -29,16 +29,16 @@ public class Port implements Serializable, PortOperations {
 	public Port() {
 	}
 
-	public Port(int pNumber, String name, boolean landingAbility, double latitude, double longitude, double storingCapacity, Collection<Trip> traffic, Collection<Container> containers, Collection<Vehicle> vehicles) {
+	public Port(int pNumber, String name, boolean landingAbility, double latitude, double longitude, double storingCapacity) {
 		this.pNumber = pNumber;
 		this.name = name;
 		this.landingAbility = landingAbility;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.storingCapacity = storingCapacity;
-		this.traffic = traffic;
-		this.containers = containers;
-		this.vehicles = vehicles;
+		this.traffic = new ArrayList<>();
+		this.containers = new ArrayList<>();
+		this.vehicles = new ArrayList<>();
 	}
 
 	public int getPNumber() {
@@ -360,8 +360,8 @@ public class Port implements Serializable, PortOperations {
 			Collection<Container> shipContainers = new ArrayList<>();
 
 		// Creating some test data
-		Port port1 = new Port(1, "PortA", true, 34.0522, -118.2437, 5000, new ArrayList<>(), shipContainers, new ArrayList<>());
-		Port port2 = new Port(2, "PortB", true, 36.7783, -119.4179, 5500, new ArrayList<>(), shipContainers, new ArrayList<>());
+		Port port1 = new Port(1, "PortA", true, 34.0522, -118.2437, 5000);
+		Port port2 = new Port(2, "PortB", true, 36.7783, -119.4179, 5500);
 
 		Vehicle vehicle1 = new Ship(5, "Cargo Ship", 3000, 5000, 2000, port1, shipContainers);
 		Vehicle vehicle2 = new Vehicle("Truck2", 100, 200, 300, port2, shipContainers);

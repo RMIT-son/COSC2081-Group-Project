@@ -39,7 +39,7 @@ public class Interface {
 
 
 		// temp for testing for prototyping
-		Port port = new Port(1, "Hamburg", true, 53.551086, 9.993682, 1000000, null, null, null);
+		Port port = new Port(1, "Hamburg", true, 53.551086, 9.993682, 1000000);
 		User mana = new PortManager("manager", "pwd12345", port);
 		User admin = new SystemAdmin("admin", "pwd12345");
 		ArrayList<User> users = new ArrayList<>();
