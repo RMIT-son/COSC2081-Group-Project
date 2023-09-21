@@ -23,7 +23,7 @@ public interface VehicleOperations {
 
     void saveVechicle(Collection<Vehicle> vehicles);
 
-    List<Vehicle> readVehicle();
+
 
     void updateVehicle();
 

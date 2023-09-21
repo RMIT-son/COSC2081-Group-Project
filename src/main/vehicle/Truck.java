@@ -3,6 +3,7 @@ package main.vehicle;
 import main.container.Container;
 import main.porttrip.Port;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Truck extends Vehicle {
@@ -10,9 +11,10 @@ public class Truck extends Vehicle {
 
 	public Truck() {}
 
-	public Truck(int tNumber, String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
+	public Truck(int tNumber, String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort) {
 		super(name, fuel, fuelCapacity, carryCapacity, currentPort);
 		this.tNumber = tNumber;
+		this.containers = new ArrayList<>();
 	}
   
 	public int getTNumber() {

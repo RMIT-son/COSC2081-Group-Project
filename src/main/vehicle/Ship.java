@@ -3,6 +3,7 @@ package main.vehicle;
 import main.container.Container;
 import main.porttrip.Port;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Ship extends Vehicle {
@@ -12,9 +13,10 @@ public class Ship extends Vehicle {
 		super();
 	}
 
-	public Ship(int sNumber, String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
+	public Ship(int sNumber, String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort ) {
 		super(name, fuel, fuelCapacity, carryCapacity, currentPort);
 		this.sNumber = sNumber;
+		this.containers = new ArrayList<>();
 	}
 
 	public int getSNumber() {

@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public class ReeferTruck extends Truck implements carryAble {
 	public ReeferTruck(int tNumber, String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort, Collection<Container> containers) {
-		super(tNumber, name, fuel, fuelCapacity, carryCapacity, currentPort, containers);
+		super(tNumber, name, fuel, fuelCapacity, carryCapacity, currentPort);
 	}
 	@Override
 	public boolean carryAble(Container container) {

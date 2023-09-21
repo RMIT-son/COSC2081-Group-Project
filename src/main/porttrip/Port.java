@@ -329,82 +329,82 @@ public class Port implements Serializable, PortOperations {
 		} catch (IOException i) {
 			i.printStackTrace();
 		}
-	}
+	}}
 
-	public static void main(String[] args) {
-		// Creating instance of the CRUD class
-		Port portCRUD = new Port();
+// 	//public static void main(String[] args) {
+// 		// Creating instance of the CRUD class
+// 		Port portCRUD = new Port();
 
-		// Testing Create
-//		portCRUD.createPort(port1);
-//		portCRUD.createPort(port2);
-//
-//		// Testing Read
-		List<Port> ports = portCRUD.readPort();
-//		for (Port port : ports) {
-//			System.out.println(port);
-//		}
-//
-//		// Updating port1's name and then saving it
-//		port1.setStoringCapacity(6000);
-//		portCRUD.updatePort(port1);
-//
-//		// Testing if the name got updated
-//		ports = portCRUD.readPort();
-//		for (Port port : ports) {
-//			System.out.println(port);
-//		}
+// 		// Testing Create
+// //		portCRUD.createPort(port1);
+// //		portCRUD.createPort(port2);
+// //
+// //		// Testing Read
+// 		List<Port> ports = portCRUD.readPort();
+// //		for (Port port : ports) {
+// //			System.out.println(port);
+// //		}
+// //
+// //		// Updating port1's name and then saving it
+// //		port1.setStoringCapacity(6000);
+// //		portCRUD.updatePort(port1);
+// //
+// //		// Testing if the name got updated
+// //		ports = portCRUD.readPort();
+// //		for (Port port : ports) {
+// //			System.out.println(port);
+// //		}
 
 
-		// Let's assume you also have a Vehicle class with a default constructor
-			Collection<Container> shipContainers = new ArrayList<>();
+// 		// Let's assume you also have a Vehicle class with a default constructor
+// 			Collection<Container> shipContainers = new ArrayList<>();
 
-		// Creating some test data
-		Port port1 = new Port(1, "PortA", true, 34.0522, -118.2437, 5000);
-		Port port2 = new Port(2, "PortB", true, 36.7783, -119.4179, 5500);
+// 		// Creating some test data
+// 		Port port1 = new Port(1, "PortA", true, 34.0522, -118.2437, 5000);
+// 		Port port2 = new Port(2, "PortB", true, 36.7783, -119.4179, 5500);
 
-		Vehicle vehicle1 = new Ship(5, "Cargo Ship", 3000, 5000, 2000, port1, shipContainers);
-		Vehicle vehicle2 = new Vehicle("Truck2", 100, 200, 300, port2, shipContainers);
-		// Creating Container instances
-		Container container1 = new Liquid(101, 1000, 50, vehicle1, port1, Container.ContainerState.Neither);
-		Container container2 = new OpenSide(102, 1500, 75, vehicle2, port2, Container.ContainerState.Neither);
-			shipContainers.add(container1);
+// 		Vehicle vehicle1 = new Ship(5, "Cargo Ship", 3000, 5000, 2000, port1, shipContainers);
+// 		Vehicle vehicle2 = new Vehicle("Truck2", 100, 200, 300);
+// 		// Creating Container instances
+// 		Container container1 = new Liquid(101, 1000, 50, vehicle1, port1, Container.ContainerState.Neither);
+// 		Container container2 = new OpenSide(102, 1500, 75, vehicle2, port2, Container.ContainerState.Neither);
+// 			shipContainers.add(container1);
 
-		// Test adding containers
-		portCRUD.loadContainerToPort(container1);
-		portCRUD.unloadContainerFromPort(container2);
+// 		// Test adding containers
+// 		portCRUD.loadContainerToPort(container1);
+// 		portCRUD.unloadContainerFromPort(container2);
 
-//		// Test getting current container weight
-//		System.out.println("Current weight of containers in port1: " + port2.getCurrentContainerWeight());
-//
-//		// Test getNumberOfContainers
-//		System.out.println("Number of containers in port1: " + port2.getNumberOfContainers());
+// //		// Test getting current container weight
+// //		System.out.println("Current weight of containers in port1: " + port2.getCurrentContainerWeight());
+// //
+// //		// Test getNumberOfContainers
+// //		System.out.println("Number of containers in port1: " + port2.getNumberOfContainers());
 
-		port2.getVehicles().add(vehicle1);
-		port2.getVehicles().add(vehicle2);
+// 		port2.getVehicles().add(vehicle1);
+// 		port2.getVehicles().add(vehicle2);
 
-		for (Port port : ports) {
-			System.out.println(port);
-		}
+// 		for (Port port : ports) {
+// 			System.out.println(port);
+// 		}
 
-//		// Test getNumberOfVehicles
-//		System.out.println("Number of vehicles in port1: " + port2.getNumberOfVehicles());
-//
-//		// Test distanceTo
-//		System.out.println("Distance from port1 to port2: " + port2.distanceTo(port1) + " km");
-//
-//		// Test canMoveTo
-//		System.out.println("Can move from port1 to port2: " + port2.canMoveTo(port1));
+// //		// Test getNumberOfVehicles
+// //		System.out.println("Number of vehicles in port1: " + port2.getNumberOfVehicles());
+// //
+// //		// Test distanceTo
+// //		System.out.println("Distance from port1 to port2: " + port2.distanceTo(port1) + " km");
+// //
+// //		// Test canMoveTo
+// //		System.out.println("Can move from port1 to port2: " + port2.canMoveTo(port1));
 
-		// Testing Delete
-		ports = portCRUD.readPort();
-		for (Port port : ports) {
-			portCRUD.deletePort();
-		}
+// 		// Testing Delete
+// 		ports = portCRUD.readPort();
+// 		for (Port port : ports) {
+// 			portCRUD.deletePort();
+// 		}
 
-		ports = portCRUD.readPort();
-		for (Port port : ports) {
-			System.out.println(port);
-		}
-	}
-}
+// 		ports = portCRUD.readPort();
+// 		for (Port port : ports) {
+// 			System.out.println(port);
+// 		}
+// 	}
+// }
