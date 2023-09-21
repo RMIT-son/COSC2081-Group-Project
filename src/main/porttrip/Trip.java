@@ -40,6 +40,7 @@ public class Trip implements Serializable {
 
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
+		this.updateTrip();
 	}
 
 	public LocalDate getDepartureDate() {
@@ -57,6 +58,7 @@ public class Trip implements Serializable {
 
 		this.departureDate = departureDate;
 		this.arrivalDate = arrivalDate;
+		this.updateTrip();
 	}
 
 	public Port getDeparturePort() {
@@ -65,6 +67,7 @@ public class Trip implements Serializable {
 
 	public void setDeparturePort(Port departurePort) {
 		this.departurePort = departurePort;
+		this.updateTrip();
 	}
 
 	public Port getArrivalPort() {
@@ -73,6 +76,7 @@ public class Trip implements Serializable {
 
 	public void setArrivalPort(Port arrivalPort) {
 		this.arrivalPort = arrivalPort;
+		this.updateTrip();
 	}
 
 	public String getStatus() {
@@ -81,18 +85,12 @@ public class Trip implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+		this.updateTrip();
 	}
 
 	@Override
 	public String toString() {
-		return "Trip{" +
-				"vehicle=" + vehicle +
-				", departureDate=" + departureDate +
-				", arrivalDate=" + arrivalDate +
-				", departurePort=" + departurePort +
-				", arrivalPort=" + arrivalPort +
-				", status='" + status + '\'' +
-				'}';
+		return vehicle + " from " + departurePort + " to " + arrivalPort + " on " + departureDate + " to " + arrivalDate;
 	}
 
 	//	Calculates the duration of the trip.
