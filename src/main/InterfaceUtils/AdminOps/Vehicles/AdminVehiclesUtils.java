@@ -1,8 +1,61 @@
 package main.InterfaceUtils.AdminOps.Vehicles;
 
+import de.codeshelf.consoleui.elements.ConfirmChoice;
+import de.codeshelf.consoleui.prompt.*;
+import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
+import jline.TerminalFactory;
+import main.porttrip.Port;
+import org.fusesource.jansi.Ansi;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import static main.InterfaceUtils.AdminOps.Vehicles.CreateMenus.*;
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class AdminVehiclesUtils {
-	public static void create() {
+	public static void create() throws IOException {
 		// TODO implement create vehicle interface
+		try {
+			// Create Vehicle Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Create Vehicle"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Step 1 of 3"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createListPrompt()
+					.name("Type")
+					.message("Select Vehicle Type: ")
+					.newItem("Basic").text("Basic Truck").add()
+					.newItem("Reefer").text("Reefer Truck").add()
+					.newItem("Tanker").text("Tanker Truck").add()
+					.newItem("Ship").text("Ship").add()
+					.newItem("Back").text("Back").add()
+					.addPrompt();
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			ListResult typeResult = (ListResult) result.get("Type");
+			switch (typeResult.getSelectedId()) {
+				case "Basic":
+					basicMenu();
+					break;
+				case "Reefer":
+					reeferMenu();
+					break;
+				case "Tanker":
+					tankerMenu();
+					break;
+				case "Ship":
+					shipMenu();
+					break;
+				case "Back":
+					break;
+			}
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void edit() {

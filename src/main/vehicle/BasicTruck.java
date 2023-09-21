@@ -13,6 +13,7 @@ public class BasicTruck extends Truck implements carryAble {
 	public BasicTruck(int tNumber, String name, double fuel, double fuelCapacity, double carryCapacity, Port currentPort) {
 		super(tNumber, name, fuel, fuelCapacity, carryCapacity, currentPort);
 		this.containers = new ArrayList<>();
+
 	}
 
 	@Override
