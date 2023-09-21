@@ -37,7 +37,6 @@ public class Interface {
 		System.out.println(ansi().fg(Ansi.Color.CYAN).eraseScreen().render(PMS + "Ver 1.0.0"));
 		System.out.println(ansi().render("Please login to continue"));
 
-
 		// temp for testing for prototyping
 		Port port = new Port(1, "Hamburg", true, 53.551086, 9.993682, 1000000);
 		User mana = new PortManager("manager", "pwd12345", port);
@@ -45,7 +44,6 @@ public class Interface {
 		ArrayList<User> users = new ArrayList<>();
 		users.add(mana);
 		users.add(admin);
-
 
 		// LOGIN
 		while (true) {
