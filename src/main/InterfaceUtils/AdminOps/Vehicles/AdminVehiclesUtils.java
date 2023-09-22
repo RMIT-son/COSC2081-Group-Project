@@ -13,19 +13,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static main.InterfaceUtils.AdminOps.Vehicles.CreateMenus.*;
+import static main.InterfaceUtils.AdminOps.Vehicles.CreateVehicles.*;
 import static main.vehicle.Vehicle.readVehicle;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class AdminVehiclesUtils {
-	static boolean viewMenuSwitch = true;
-
 	public static void  view() throws IOException {
+		boolean viewMenuSwitch = true;
 		ArrayList<Vehicle> viewVehiclesList = (ArrayList<Vehicle>) readVehicle();
 		while (viewMenuSwitch) {
 			try {
 				// View Vehicle Menu Setup
-				System.out.println(ansi().fg(Ansi.Color.RED).render("View Vehicles"));
 				displayUtils.displayVehicles(viewVehiclesList);
 				ConsolePrompt prompt = new ConsolePrompt();
 				PromptBuilder promptBuilder = prompt.getPromptBuilder();
@@ -107,7 +105,6 @@ public class AdminVehiclesUtils {
 			promptBuilder.createInputPrompt()
 					.name("VehiclesSelect")
 					.message("Enter the Vehicle Name you would like Edit: ")
-					.defaultValue("Honda")
 					.addPrompt();
 
 			// Initialize Variables
@@ -131,6 +128,8 @@ public class AdminVehiclesUtils {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null input."));
 		} finally {
 			try {
 				TerminalFactory.get().restore();

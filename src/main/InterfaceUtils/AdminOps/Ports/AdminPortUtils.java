@@ -22,14 +22,12 @@ import static main.porttrip.Port.readPort;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class AdminPortUtils {
-	static boolean viewMenuSwitch = true;
-
 	public static void view() throws IOException {
+		boolean viewMenuSwitch = true;
 		ArrayList<Port> viewPortsList = (ArrayList<Port>) readPort();
 		while (viewMenuSwitch) {
 			try {
 				// View Vehicle Menu Setup
-				System.out.println(ansi().fg(Ansi.Color.RED).render("View Ports"));
 				displayUtils.displayPorts(viewPortsList);
 				ConsolePrompt prompt = new ConsolePrompt();
 				PromptBuilder promptBuilder = prompt.getPromptBuilder();
@@ -130,7 +128,6 @@ public class AdminPortUtils {
 			promptBuilder.createInputPrompt()
 					.name("PortsSelect")
 					.message("Enter the Port Name you would like Edit: ")
-					.defaultValue("Hamburg")
 					.addPrompt();
 
 			// Initialize Variables
@@ -155,6 +152,8 @@ public class AdminPortUtils {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null input."));
 		} finally {
 			try {
 				TerminalFactory.get().restore();
@@ -179,7 +178,6 @@ public class AdminPortUtils {
 			promptBuilder.createInputPrompt()
 					.name("PortsSelect")
 					.message("Enter the Port Name you would like Edit: ")
-					.defaultValue("Hamburg")
 					.addPrompt();
 
 			// Initialize Variables

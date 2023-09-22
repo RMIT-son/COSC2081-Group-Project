@@ -19,8 +19,8 @@ public class DryStorage extends Container {
         super();
     }
 
-    public DryStorage(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort, ContainerState state) {
-        super(cNumber, weight, requiredFuel, currentVehicle, currentPort, state);
+    public DryStorage(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort) {
+        super(cNumber, weight, requiredFuel, currentVehicle, currentPort);
     }
 
     @Override

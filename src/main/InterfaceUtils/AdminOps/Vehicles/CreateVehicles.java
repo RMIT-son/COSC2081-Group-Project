@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
-public class CreateMenus {
+public class CreateVehicles {
 	public static void basicMenu() throws IOException {
 		try {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Create Basic Truck"));
@@ -77,7 +77,6 @@ public class CreateMenus {
 
 
 	public static void reeferMenu() throws IOException {
-		// TODO implement reefer vehicle menu
 		try {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Create Reefer Truck"));
 			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
@@ -137,7 +136,6 @@ public class CreateMenus {
 	}
 
 	public static void tankerMenu() throws IOException {
-		// TODO implement tanker vehicle menu
 		try {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Create Tanker Truck"));
 			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));

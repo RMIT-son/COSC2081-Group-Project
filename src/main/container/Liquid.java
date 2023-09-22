@@ -20,8 +20,8 @@ public class Liquid extends Container {
         super();
     }
 
-    public Liquid(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort, ContainerState state) {
-        super(cNumber, weight, requiredFuel, currentVehicle, currentPort, state);
+    public Liquid(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort) {
+        super(cNumber, weight, requiredFuel, currentVehicle, currentPort);
     }
 
     @Override

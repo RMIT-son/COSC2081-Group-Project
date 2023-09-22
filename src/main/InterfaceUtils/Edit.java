@@ -8,8 +8,10 @@ import de.codeshelf.consoleui.prompt.PromtResultItemIF;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
 import main.InterfaceUtils.PortManagerOps.Vehicles.PMVehiclesUtils;
+import main.Users.User;
 import main.container.Container;
 import main.porttrip.Port;
+import main.porttrip.Trip;
 import main.vehicle.Ship;
 import main.vehicle.TankerTruck;
 import main.vehicle.Truck;
@@ -167,6 +169,14 @@ public class Edit {
 	}
 
 	public static void editContainer(Container container) {
+		//TODO implement editContainer
+	}
 
+	public static void editTrip(Trip trip) {
+		//TODO implement editTrip
+	}
+
+	public static void editUser(User user) {
+		//TODO implement editUser
 	}
 }

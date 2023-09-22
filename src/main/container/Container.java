@@ -25,17 +25,17 @@ public class Container implements Serializable {
 
 	}
 
-	protected  ContainerState state = ContainerState.Neither;
+	protected ContainerState state;
 
 	public Container() {}
 
-	public Container(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort, ContainerState state) {
+	public Container(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort) {
 		this.cNumber = cNumber;
 		this.weight = weight;
 		this.requiredFuel = requiredFuel;
 		this.currentVehicle = currentVehicle;
 		this.currentPort = currentPort;
-		this.state = state;
+		state = ContainerState.Neither;
 	}
 
 	public ContainerState getState() {

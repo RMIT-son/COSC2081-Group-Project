@@ -20,8 +20,8 @@ public class OpenTop extends Container {
     public OpenTop() {
     }
 
-    public OpenTop(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort, ContainerState state) {
-        super(cNumber, weight, requiredFuel, currentVehicle, currentPort, state);
+    public OpenTop(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort) {
+        super(cNumber, weight, requiredFuel, currentVehicle, currentPort);
     }
 
     @Override
