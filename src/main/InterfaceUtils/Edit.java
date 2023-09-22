@@ -8,7 +8,10 @@ import de.codeshelf.consoleui.prompt.PromtResultItemIF;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
 import main.InterfaceUtils.PortManagerOps.Vehicles.PMVehiclesUtils;
+import main.container.Container;
 import main.porttrip.Port;
+import main.vehicle.Ship;
+import main.vehicle.TankerTruck;
 import main.vehicle.Truck;
 import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
@@ -82,6 +85,88 @@ public class Edit {
 		}
 	}
 
-	public static void editVehicle(Vehicle vehicle) {
+	public static void editVehicle(Vehicle vehicle) throws IOException {
+		try {
+			// Edit Vehicle Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Vehicle"));
+			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+
+			// Initialize Vehicle Id
+			String defaultId;
+			if (vehicle instanceof Truck) {
+				defaultId = Integer.toString(((Truck) vehicle).getTNumber());
+			} else if (vehicle instanceof Ship) {
+				defaultId = Integer.toString(((Ship) vehicle).getSNumber());
+			} else {
+				defaultId = "N/A";
+			}
+
+			// Create Prompts
+			promptBuilder.createInputPrompt()
+					.name("Id")
+					.message("Enter new Vehicle Number (int): ")
+					.defaultValue(defaultId)
+					.addPrompt();
+			promptBuilder.createInputPrompt()
+					.name("Name")
+					.message("Enter new Vehicle Name: ")
+					.defaultValue(vehicle.getName())
+					.addPrompt();
+			promptBuilder.createInputPrompt()
+					.name("Fuel")
+					.message("Enter new Current Fuel (double): ")
+					.defaultValue(Double.toString(vehicle.getFuel()))
+					.addPrompt();
+			promptBuilder.createInputPrompt()
+					.name("Fuel Capacity")
+					.message("Enter new Fuel Capacity (double): ")
+					.defaultValue(Double.toString(vehicle.getFuelCapacity()))
+					.addPrompt();
+			promptBuilder.createInputPrompt()
+					.name("Carry Capacity")
+					.message("Enter new Carry Capacity (double): ")
+					.defaultValue(Double.toString(vehicle.getCarryCapacity()))
+					.addPrompt();
+
+			// Initialize Variables
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult idInput = (InputResult) result.get("Id");
+			int id = Integer.parseInt(idInput.getInput().trim());
+			InputResult nameInput = (InputResult) result.get("Name");
+			String vehicleName = nameInput.getInput().trim();
+			InputResult fuelInput = (InputResult) result.get("Fuel");
+			double fuel = Double.parseDouble(fuelInput.getInput().trim());
+			InputResult FCInput = (InputResult) result.get("Fuel Capacity");
+			double fuelCapacity = Double.parseDouble(FCInput.getInput().trim());
+			InputResult CCInput = (InputResult) result.get("Carry Capacity");
+			double carryCapacity = Double.parseDouble(CCInput.getInput().trim());
+
+			// Edit Vehicle
+			if (vehicle instanceof Truck) {
+				((Truck) vehicle).setTNumber(id);
+			} else if (vehicle instanceof Ship) {
+				((Ship) vehicle).setSNumber(id);
+			}
+			vehicle.setName(vehicleName);
+			vehicle.setFuel(fuel);
+			vehicle.setFuelCapacity(fuelCapacity);
+			vehicle.setCarryCapacity(carryCapacity);
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter the correctly specified value type."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null value"));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void editContainer(Container container) {
+
 	}
 }

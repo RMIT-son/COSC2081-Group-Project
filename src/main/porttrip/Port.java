@@ -1,9 +1,5 @@
 package main.porttrip;
 
-import main.container.Liquid;
-import main.container.OpenSide;
-import main.vehicle.Ship;
-import main.vehicle.Truck;
 import main.vehicle.Vehicle;
 import main.container.Container;
 

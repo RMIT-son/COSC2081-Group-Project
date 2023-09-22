@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import static main.porttrip.Port.readPort;
 import static org.fusesource.jansi.Ansi.ansi;
@@ -166,13 +167,11 @@ public class AdminPortUtils {
 
 	public static void delete() {
 		// temp ports for testing
-		ArrayList<Port> ports = new ArrayList<>(Arrays.asList(
-				new Port(1, "Hamburg", true, 53.551086, 9.993682, 1000000))
-		);
+		ArrayList<Port> ports = (ArrayList<Port>) readPort();
 		try {
 			// Delete Port Menu Setup
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Delete Port"));
-			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Vehicles in Port:"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Ports:"));
 			displayUtils.displayPorts(ports);
 			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
 			ConsolePrompt prompt = new ConsolePrompt();
@@ -201,7 +200,7 @@ public class AdminPortUtils {
 			}
 
 			// Delete Port Confirmation
-			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 2 of 2"));
+			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
 			prompt = new ConsolePrompt();
 			promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createConfirmPromp()
@@ -221,6 +220,8 @@ public class AdminPortUtils {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null input."));
 		} finally {
 			try {
 				TerminalFactory.get().restore();

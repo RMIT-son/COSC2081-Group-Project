@@ -6,7 +6,6 @@ import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
 import main.InterfaceUtils.Edit;
 import main.InterfaceUtils.displayUtils;
-import main.porttrip.Port;
 import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
 
@@ -98,7 +97,6 @@ public class AdminVehiclesUtils {
 	}
 
 	public static void edit() {
-		// TODO implement edit vehicle interface
 		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) readVehicle();
 		try {
 			// Edit Vehicle Menu Setup
@@ -118,7 +116,7 @@ public class AdminVehiclesUtils {
 			String selectedVehicleName = vehiclesInput.getInput().trim();
 			Vehicle selectedVehicle = null;
 
-			// Find Port
+			// Find Vehicle
 			for (Vehicle vehicle : vehicles) {
 				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
 					selectedVehicle = vehicle;
@@ -129,7 +127,6 @@ public class AdminVehiclesUtils {
 			if (selectedVehicle == null) {
 				System.out.println(ansi().fg(Ansi.Color.RED).render("Vehicle not found"));
 			}
-			// May have to add more code here for menu logic
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
@@ -144,6 +141,66 @@ public class AdminVehiclesUtils {
 	}
 
 	public static void delete() {
-		// TODO implement delete vehicle interface
+		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) readVehicle();
+		try {
+			// Delete Port Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Delete Vehicle"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Vehicles: "));
+			displayUtils.displayVehicles(vehicles);
+			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("VehiclesSelect")
+					.message("Enter the Vehicle Name you would like Edit: ")
+					.addPrompt();
+
+			// Initialize Variables
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
+			String selectedVehicleName = vehiclesInput.getInput().trim();
+			Vehicle selectedVehicle = null;
+
+			// Find Port
+			for (Vehicle vehicle : vehicles) {
+				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
+					selectedVehicle = vehicle;
+					break;
+				}
+			}
+			if (selectedVehicle == null) {
+				System.out.println(ansi().fg(Ansi.Color.RED).render("Vehicle not found"));
+			}
+
+			// Delete Port Confirmation
+			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
+			prompt = new ConsolePrompt();
+			promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createConfirmPromp()
+					.name("Delete")
+					.message("Are you sure you want to delete this Vehicle?")
+					.defaultValue(ConfirmChoice.ConfirmationValue.YES)
+					.addPrompt();
+			result = prompt.prompt(promptBuilder.build());
+			ConfirmResult confirmResult = (ConfirmResult) result.get("Delete");
+
+			// Delete Port
+			if (confirmResult.getConfirmed() == ConfirmChoice.ConfirmationValue.YES) {
+				assert selectedVehicle != null;
+				selectedVehicle.deleteVehicle();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("Invalid input. Please enter a non-null input."));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

@@ -10,8 +10,8 @@ public interface VehicleOperations {
     boolean find(int idNumber);
     boolean loadableContainer(Container container);
 
-    public void loadContainer(Container container);
-    public void unloadContainer(Container container);
+    void loadContainer(Container container);
+    void unloadContainer(Container container);
     Container findingContainer(Container container);
 
     double countWeight();

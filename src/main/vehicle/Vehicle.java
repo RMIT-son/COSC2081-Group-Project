@@ -86,7 +86,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 
 	public String display() {
 		return null;
-	};
+	}
 
 	@Override
 	public String toString() {

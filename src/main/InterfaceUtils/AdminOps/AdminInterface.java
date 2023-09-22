@@ -10,24 +10,11 @@ import main.InterfaceUtils.AdminOps.Ports.AdminPortUtils;
 import main.InterfaceUtils.AdminOps.Trips.AdminTripsUtils;
 import main.InterfaceUtils.AdminOps.Users.AdminUsersUtils;
 import main.InterfaceUtils.AdminOps.Vehicles.AdminVehiclesUtils;
-import main.InterfaceUtils.displayUtils;
-import main.Users.User;
-import main.container.Container;
-import main.porttrip.Port;
-import main.porttrip.Trip;
-import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
-import static main.Users.User.readUser;
-import static main.container.Container.readContainer;
-import static main.porttrip.Port.readPort;
-import static main.porttrip.Trip.readTrip;
-import static main.vehicle.Vehicle.readVehicle;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class AdminInterface {
