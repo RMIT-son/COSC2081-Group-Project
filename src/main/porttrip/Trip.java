@@ -24,7 +24,7 @@ public class Trip implements Serializable {
 	public Trip() {
 	}
 
-	public Trip(Vehicle vehicle, LocalDate departureDate, LocalDate arrivalDate, Port departurePort, Port arrivalPort, String status) {
+	public Trip(Vehicle vehicle, LocalDate departureDate, LocalDate arrivalDate, Port departurePort, Port arrivalPort) {
 
 		this.vehicle = vehicle;
 		this.departureDate = departureDate;

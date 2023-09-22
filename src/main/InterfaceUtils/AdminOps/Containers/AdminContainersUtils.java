@@ -165,7 +165,7 @@ public class AdminContainersUtils {
 			int selectedContainerId = Integer.parseInt(containersInput.getInput().trim());
 			Container selectedContainer = null;
 
-			// Find Port
+			// Find Container
 			for (Container container : containers) {
 				if (container.getCNumber() == selectedContainerId) {
 					selectedContainer = container;
@@ -188,7 +188,7 @@ public class AdminContainersUtils {
 			result = prompt.prompt(promptBuilder.build());
 			ConfirmResult confirmResult = (ConfirmResult) result.get("Delete");
 
-			// Delete Port
+			// Delete Container
 			if (confirmResult.getConfirmed() == ConfirmChoice.ConfirmationValue.YES) {
 				assert selectedContainer != null;
 				selectedContainer.deleteContainer();

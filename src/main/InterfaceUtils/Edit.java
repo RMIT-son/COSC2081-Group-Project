@@ -7,20 +7,15 @@ import de.codeshelf.consoleui.prompt.InputResult;
 import de.codeshelf.consoleui.prompt.PromtResultItemIF;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
-import main.InterfaceUtils.PortManagerOps.Vehicles.PMVehiclesUtils;
 import main.Users.User;
 import main.container.Container;
-import main.container.DryStorage;
 import main.porttrip.Port;
-import main.porttrip.Trip;
 import main.vehicle.Ship;
-import main.vehicle.TankerTruck;
 import main.vehicle.Truck;
 import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.fusesource.jansi.Ansi.ansi;

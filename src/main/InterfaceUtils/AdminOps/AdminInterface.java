@@ -254,7 +254,7 @@ public class AdminInterface {
                 switch (UResult.getSelectedId()) {
                     case "View":
                         System.out.println("View Users has been chosen");
-                        //TODO AdminUsersUtils.view();
+                        AdminUsersUtils.view();
                         break;
                     case "Create":
                         System.out.println("Create a New User has been chosen");

@@ -34,9 +34,9 @@ public class tableTest {
 		));
 
 		ArrayList<Trip> trips1 = new ArrayList<>(Arrays.asList(
-				new Trip(null, null, null, null, null, null),
-				new Trip(null, null, null, null, null, null),
-				new Trip(null, null, null, null, null, null)
+				new Trip(null, null, null, null, null),
+				new Trip(null, null, null, null, null),
+				new Trip(null, null, null, null, null)
 		));
 
 		ArrayList<Container> containers1 = new ArrayList<>(Arrays.asList(
