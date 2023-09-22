@@ -118,7 +118,7 @@ public class AdminPortUtils {
 			for (Port port : ports) {
 				if (port.getName().equalsIgnoreCase(selectedPortName)) {
 					selectedPort = port;
-					Edit.edit(selectedPort);
+					Edit.editPort(selectedPort);
 					break;
 				}
 			}

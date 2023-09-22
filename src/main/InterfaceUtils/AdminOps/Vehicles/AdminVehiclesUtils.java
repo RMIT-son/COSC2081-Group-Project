@@ -1,10 +1,8 @@
 package main.InterfaceUtils.AdminOps.Vehicles;
 
-import de.codeshelf.consoleui.elements.ConfirmChoice;
 import de.codeshelf.consoleui.prompt.*;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
-import main.porttrip.Port;
 import org.fusesource.jansi.Ansi;
 
 import java.io.IOException;
@@ -15,11 +13,10 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 public class AdminVehiclesUtils {
 	public static void create() throws IOException {
-		// TODO implement create vehicle interface
 		try {
 			// Create Vehicle Menu Setup
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Create Vehicle"));
-			System.out.println(ansi().fg(Ansi.Color.RED).render("Step 1 of 3"));
+			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createListPrompt()
@@ -31,8 +28,12 @@ public class AdminVehiclesUtils {
 					.newItem("Ship").text("Ship").add()
 					.newItem("Back").text("Back").add()
 					.addPrompt();
+
+			// Initialize Variables
 			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
 			ListResult typeResult = (ListResult) result.get("Type");
+
+			// Create Vehicle Menu Switch
 			switch (typeResult.getSelectedId()) {
 				case "Basic":
 					basicMenu();
@@ -60,6 +61,16 @@ public class AdminVehiclesUtils {
 
 	public static void edit() {
 		// TODO implement edit vehicle interface
+		try {
+			// Edit Vehicle Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Vehicle"));
+			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void delete() {

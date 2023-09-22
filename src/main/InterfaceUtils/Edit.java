@@ -7,16 +7,20 @@ import de.codeshelf.consoleui.prompt.InputResult;
 import de.codeshelf.consoleui.prompt.PromtResultItemIF;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
+import main.InterfaceUtils.PortManagerOps.Vehicles.PMVehiclesUtils;
 import main.porttrip.Port;
+import main.vehicle.Truck;
+import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class Edit {
-	public static void edit(Port port) throws IOException {
+	public static void editPort(Port port) throws IOException {
 		try {
 			System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Create Port Menu"));
 			ConsolePrompt prompt = new ConsolePrompt();
@@ -76,5 +80,8 @@ public class Edit {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static void editVehicle(Vehicle vehicle) {
 	}
 }

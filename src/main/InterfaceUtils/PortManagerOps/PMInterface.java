@@ -7,11 +7,14 @@ import de.codeshelf.consoleui.prompt.PromtResultItemIF;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
 import main.InterfaceUtils.AdminOps.Containers.AdminContainersUtils;
+import main.InterfaceUtils.AdminOps.Vehicles.AdminVehiclesUtils;
 import main.InterfaceUtils.PortManagerOps.Containers.PMContainersUtils;
 import main.InterfaceUtils.PortManagerOps.Port.PMPortUtils;
 import main.InterfaceUtils.PortManagerOps.Trips.PMTripsUtils;
 import main.InterfaceUtils.PortManagerOps.Vehicles.PMVehiclesUtils;
+import main.InterfaceUtils.displayUtils;
 import main.Users.PortManager;
+import main.container.Container;
 import main.porttrip.Port;
 import main.vehicle.Ship;
 import main.vehicle.Truck;
@@ -21,14 +24,16 @@ import org.fusesource.jansi.Ansi;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static main.InterfaceUtils.Interface.currentUser;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class PMInterface {
     static PortManager currentPortMana = (PortManager) currentUser;
-    static Port portManaging = currentPortMana.getPortManaging();
+    public static Port portManaging = currentPortMana.getPortManaging();
     public static boolean portMenuState;
+    public static boolean vehiclesMenuState;
     public static boolean containersMenuState;
     public static boolean tripsMenuState;
     public static boolean statMenuState;
@@ -44,6 +49,7 @@ public class PMInterface {
                 promptBuilder.createListPrompt()
                         .name("PortOptions")
                         .message("Which action would you like to do?")
+                        .newItem("View").text("View Port Details").add()
                         .newItem("Name").text("Edit Port Name").add()
                         .newItem("Coords").text("Edit Port Coordinates").add()
                         .newItem("Capacity").text("Edit Storing Capacity").add()
@@ -53,6 +59,10 @@ public class PMInterface {
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult POResult = (ListResult) result.get("PortOptions");
                 switch (POResult.getSelectedId()) {
+                    case "View":
+                        System.out.println("View Port Details has been chosen");
+                        displayUtils.displayPorts(List.of(portManaging));
+                        break;
                     case "Name":
                         System.out.println("Edit Port Name has been chosen");
                         PMPortUtils.editName();
@@ -87,43 +97,45 @@ public class PMInterface {
     }
 
     public static void vehiclesOPS() {
-        ArrayList<Vehicle> vehiclesInPort = (ArrayList<Vehicle>) portManaging.getVehicles();
-        try {
-            System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Vehicle CRUD Manager Menu"));
-            System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Current Vehicles in Port:"));
-            System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Step 1 of 3"));
-            ConsolePrompt prompt = new ConsolePrompt();
-            PromptBuilder promptBuilder = prompt.getPromptBuilder();
-            promptBuilder.createInputPrompt()
-                    .name("VehiclesSelect")
-                    .message("Enter the Vehicle Name you would like Edit: ")
-                    .defaultValue("Honda")
-                    .addPrompt();
-            HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
-            InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
-            String selectedVehicleName = vehiclesInput.getInput().trim();
-            Vehicle selectedVehicle = null;
-
-                for (Vehicle vehicle : vehiclesInPort) {
-                    if (vehicle instanceof Truck && vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
-                        selectedVehicle = vehicle;
-                        PMVehiclesUtils.edit(selectedVehicle);
-                        break;
-                    }
-                }
-                if (selectedVehicle == null) {
-                    System.out.println(ansi().fg(Ansi.Color.RED).render("Vehicle not found"));
-                }
-            // May have to add more code here for menu logic
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Please enter a valid integer ID.");
-        } finally {
+        vehiclesMenuState = true;
+        while (vehiclesMenuState) {
             try {
-                TerminalFactory.get().restore();
-            } catch (Exception e) {
+                System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Vehicles CRUD Admin Menu"));
+                ConsolePrompt prompt = new ConsolePrompt();
+                PromptBuilder promptBuilder = prompt.getPromptBuilder();
+                promptBuilder.createListPrompt()
+                        .name("VehicleOptions")
+                        .message("Which action would you like to do?")
+                        .newItem("View").text("View Vehicles in Port").add()
+                        .newItem("Edit").text("Edit Vehicles").add()
+                        .newItem("Back").text("Back").add()
+                        .addPrompt();
+                HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+                ListResult VResult = (ListResult) result.get("VehicleOptions");
+                switch (VResult.getSelectedId()) {
+                    case "View":
+                        System.out.println("View Vehicles in Port has been chosen");
+                        ArrayList<Vehicle> vehiclesInPort = (ArrayList<Vehicle>) portManaging.getVehicles();
+                        System.out.println(ansi().eraseScreen().fg(Ansi.Color.CYAN).render("Current Vehicles in Port:"));
+                        displayUtils.displayVehicles(vehiclesInPort);
+                        break;
+                    case "Edit":
+                        System.out.println("Edit Vehicles has been chosen");
+                        PMVehiclesUtils.edit();
+                        break;
+                    case "Back":
+                        System.out.println(ansi().render( "Returning to Admin Main Menu..."));
+                        vehiclesMenuState = false;
+                        break;
+                }
+            } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    TerminalFactory.get().restore();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -138,6 +150,7 @@ public class PMInterface {
                 promptBuilder.createListPrompt()
                         .name("ContainerOptions")
                         .message("Which action would you like to do?")
+                        .newItem("View").text("View Containers in Port").add()
                         .newItem("Create").text("Create New Container").add()
                         .newItem("Edit").text("Edit Containers").add()
                         .newItem("Delete").text("Delete a Container").add()
@@ -146,6 +159,12 @@ public class PMInterface {
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult CResult = (ListResult) result.get("ContainerOptions");
                 switch (CResult.getSelectedId()) {
+                    case "View":
+                        System.out.println("View Containers in Port has been chosen");
+                        ArrayList<Container> containersInPort = (ArrayList<Container>) portManaging.getContainers();
+                        System.out.println(ansi().eraseScreen().fg(Ansi.Color.CYAN).render("Current Containers in Port:"));
+                        displayUtils.displayContainers(containersInPort);
+                        break;
                     case "Create":
                         System.out.println("Create a New Container has been chosen");
                         PMContainersUtils.create();

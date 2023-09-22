@@ -15,7 +15,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 	protected Port currentPort;
 	protected Collection<Container> containers;
 
-	private final String FILENAME = "resources/vehicle.obj";
+	private static final String FILENAME = "resources/vehicle.obj";
 
 	public Vehicle() {}
 
@@ -204,14 +204,11 @@ public class Vehicle implements Serializable, VehicleOperations {
 	public int checkConNumb(){
 		return this.getContainers().size();
 	}
-
-
-
-	//CRUD vehicle
+//CRUD vehicle
 
 	//Create vehicle
 	public void createVehicle(){
-		List<Vehicle> vehicles = readVehicle();
+		List<Vehicle> vehicles = readFile();
 		vehicles.add(this);
 		saveVechicle(vehicles);
 	}
@@ -224,7 +221,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 		}
 	}
 	//Read
-	public List<Vehicle> readVehicle() {
+	public static List<Vehicle> readFile() {
 		try {
 			FileInputStream fileIn = new FileInputStream(FILENAME);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -232,6 +229,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 			in.close();
 			fileIn.close();
 			return vehicles;
+
 		} catch (IOException i) {
 			return new ArrayList<>();
 		} catch (ClassNotFoundException c) {
@@ -242,7 +240,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 
 	// Update
 	public void updateVehicle() {
-		List<Vehicle> vehicles = readVehicle();
+		List<Vehicle> vehicles = readFile();
 		for (int i = 0; i < vehicles.size(); i++) {
 			if (Objects.equals(vehicles.get(i).getName(), this.getName())) {
 				vehicles.set(i, this);
@@ -255,11 +253,15 @@ public class Vehicle implements Serializable, VehicleOperations {
 
 	//Delete vehicle
 	public void deleteVehicle() {
-		List<Vehicle> vehicles = readVehicle();
+		List<Vehicle> vehicles = readFile();
 		vehicles.removeIf(vehicle -> Objects.equals(vehicle.getName(), this.getName()));
 		saveVechicle(vehicles);
 	}
 
+	private static List<Vehicle> readVehicle() {
+		List<Vehicle> vehicles = readFile();
+		return vehicles;
+	}
 
 
 
@@ -273,86 +275,18 @@ public class Vehicle implements Serializable, VehicleOperations {
 
 		// Create a Vehicle
 		Vehicle vehicle1 = new Vehicle("Truck1", 50, 100, 500, port1);
-
-
-		// Testing CRUD operations
+		Vehicle vehicle2 = new Vehicle("Truck2", 90, 100, 500, port1);
 
 
 		// CRU[D] operations on Vehicle
 		vehicle1.createVehicle();
-
-		System.out.println("Vehicle created!");
-		displayAllVehicles(vehicle1);
-
-		// Update Vehicle
-		vehicle1.setFuel(90); // For demonstration purposes
-
-
-		// Update: just for demonstration, updating the current port
-		vehicle1.setCurrentPort(new Port());  // Moving to a new port (for the sake of testing).
-		vehicle1.updateVehicle();
-
-		System.out.println("Vehicle updated!");
-		displayAllVehicles(vehicle1);
-
-		// Create Containers and Load them onto Vehicle
-		Container container1 = new Container(1, 100, 5, null, null, Container.ContainerState.Neither);
-		Container container2 = new Container(2, 150, 8, null, null, Container.ContainerState.Neither);
-
-		vehicle1.loadContainer(container1);
-		vehicle1.loadContainer(container2);
-
-
-		System.out.println("Containers loaded!");
-		displayAllVehicles(vehicle1);
-
-		// Unload Container
-		vehicle1.unloadContainer(container2);
-		System.out.println("Container 2 unloaded!");
-		displayAllVehicles(vehicle1);
-
-		// Refuel the Vehicle
-		vehicle1.refuel();
-		System.out.println("Vehicle refueled!");
-		displayAllVehicles(vehicle1);
-
-		// [D]elete Vehicle
+		vehicle2.createVehicle();
+		List<Vehicle> newss = readVehicle();
+		System.out.println(newss);
 		vehicle1.deleteVehicle();
-		System.out.println("Vehicle deleted!");
-		displayAllVehicles(vehicle1);
-
-		System.out.println("Tests completed!");
+		vehicle2.deleteVehicle();
 	}
-
-	private static void displayAllVehicles(Vehicle vehicle) {
-		System.out.println("All vehicles: ");
-		for (Vehicle v : vehicle.readVehicle()) {
-			System.out.println(v);
-		}
-
-		List<Vehicle> readVehicles = vehicle.readVehicle();
-
-		// Display the read vehicles
-		if (readVehicles.isEmpty()) {
-			System.out.println("No vehicles found in the file.");
-		} else {
-			System.out.println("Vehicles read from the file:");
-			for (Vehicle v : readVehicles) {
-				System.out.println(vehicle);
-			}
-
-			// Delete
-			vehicle.deleteVehicle();
-			System.out.println("Vehicle deleted!");
-
-			// Read to verify deletion
-			System.out.println("All vehicles after deletion: ");
-			for (Vehicle v : vehicle.readVehicle()) {
-				System.out.println(v);
-			}
-
-		}
-	}
-
 }
+
+
 
