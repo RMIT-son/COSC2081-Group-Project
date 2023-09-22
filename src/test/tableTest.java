@@ -41,10 +41,10 @@ public class tableTest {
 
 		ArrayList<Container> containers1 = new ArrayList<>(Arrays.asList(
 
-				new Container(1, 12, 29, null, null, null),
-				new Container(2, 12, 29, null, null, null),
-				new Container(3, 12, 29, null, null, null),
-				new Container(4, 12, 29, null, null, null)
+				new Container(1, 12, 29, null, null),
+				new Container(2, 12, 29, null, null),
+				new Container(3, 12, 29, null, null),
+				new Container(4, 12, 29, null, null)
 		));
 
 		ArrayList<Port> ports = new ArrayList<>(Arrays.asList(

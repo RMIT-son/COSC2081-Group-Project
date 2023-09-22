@@ -149,7 +149,7 @@ public class AdminInterface {
                 switch (CResult.getSelectedId()) {
                     case "View":
                         System.out.println("View Containers has been chosen");
-                        //TODO AdminContainersUtils.view()
+                        AdminContainersUtils.view();
                         break;
                     case "Create":
                         System.out.println("Create a New Container has been chosen");

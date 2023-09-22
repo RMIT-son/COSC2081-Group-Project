@@ -1,12 +1,10 @@
 package main.InterfaceUtils.AdminOps.Containers;
 
 import de.codeshelf.consoleui.elements.ConfirmChoice;
-import de.codeshelf.consoleui.prompt.ConfirmResult;
-import de.codeshelf.consoleui.prompt.ConsolePrompt;
-import de.codeshelf.consoleui.prompt.ListResult;
-import de.codeshelf.consoleui.prompt.PromtResultItemIF;
+import de.codeshelf.consoleui.prompt.*;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
+import main.InterfaceUtils.Edit;
 import main.InterfaceUtils.displayUtils;
 import main.container.Container;
 import org.fusesource.jansi.Ansi;
@@ -25,7 +23,7 @@ public class AdminContainersUtils {
 		ArrayList<Container> viewContainersList = (ArrayList<Container>) readContainer();
 		while (viewMenuSwitch) {
 			try {
-				// View Vehicle Menu Setup
+				// View Container Menu Setup
 				displayUtils.displayContainers(viewContainersList);
 				ConsolePrompt prompt = new ConsolePrompt();
 				PromptBuilder promptBuilder = prompt.getPromptBuilder();
@@ -51,7 +49,7 @@ public class AdminContainersUtils {
 	}
 	public static void create() throws IOException {
 		try {
-			// Create Vehicle Menu Setup
+			// Create Containers Menu Setup
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Create Container"));
 			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
 			ConsolePrompt prompt = new ConsolePrompt();
@@ -71,7 +69,7 @@ public class AdminContainersUtils {
 			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
 			ListResult typeResult = (ListResult) result.get("Type");
 
-			// Create Vehicle Menu Switch
+			// Create Containers Menu Switch
 			switch (typeResult.getSelectedId()) {
 				case "Dry":
 					dryMenu();
@@ -101,10 +99,112 @@ public class AdminContainersUtils {
 	}
 
 	public static void edit() {
-		// TODO implement edit container interface
+		ArrayList<Container> containers = (ArrayList<Container>) readContainer();
+		try {
+			// Edit Container Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Container"));
+			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
+			displayUtils.displayContainers(containers);
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("ContainersSelect")
+					.message("Enter the Container ID you would like Edit: ")
+					.addPrompt();
+
+			// Initialize Variables
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult containersInput = (InputResult) result.get("ContainersSelect");
+			int selectedContainerId = Integer.parseInt(containersInput.getInput().trim());
+			Container selectedContainer = null;
+
+			// Find Container
+			for (Container container : containers) {
+				if (container.getCNumber() == selectedContainerId) {
+					selectedContainer = container;
+					Edit.editContainer(selectedContainer);
+					break;
+				}
+			}
+			if (selectedContainer == null) {
+				System.out.println(ansi().fg(Ansi.Color.RED).render("Container not found"));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null input."));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void delete() {
-		// TODO implement delete container interface
+		ArrayList<Container> containers = (ArrayList<Container>) readContainer();
+		try {
+			// Delete Port Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Delete Container"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Containers: "));
+			displayUtils.displayContainers(containers);
+			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("ContainersSelect")
+					.message("Enter the Container Name you would like Edit: ")
+					.addPrompt();
+
+			// Initialize Variables
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult containersInput = (InputResult) result.get("ContainersSelect");
+			int selectedContainerId = Integer.parseInt(containersInput.getInput().trim());
+			Container selectedContainer = null;
+
+			// Find Port
+			for (Container container : containers) {
+				if (container.getCNumber() == selectedContainerId) {
+					selectedContainer = container;
+					break;
+				}
+			}
+			if (selectedContainer == null) {
+				System.out.println(ansi().fg(Ansi.Color.RED).render("Container not found"));
+			}
+
+			// Delete Port Confirmation
+			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
+			prompt = new ConsolePrompt();
+			promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createConfirmPromp()
+					.name("Delete")
+					.message("Are you sure you want to delete this Container?")
+					.defaultValue(ConfirmChoice.ConfirmationValue.YES)
+					.addPrompt();
+			result = prompt.prompt(promptBuilder.build());
+			ConfirmResult confirmResult = (ConfirmResult) result.get("Delete");
+
+			// Delete Port
+			if (confirmResult.getConfirmed() == ConfirmChoice.ConfirmationValue.YES) {
+				assert selectedContainer != null;
+				selectedContainer.deleteContainer();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("Invalid input. Please enter a non-null input."));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

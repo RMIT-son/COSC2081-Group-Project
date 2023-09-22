@@ -10,6 +10,7 @@ import jline.TerminalFactory;
 import main.InterfaceUtils.PortManagerOps.Vehicles.PMVehiclesUtils;
 import main.Users.User;
 import main.container.Container;
+import main.container.DryStorage;
 import main.porttrip.Port;
 import main.porttrip.Trip;
 import main.vehicle.Ship;
@@ -168,8 +169,51 @@ public class Edit {
 		}
 	}
 
-	public static void editContainer(Container container) {
-		//TODO implement editContainer
+	public static void editContainer(Container container) throws IOException {
+		try {
+			// Edit Container Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Container"));
+			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("Id")
+					.message("Enter new Container Number (int): ")
+					.addPrompt();
+			promptBuilder.createInputPrompt()
+					.name("Weight")
+					.message("Enter new Container Weight (double): ")
+					.addPrompt();
+			promptBuilder.createInputPrompt()
+					.name("Fuel")
+					.message("Enter new Container required Fuel (double): ")
+					.addPrompt();
+
+			// Initialize Variables
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult idInput = (InputResult) result.get("Id");
+			int id = Integer.parseInt(idInput.getInput().trim());
+			InputResult weightInput = (InputResult) result.get("Weight");
+			double fuel = Double.parseDouble(weightInput.getInput().trim());
+			InputResult RFInput = (InputResult) result.get("Fuel");
+			double requiredFuel = Double.parseDouble(RFInput.getInput().trim());
+
+			// Edit Vehicle
+			container.setCNumber(id);
+			container.setWeight(fuel);
+			container.setRequiredFuel(requiredFuel);
+
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter the correctly specified value type."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null value"));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void editTrip(Trip trip) {

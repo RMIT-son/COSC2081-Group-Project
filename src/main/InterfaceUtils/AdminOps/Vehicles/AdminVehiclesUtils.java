@@ -100,6 +100,7 @@ public class AdminVehiclesUtils {
 			// Edit Vehicle Menu Setup
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Vehicle"));
 			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
+			displayUtils.displayVehicles(vehicles);
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
