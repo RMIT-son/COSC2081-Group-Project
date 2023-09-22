@@ -17,9 +17,41 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import static main.porttrip.Port.readPort;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class AdminPortUtils {
+	static boolean viewMenuSwitch = true;
+
+	public static void view() throws IOException {
+		ArrayList<Port> viewPortsList = (ArrayList<Port>) readPort();
+		while (viewMenuSwitch) {
+			try {
+				// View Vehicle Menu Setup
+				System.out.println(ansi().fg(Ansi.Color.RED).render("View Ports"));
+				displayUtils.displayPorts(viewPortsList);
+				ConsolePrompt prompt = new ConsolePrompt();
+				PromptBuilder promptBuilder = prompt.getPromptBuilder();
+				promptBuilder.createConfirmPromp()
+						.name("Continue")
+						.message("Continue?")
+						.defaultValue(ConfirmChoice.ConfirmationValue.NO)
+						.addPrompt();
+				HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+				ConfirmResult continueResult = (ConfirmResult) result.get("Continue");
+				boolean cont = continueResult.getConfirmed() == ConfirmChoice.ConfirmationValue.YES;
+				if (!cont) {
+					viewMenuSwitch = false;
+				}
+			} finally {
+				try {
+					TerminalFactory.get().restore();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	public static void create() throws IOException {
 		try {
 			// Create Port Menu Setup
@@ -68,14 +100,6 @@ public class AdminPortUtils {
 			boolean landing = confirmResult.getConfirmed() == ConfirmChoice.ConfirmationValue.YES;
 
 			// Create Port
-			System.out.println("Port{" +
-					"id=" + id +
-					", name='" + portName + '\'' +
-					", landing=" + landing +
-					", lat=" + lat +
-					", lon=" + lon +
-					", store=" + store +
-					'}');
 			Port newPort = new Port(id, portName, landing, lat, lon, store);
 			newPort.createPort();
 		} catch (NumberFormatException e) {
@@ -93,7 +117,7 @@ public class AdminPortUtils {
 
 	public static void editChoose() {
 		// temp ports for testing
-		ArrayList<Port> ports = new ArrayList<>();
+		ArrayList<Port> ports = (ArrayList<Port>) readPort();
 		try {
 			// Edit Port Menu Setup
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Port"));

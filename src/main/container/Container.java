@@ -13,14 +13,10 @@ public class Container implements Serializable {
 	protected int cNumber;
 	protected double weight;
 	protected double requiredFuel;
-
 	protected Vehicle currentVehicle;
 
 	protected Port currentPort;
-	private final String FILENAME = "resources/container.obj";
-
-	public Container(int i, int i1, int i2) {
-	}
+	private static final String FILENAME = "resources/container.obj";
 
 	public enum ContainerState{
 		AtPort,
@@ -137,7 +133,7 @@ public class Container implements Serializable {
 		}
 	}
 	//Read
-	public List<Container> readContainer() {
+	public static List<Container> readContainer() {
 		try {
 			FileInputStream fileIn = new FileInputStream(FILENAME);
 			ObjectInputStream in = new ObjectInputStream(fileIn);

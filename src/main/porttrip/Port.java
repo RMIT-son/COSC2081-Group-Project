@@ -24,7 +24,7 @@ public class Port implements Serializable, PortOperations {
 	protected Collection<Trip> traffic;
 	protected Collection<Container> containers;
 	protected Collection<Vehicle> vehicles;
-	private final String FILENAME = "resources/ports.obj";
+	private static final String FILENAME = "resources/ports.obj";
 
 	public Port() {
 	}
@@ -284,7 +284,7 @@ public class Port implements Serializable, PortOperations {
 	}
 
 	// Read
-	public List<Port> readPort() {
+	public static List<Port> readPort() {
 		try {
 			FileInputStream fileIn = new FileInputStream(FILENAME);
 			ObjectInputStream in = new ObjectInputStream(fileIn);

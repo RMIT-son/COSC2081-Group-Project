@@ -12,7 +12,7 @@ public class User {
 	protected String username;
 	protected String password;
 
-	private final String FILENAME = "resources/user.obj";
+	private static final String FILENAME = "resources/user.obj";
 
 	public User() {
 	}
@@ -59,7 +59,7 @@ public class User {
 		}
 	}
 	//Read
-	public List<User> readUser() {
+	public static List<User> readUser() {
 		try {
 			FileInputStream fileIn = new FileInputStream(FILENAME);
 			ObjectInputStream in = new ObjectInputStream(fileIn);

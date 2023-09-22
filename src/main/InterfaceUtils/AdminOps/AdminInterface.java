@@ -10,11 +10,24 @@ import main.InterfaceUtils.AdminOps.Ports.AdminPortUtils;
 import main.InterfaceUtils.AdminOps.Trips.AdminTripsUtils;
 import main.InterfaceUtils.AdminOps.Users.AdminUsersUtils;
 import main.InterfaceUtils.AdminOps.Vehicles.AdminVehiclesUtils;
+import main.InterfaceUtils.displayUtils;
+import main.Users.User;
+import main.container.Container;
+import main.porttrip.Port;
+import main.porttrip.Trip;
+import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
+import static main.Users.User.readUser;
+import static main.container.Container.readContainer;
+import static main.porttrip.Port.readPort;
+import static main.porttrip.Trip.readTrip;
+import static main.vehicle.Vehicle.readVehicle;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class AdminInterface {
@@ -34,6 +47,7 @@ public class AdminInterface {
                 promptBuilder.createListPrompt()
                         .name("PortOptions")
                         .message("Which action would you like to do?")
+                        .newItem("View").text("View Ports").add()
                         .newItem("Create").text("Create New Port").add()
                         .newItem("Edit").text("Edit a Port").add()
                         .newItem("Delete").text("Delete a Port").add()
@@ -42,6 +56,10 @@ public class AdminInterface {
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult POResult = (ListResult) result.get("PortOptions");
                 switch (POResult.getSelectedId()) {
+                    case "View":
+                        System.out.println("View Ports has been chosen");
+                        AdminPortUtils.view();
+                        break;
                     case "Create":
                         System.out.println("Create a New Port has been chosen");
                         AdminPortUtils.create();
@@ -75,12 +93,13 @@ public class AdminInterface {
         vehiclesMenuState = true;
         while (vehiclesMenuState) {
             try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Vehicles CRUD Admin Menu"));
+                System.out.println(ansi().fg(Ansi.Color.RED).render("Vehicles CRUD Admin Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
                         .name("VehicleOptions")
                         .message("Which action would you like to do?")
+                        .newItem("View").text("View Vehicles").add()
                         .newItem("Create").text("Create New Vehicle").add()
                         .newItem("Edit").text("Edit Vehicles").add()
                         .newItem("Delete").text("Delete a Vehicle").add()
@@ -89,6 +108,10 @@ public class AdminInterface {
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult VResult = (ListResult) result.get("VehicleOptions");
                 switch (VResult.getSelectedId()) {
+                    case "View":
+                        System.out.println("View Vehicles has been chosen");
+                        AdminVehiclesUtils.view();
+                        break;
                     case "Create":
                         System.out.println("Create a New Vehicle has been chosen");
                         AdminVehiclesUtils.create();
@@ -128,6 +151,7 @@ public class AdminInterface {
                 promptBuilder.createListPrompt()
                         .name("ContainerOptions")
                         .message("Which action would you like to do?")
+                        .newItem("View").text("View Containers").add()
                         .newItem("Create").text("Create New Container").add()
                         .newItem("Edit").text("Edit Containers").add()
                         .newItem("Delete").text("Delete a Container").add()
@@ -136,6 +160,10 @@ public class AdminInterface {
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult CResult = (ListResult) result.get("ContainerOptions");
                 switch (CResult.getSelectedId()) {
+                    case "View":
+                        System.out.println("View Containers has been chosen");
+                        //TODO AdminContainersUtils.view()
+                        break;
                     case "Create":
                         System.out.println("Create a New Container has been chosen");
                         AdminContainersUtils.create();
@@ -175,6 +203,7 @@ public class AdminInterface {
                 promptBuilder.createListPrompt()
                         .name("TripsOptions")
                         .message("Which action would you like to do?")
+                        .newItem("View").text("View Trips").add()
                         .newItem("Schedule").text("Schedule New Trip").add()
                         .newItem("Edit").text("Edit Trip History").add()
                         .newItem("Delete").text("Delete a Trip").add()
@@ -183,6 +212,10 @@ public class AdminInterface {
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult TResult = (ListResult) result.get("TripsOptions");
                 switch (TResult.getSelectedId()) {
+                    case "View":
+                        System.out.println("View Trips has been chosen");
+                        //TODO AdminTripsUtils.view();
+                        break;
                     case "Schedule":
                         System.out.println("Schedule a new Trip has been chosen");
                         AdminTripsUtils.schedule();
@@ -223,6 +256,7 @@ public class AdminInterface {
                 promptBuilder.createListPrompt()
                         .name("UsersOptions")
                         .message("Which action would you like to do?")
+                        .newItem("View").text("View Users").add()
                         .newItem("Create").text("Create New User").add()
                         .newItem("Edit").text("Edit Users").add()
                         .newItem("Delete").text("Delete a User").add()
@@ -231,6 +265,10 @@ public class AdminInterface {
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult UResult = (ListResult) result.get("UsersOptions");
                 switch (UResult.getSelectedId()) {
+                    case "View":
+                        System.out.println("View Users has been chosen");
+                        //TODO AdminUsersUtils.view();
+                        break;
                     case "Create":
                         System.out.println("Create a New User has been chosen");
                         AdminUsersUtils.create();

@@ -258,7 +258,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 		saveVechicle(vehicles);
 	}
 
-	private static List<Vehicle> readVehicle() {
+	public static List<Vehicle> readVehicle() {
 		List<Vehicle> vehicles = readFile();
 		return vehicles;
 	}

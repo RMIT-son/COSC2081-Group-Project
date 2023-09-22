@@ -19,7 +19,7 @@ public class Trip implements Serializable {
 	protected Port departurePort;
 	protected Port arrivalPort;
 	protected String status;
-	private final String FILENAME = "resources/trips.obj";
+	private static final String FILENAME = "resources/trips.obj";
 
 	public Trip() {
 	}
@@ -226,7 +226,7 @@ public class Trip implements Serializable {
 		}
 
 		// Read
-		public List<Trip> readTrip () {
+		public static List<Trip> readTrip () {
 			try {
 				FileInputStream fileIn = new FileInputStream(FILENAME);
 				ObjectInputStream in = new ObjectInputStream(fileIn);

@@ -195,6 +195,7 @@ public class PMInterface {
     }
 
     public static void tripsOPS() {
+        // TODO update tripsOPS
         tripsMenuState = true;
         while (tripsMenuState) {
             try {

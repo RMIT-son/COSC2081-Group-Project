@@ -41,7 +41,7 @@ public class CreateMenus {
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Carry Capacity")
-					.message("Enter Longitude (double): ")
+					.message("Enter Carry Capacity (double): ")
 					.addPrompt();
 
 			// Initialize Variables
@@ -102,7 +102,7 @@ public class CreateMenus {
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Carry Capacity")
-					.message("Enter Longitude (double): ")
+					.message("Enter Carry Capacity (double): ")
 					.addPrompt();
 
 			// Initialize Variables
@@ -162,7 +162,7 @@ public class CreateMenus {
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Carry Capacity")
-					.message("Enter Longitude (double): ")
+					.message("Enter Carry Capacity (double): ")
 					.addPrompt();
 
 			// Initialize Variables
@@ -197,7 +197,6 @@ public class CreateMenus {
 	}
 
 	public static void shipMenu() throws IOException {
-		// TODO implement ship menu
 		try {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Create Ship"));
 			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
@@ -222,7 +221,7 @@ public class CreateMenus {
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Carry Capacity")
-					.message("Enter Longitude (double): ")
+					.message("Enter Carry Capacity (double): ")
 					.addPrompt();
 
 			// Initialize Variables

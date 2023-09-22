@@ -1,17 +1,55 @@
 package main.InterfaceUtils.AdminOps.Vehicles;
 
+import de.codeshelf.consoleui.elements.ConfirmChoice;
 import de.codeshelf.consoleui.prompt.*;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
+import main.InterfaceUtils.Edit;
+import main.InterfaceUtils.displayUtils;
+import main.porttrip.Port;
+import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static main.InterfaceUtils.AdminOps.Vehicles.CreateMenus.*;
+import static main.vehicle.Vehicle.readVehicle;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class AdminVehiclesUtils {
+	static boolean viewMenuSwitch = true;
+
+	public static void  view() throws IOException {
+		ArrayList<Vehicle> viewVehiclesList = (ArrayList<Vehicle>) readVehicle();
+		while (viewMenuSwitch) {
+			try {
+				// View Vehicle Menu Setup
+				System.out.println(ansi().fg(Ansi.Color.RED).render("View Vehicles"));
+				displayUtils.displayVehicles(viewVehiclesList);
+				ConsolePrompt prompt = new ConsolePrompt();
+				PromptBuilder promptBuilder = prompt.getPromptBuilder();
+				promptBuilder.createConfirmPromp()
+						.name("Continue")
+						.message("Continue?")
+						.defaultValue(ConfirmChoice.ConfirmationValue.NO)
+						.addPrompt();
+				HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+				ConfirmResult continueResult = (ConfirmResult) result.get("Continue");
+				boolean cont = continueResult.getConfirmed() == ConfirmChoice.ConfirmationValue.YES;
+				if (!cont) {
+					viewMenuSwitch = false;
+				}
+			} finally {
+				try {
+					TerminalFactory.get().restore();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	public static void create() throws IOException {
 		try {
 			// Create Vehicle Menu Setup
@@ -61,15 +99,47 @@ public class AdminVehiclesUtils {
 
 	public static void edit() {
 		// TODO implement edit vehicle interface
+		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) readVehicle();
 		try {
 			// Edit Vehicle Menu Setup
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Vehicle"));
 			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("VehiclesSelect")
+					.message("Enter the Vehicle Name you would like Edit: ")
+					.defaultValue("Honda")
+					.addPrompt();
 
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+			// Initialize Variables
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
+			String selectedVehicleName = vehiclesInput.getInput().trim();
+			Vehicle selectedVehicle = null;
+
+			// Find Port
+			for (Vehicle vehicle : vehicles) {
+				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
+					selectedVehicle = vehicle;
+					Edit.editVehicle(selectedVehicle);
+					break;
+				}
+			}
+			if (selectedVehicle == null) {
+				System.out.println(ansi().fg(Ansi.Color.RED).render("Vehicle not found"));
+			}
+			// May have to add more code here for menu logic
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

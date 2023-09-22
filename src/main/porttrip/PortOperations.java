@@ -17,7 +17,11 @@ public interface PortOperations {
     double distanceTo(Port otherPort);
     boolean canMoveTo(Port otherPort);
     void createPort();
-    Collection<Port> readPort();
+
+    static Collection<Port> readPort() {
+        return null;
+    }
+
     void updatePort();
     void deletePort();
 }
