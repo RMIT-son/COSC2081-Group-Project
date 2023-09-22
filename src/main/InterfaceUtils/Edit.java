@@ -198,7 +198,7 @@ public class Edit {
 			InputResult RFInput = (InputResult) result.get("Fuel");
 			double requiredFuel = Double.parseDouble(RFInput.getInput().trim());
 
-			// Edit Vehicle
+			// Edit Container
 			container.setCNumber(id);
 			container.setWeight(fuel);
 			container.setRequiredFuel(requiredFuel);
@@ -216,11 +216,45 @@ public class Edit {
 		}
 	}
 
-	public static void editTrip(Trip trip) {
-		//TODO implement editTrip
-	}
+	public static void editUser(User user) throws IOException {
+		try {
+			// Edit Container Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Container"));
+			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("Username")
+					.message("Enter new Username: ")
+					.defaultValue(user.getUsername())
+					.addPrompt();
+			promptBuilder.createInputPrompt()
+					.name("Password")
+					.message("Enter new Password: ")
+					.defaultValue(user.getPassword())
+					.addPrompt();
 
-	public static void editUser(User user) {
-		//TODO implement editUser
+			// Initialize Variables
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult usernameInput = (InputResult) result.get("Username");
+			String username = usernameInput.getInput().trim();
+			InputResult weightInput = (InputResult) result.get("Password");
+			String password = weightInput.getInput().trim();
+
+			// Edit User
+			user.setUsername(username);
+			user.setPassword(password);
+
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter the correctly specified value type."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null value"));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
