@@ -77,122 +77,145 @@ public class Seed {
 		Vehicle tanker5 = new TankerTruck(20, "Tanker5", 80, 320, 530, port5);
 		port5.addVehicle(tanker5);
 
-		Container openTop1 = new Container(1, 100.0, 10, ship1, null);
-		Container openTop2 = new Container(2, 105.5, 12, basic1, null);
-		Container openTop3 = new Container(3, 110.2, 14, basic2, null);
-		Container openTop4 = new Container(4, 115.7, 16, null, port2);
-		Container openTop5 = new Container(5, 120.3, 18, basic3, null);
-		Container openTop6 = new Container(6, 125.4, 20, null, port3);
+		Container openTop1 = new OpenTop(1, 100.0, 10, ship1, null);
+		Container openTop2 = new OpenTop(2, 105.5, 12, basic1, null);
+		Container openTop3 = new OpenTop(3, 110.2, 14, basic2, null);
+		Container openTop4 = new OpenTop(4, 115.7, 16, null, port2);
+		Container openTop5 = new OpenTop(5, 120.3, 18, basic3, null);
+		Container openTop6 = new OpenTop(6, 125.4, 20, null, port3);
 
-		Container dryStorage1 = new Container(7, 130.8, 25, ship2, null);
-		Container dryStorage2 = new Container(8, 135.2, 22, basic1, null);
-		Container dryStorage3 = new Container(9, 140.7, 20, basic2, null);
-		Container dryStorage4 = new Container(10, 145.3, 18, null, port4);
-		Container dryStorage5 = new Container(11, 150.1, 15, basic4, null);
-		Container dryStorage6 = new Container(12, 155.9, 12, null, port5);
+		Container dryStorage1 = new DryStorage(7, 130.8, 25, ship2, null);
+		Container dryStorage2 = new DryStorage(8, 135.2, 22, basic1, null);
+		Container dryStorage3 = new DryStorage(9, 140.7, 20, basic2, null);
+		Container dryStorage4 = new DryStorage(10, 145.3, 18, null, port4);
+		Container dryStorage5 = new DryStorage(11, 150.1, 15, basic4, null);
+		Container dryStorage6 = new DryStorage(12, 155.9, 12, null, port5);
 
-		Container liquid1 = new Container(13, 15.5, 30, tanker1, null);
-		Container liquid2 = new Container(14, 16.7, 32, tanker2, null);
-		Container liquid3 = new Container(15, 17.9, 34, tanker3, null);
-		Container liquid4 = new Container(16, 19.1, 36, tanker4, null);
-		Container liquid5 = new Container(17, 20.3, 38, tanker5, null);
+		Container liquid1 = new Liquid(13, 15.5, 30, tanker1, null);
+		Container liquid2 = new Liquid(14, 16.7, 32, tanker2, null);
+		Container liquid3 = new Liquid(15, 17.9, 34, tanker3, null);
+		Container liquid4 = new Liquid(16, 19.1, 36, tanker4, null);
+		Container liquid5 = new Liquid(17, 20.3, 38, tanker5, null);
 
-		Container reefercon1 = new Container(18, 18.8, 8, reefer1, null);
-		Container reefercon2 = new Container(19, 19.6, 10, reefer2, null);
-		Container reefercon3 = new Container(20, 20.4, 6, reefer3, null);
-		Container reefercon4 = new Container(21, 21.2, 5, reefer4, null);
-		Container reefercon5 = new Container(22, 22.0, 7, reefer5, null);
+		Container reefercon1 = new Refrigerated(18, 18.8, 8, reefer1, null);
+		Container reefercon2 = new Refrigerated(19, 19.6, 10, reefer2, null);
+		Container reefercon3 = new Refrigerated(20, 20.4, 6, reefer3, null);
+		Container reefercon4 = new Refrigerated(21, 21.2, 5, reefer4, null);
+		Container reefercon5 = new Refrigerated(22, 22.0, 7, reefer5, null);
 
-		Container openSide1 = new Container(23, 22.5, 9, basic3, null);
-		Container openSide2 = new Container(24, 23.7, 11, basic4, null);
-		Container openSide3 = new Container(25, 24.9, 13, basic5, null);
-		Container openSide4 = new Container(26, 26.1, 15, null, port4);
-		Container openSide5 = new Container(27, 27.3, 17, null, port5);
+		Container openSide1 = new OpenSide(23, 22.5, 9, basic3, null);
+		Container openSide2 = new OpenSide(24, 23.7, 11, basic4, null);
+		Container openSide3 = new OpenSide(25, 24.9, 13, basic5, null);
+		Container openSide4 = new OpenSide(26, 26.1, 15, null, port4);
+		Container openSide5 = new OpenSide(27, 27.3, 17, null, port5);
 
-		Container dryStorage7 = new Container(28, 160.5, 19, null, port1);
-		Container liquid6 = new Container(29, 28.5, 21, tanker1, null);
-		Container openTop7 = new Container(30, 130.7, 23, null, port2);
+		Container dryStorage7 = new DryStorage(28, 160.5, 19, null, port1);
+		Container liquid6 = new Liquid(29, 28.5, 21, tanker1, null);
+		Container openTop7 = new OpenTop(30, 130.7, 23, null, port2);
 
 
 		// Sample data for Trips using Ships
-		Trip trip1 = new Trip(ship1, LocalDate.of(2023, 9, 25), LocalDate.of(2023, 9, 28), port1, port2);
+		Trip trip1 = new Trip(ship1, LocalDate.parse("2023-09-25"), LocalDate.parse("2023-09-28"), port1, port2);
+		trip1.scheduleTrip(ship1, port1, port2, LocalDate.parse("2023-09-25"), LocalDate.parse("2023-09-28"));
 		trip1.createTrip();
 
-		Trip trip2 = new Trip(ship2, LocalDate.of(2023, 9, 26), LocalDate.of(2023, 9, 30), port2, port3);
+		Trip trip2 = new Trip(ship2, LocalDate.parse("2023-09-26"), LocalDate.parse("2023-09-30"), port2, port3);
+		trip2.scheduleTrip(ship2, port2, port3, LocalDate.parse("2023-09-26"), LocalDate.parse("2023-09-30"));
 		trip2.createTrip();
 
-		Trip trip3 = new Trip(ship3, LocalDate.of(2023, 9, 27), LocalDate.of(2023, 9, 31), port3, port4);
+		Trip trip3 = new Trip(ship3, LocalDate.parse("2023-09-27"), LocalDate.parse("2023-09-30"), port3, port4);
+		trip3.scheduleTrip(ship3, port3, port4, LocalDate.parse("2023-09-27"), LocalDate.parse("2023-09-30"));
 		trip3.createTrip();
 
-		Trip trip4 = new Trip(ship4, LocalDate.of(2023, 10, 1), LocalDate.of(2023, 10, 4), port4, port5);
+		Trip trip4 = new Trip(ship4, LocalDate.parse("2023-10-01"), LocalDate.parse("2023-10-04"), port4, port5);
+		trip4.scheduleTrip(ship4, port4, port5, LocalDate.parse("2023-10-01"), LocalDate.parse("2023-10-04"));
 		trip4.createTrip();
 
-		Trip trip5 = new Trip(ship5, LocalDate.of(2023, 10, 2), LocalDate.of(2023, 10, 6), port5, port1);
+		Trip trip5 = new Trip(ship5, LocalDate.parse("2023-10-02"), LocalDate.parse("2023-10-06"), port5, port1);
+		trip5.scheduleTrip(ship5, port5, port1, LocalDate.parse("2023-10-02"), LocalDate.parse("2023-10-06"));
 		trip5.createTrip();
 
-// Sample data for Trips using Reefer Trucks
-		Trip trip6 = new Trip(reefer1, LocalDate.of(2023, 10, 3), LocalDate.of(2023, 10, 4), port1, port2);
+		Trip trip6 = new Trip(reefer1, LocalDate.parse("2023-10-03"), LocalDate.parse("2023-10-04"), port1, port2);
+		trip6.scheduleTrip(reefer1, port1, port2, LocalDate.parse("2023-10-03"), LocalDate.parse("2023-10-04"));
 		trip6.createTrip();
 
-		Trip trip7 = new Trip(reefer2, LocalDate.of(2023, 10, 5), LocalDate.of(2023, 10, 6), port2, port3);
+		Trip trip7 = new Trip(reefer2, LocalDate.parse("2023-10-05"), LocalDate.parse("2023-10-06"), port2, port3);
+		trip7.scheduleTrip(reefer2, port2, port3, LocalDate.parse("2023-10-05"), LocalDate.parse("2023-10-06"));
 		trip7.createTrip();
 
-		Trip trip8 = new Trip(reefer3, LocalDate.of(2023, 10, 7), LocalDate.of(2023, 10, 8), port3, port4);
+		Trip trip8 = new Trip(reefer3, LocalDate.parse("2023-10-07"), LocalDate.parse("2023-10-08"), port3, port4);
+		trip8.scheduleTrip(reefer3, port3, port4, LocalDate.parse("2023-10-07"), LocalDate.parse("2023-10-08"));
 		trip8.createTrip();
 
-		Trip trip9 = new Trip(reefer4, LocalDate.of(2023, 10, 9), LocalDate.of(2023, 10, 10), port4, port5);
+		Trip trip9 = new Trip(reefer4, LocalDate.parse("2023-10-09"), LocalDate.parse("2023-10-10"), port4, port5);
+		trip9.scheduleTrip(reefer4, port4, port5, LocalDate.parse("2023-10-09"), LocalDate.parse("2023-10-10"));
 		trip9.createTrip();
 
-		Trip trip10 = new Trip(reefer5, LocalDate.of(2023, 10, 11), LocalDate.of(2023, 10, 12), port5, port1);
+		Trip trip10 = new Trip(reefer5, LocalDate.parse("2023-10-11"), LocalDate.parse("2023-10-12"), port5, port1);
+		trip10.scheduleTrip(reefer5, port5, port1, LocalDate.parse("2023-10-11"), LocalDate.parse("2023-10-12"));
 		trip10.createTrip();
 
-// Sample data for Trips using Basic Trucks
-		Trip trip11 = new Trip(basic1, LocalDate.of(2023, 10, 13), LocalDate.of(2023, 10, 14), port1, port2);
+		Trip trip11 = new Trip(basic1, LocalDate.parse("2023-10-13"), LocalDate.parse("2023-10-14"), port1, port2);
+		trip11.scheduleTrip(basic1, port1, port2, LocalDate.parse("2023-10-13"), LocalDate.parse("2023-10-14"));
 		trip11.createTrip();
 
-		Trip trip12 = new Trip(basic2, LocalDate.of(2023, 10, 15), LocalDate.of(2023, 10, 16), port2, port3);
+		Trip trip12 = new Trip(basic2, LocalDate.parse("2023-10-15"), LocalDate.parse("2023-10-16"), port2, port3);
+		trip12.scheduleTrip(basic2, port2, port3, LocalDate.parse("2023-10-15"), LocalDate.parse("2023-10-16"));
 		trip12.createTrip();
 
-		Trip trip13 = new Trip(basic3, LocalDate.of(2023, 10, 17), LocalDate.of(2023, 10, 18), port3, port4);
+		Trip trip13 = new Trip(basic3, LocalDate.parse("2023-10-17"), LocalDate.parse("2023-10-18"), port3, port4);
+		trip13.scheduleTrip(basic3, port3, port4, LocalDate.parse("2023-10-17"), LocalDate.parse("2023-10-18"));
 		trip13.createTrip();
 
-		Trip trip14 = new Trip(basic4, LocalDate.of(2023, 10, 19), LocalDate.of(2023, 10, 20), port4, port5);
+		Trip trip14 = new Trip(basic4, LocalDate.parse("2023-10-19"), LocalDate.parse("2023-10-20"), port4, port5);
+		trip14.scheduleTrip(basic4, port4, port5, LocalDate.parse("2023-10-19"), LocalDate.parse("2023-10-20"));
 		trip14.createTrip();
 
-		Trip trip15 = new Trip(basic5, LocalDate.of(2023, 10, 21), LocalDate.of(2023, 10, 22), port5, port1);
+		Trip trip15 = new Trip(basic5, LocalDate.parse("2023-10-21"), LocalDate.parse("2023-10-22"), port5, port1);
+		trip15.scheduleTrip(basic5, port5, port1, LocalDate.parse("2023-10-21"), LocalDate.parse("2023-10-22"));
 		trip15.createTrip();
 
-// Sample data for Trips using Tanker Trucks
-		Trip trip16 = new Trip(tanker1, LocalDate.of(2023, 10, 23), LocalDate.of(2023, 10, 24), port1, port2);
+		Trip trip16 = new Trip(tanker1, LocalDate.parse("2023-10-23"), LocalDate.parse("2023-10-24"), port1, port2);
+		trip16.scheduleTrip(tanker1, port1, port2, LocalDate.parse("2023-10-23"), LocalDate.parse("2023-10-24"));
 		trip16.createTrip();
 
-		Trip trip17 = new Trip(tanker2, LocalDate.of(2023, 10, 25), LocalDate.of(2023, 10, 26), port2, port3);
+		Trip trip17 = new Trip(tanker2, LocalDate.parse("2023-10-09"), LocalDate.parse("2023-10-11"), port2, port3);
+		trip17.scheduleTrip(tanker2, port2, port3, LocalDate.parse("2023-10-09"), LocalDate.parse("2023-10-11"));
 		trip17.createTrip();
+		
 
-		Trip trip18 = new Trip(tanker3, LocalDate.of(2023, 10, 27), LocalDate.of(2023, 10, 28), port3, port4);
+		Trip trip18 = new Trip(tanker3, LocalDate.parse("2023-10-27"), LocalDate.parse("2023-10-28"), port3, port4);
+		trip18.scheduleTrip(tanker3, port3, port4, LocalDate.parse("2023-10-27"), LocalDate.parse("2023-10-28"));
 		trip18.createTrip();
 
-		Trip trip19 = new Trip(tanker4, LocalDate.of(2023, 10, 29), LocalDate.of(2023, 10, 30), port4, port5);
+		Trip trip19 = new Trip(tanker4, LocalDate.parse("2023-10-29"), LocalDate.parse("2023-10-30"), port4, port5);
+		trip19.scheduleTrip(tanker4, port4, port5, LocalDate.parse("2023-10-29"), LocalDate.parse("2023-10-30"));
 		trip19.createTrip();
 
-		Trip trip20 = new Trip(tanker5, LocalDate.of(2023, 10, 31), LocalDate.of(2023, 11, 1), port5, port1);
+		Trip trip20 = new Trip(tanker5, LocalDate.parse("2023-10-31"), LocalDate.parse("2023-11-01"), port5, port1);
+		trip20.scheduleTrip(tanker5, port5, port1, LocalDate.parse("2023-10-31"), LocalDate.parse("2023-11-01"));
 		trip20.createTrip();
 
-// 5 additional trips using the various vehicles to reach the total of 25 trips
-		Trip trip21 = new Trip(ship1, LocalDate.of(2023, 11, 2), LocalDate.of(2023, 11, 5), port1, port3);
+		Trip trip21 = new Trip(ship1, LocalDate.parse("2023-11-02"), LocalDate.parse("2023-11-05"), port1, port3);
+		trip21.scheduleTrip(ship1, port1, port3, LocalDate.parse("2023-11-02"), LocalDate.parse("2023-11-05"));
 		trip21.createTrip();
 
-		Trip trip22 = new Trip(reefer1, LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 7), port1, port4);
+		Trip trip22 = new Trip(reefer1, LocalDate.parse("2023-11-06"), LocalDate.parse("2023-11-07"), port1, port4);
+		trip22.scheduleTrip(reefer1, port1, port4, LocalDate.parse("2023-11-06"), LocalDate.parse("2023-11-07"));
 		trip22.createTrip();
 
-		Trip trip23 = new Trip(basic1, LocalDate.of(2023, 11, 8), LocalDate.of(2023, 11, 9), port1, port5);
+		Trip trip23 = new Trip(basic1, LocalDate.parse("2023-11-08"), LocalDate.parse("2023-11-09"), port1, port5);
+		trip23.scheduleTrip(basic1, port1, port5, LocalDate.parse("2023-11-08"), LocalDate.parse("2023-11-09"));
 		trip23.createTrip();
 
-		Trip trip24 = new Trip(tanker1, LocalDate.of(2023, 11, 10), LocalDate.of(2023, 11, 11), port1, port2);
+		Trip trip24 = new Trip(tanker1, LocalDate.parse("2023-11-10"), LocalDate.parse("2023-11-11"), port1, port2);
+		trip24.scheduleTrip(tanker1, port1, port2, LocalDate.parse("2023-11-10"), LocalDate.parse("2023-11-11"));
 		trip24.createTrip();
 
-		Trip trip25 = new Trip(ship2, LocalDate.of(2023, 11, 12), LocalDate.of(2023, 11, 15), port2, port4);
+		Trip trip25 = new Trip(ship2, LocalDate.parse("2023-11-12"), LocalDate.parse("2023-11-15"), port2, port4);
+		trip25.scheduleTrip(ship2, port2, port4, LocalDate.parse("2023-11-12"), LocalDate.parse("2023-11-15"));
 		trip25.createTrip();
+
 
 
 
@@ -262,6 +285,44 @@ public class Seed {
 		openSide3.createContainer();
 		openSide4.createContainer();
 		openSide5.createContainer();
+
+		// Loading containers onto their vehicles or ports
+		ship1.loadContainer(openTop1);
+		basic1.loadContainer(openTop2);
+		basic2.loadContainer(openTop3);
+		port2.loadContainerToPort(openTop4);
+		basic3.loadContainer(openTop5);
+		port3.loadContainerToPort(openTop6);
+
+		ship2.loadContainer(dryStorage1);
+		basic1.loadContainer(dryStorage2);
+		basic2.loadContainer(dryStorage3);
+		port4.loadContainerToPort(dryStorage4);
+		basic4.loadContainer(dryStorage5);
+		port5.loadContainerToPort(dryStorage6);
+
+		tanker1.loadContainer(liquid1);
+		tanker2.loadContainer(liquid2);
+		tanker3.loadContainer(liquid3);
+		tanker4.loadContainer(liquid4);
+		tanker5.loadContainer(liquid5);
+
+		reefer1.loadContainer(reefercon1);
+		reefer2.loadContainer(reefercon2);
+		reefer3.loadContainer(reefercon3);
+		reefer4.loadContainer(reefercon4);
+		reefer5.loadContainer(reefercon5);
+
+		basic3.loadContainer(openSide1);
+		basic4.loadContainer(openSide2);
+		basic5.loadContainer(openSide3);
+		port4.loadContainerToPort(openSide4);
+		port5.loadContainerToPort(openSide5);
+
+		port1.loadContainerToPort(dryStorage7);
+		tanker1.loadContainer(liquid6);
+		port2.loadContainerToPort(openTop7);
+
 
 	}
 }
