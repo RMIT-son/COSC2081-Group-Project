@@ -10,6 +10,7 @@ import main.InterfaceUtils.AdminOps.Ports.AdminPortUtils;
 import main.InterfaceUtils.AdminOps.Trips.AdminTripsUtils;
 import main.InterfaceUtils.AdminOps.Users.AdminUsersUtils;
 import main.InterfaceUtils.AdminOps.Vehicles.AdminVehiclesUtils;
+import main.InterfaceUtils.AdminOps.Stats.AdminStatUtils;
 import org.fusesource.jansi.Ansi;
 
 import java.io.IOException;
@@ -315,19 +316,41 @@ public class AdminInterface {
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
                         .name("StatOptions")
-                        .message("Which would you like to see?")
-                        .newItem().text("Placeholder 1").add()
-                        .newItem().text("Placeholder 2").add()
+                        .message("Which would you like to do?")
+                        .newItem("CalcFuel").text("Calculate how much fuel has been used in a day").add()
+                        .newItem("CalcWeight").text("Calculate how much weight of each type of container").add()
+                        .newItem("CalcDistance").text("Calculate how much distance has been traveled in a day").add()
+                        .newItem("ListShips").text("See all Ships in a Port").add()
+                        .newItem("ListTrip1Day").text("See all Trips in a day").add()
+                        .newItem("ListTripMulti").text("See all Trips in a set time").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult SResult = (ListResult) result.get("StatOptions");
                 switch (SResult.getSelectedId()) {
-                    case "Placeholder 1":
-                        System.out.println("Placeholder 1 has been chosen");
+                    case "CalcFuel":
+                        System.out.println("Calculate Fuel has been chosen");
+                        AdminStatUtils.calcFuel();
                         break;
-                    case "Placeholder 2":
-                        System.out.println("Placeholder 2 has been chosen");
+                    case "CalcWeight":
+                        System.out.println("Calculate Weight has been chosen");
+                        AdminStatUtils.calcWeight();
+                        break;
+                    case "CalcDistance":
+                        System.out.println("Calculate Distance has been chosen");
+                        AdminStatUtils.calcDistance();
+                        break;
+                    case "ListShips":
+                        System.out.println("List Ships has been chosen");
+                        AdminStatUtils.listShips();
+                        break;
+                    case "ListTrip1Day":
+                        System.out.println("List Trips in a day has been chosen");
+                        AdminStatUtils.listTrips1Day();
+                        break;
+                    case "ListTripMulti":
+                        System.out.println("List Trips in a set time has been chosen");
+                        AdminStatUtils.listTripsMulti();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Admin Main Menu..."));

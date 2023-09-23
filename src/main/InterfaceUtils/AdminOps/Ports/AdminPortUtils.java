@@ -60,23 +60,23 @@ public class AdminPortUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("Id")
-					.message("Enter new Port Id (int): ")
+					.message("Enter new Port Id (int):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Name")
-					.message("Enter new Port Name: ")
+					.message("Enter new Port Name:")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Store")
-					.message("Enter Storing Capacity (double): ")
+					.message("Enter Storing Capacity (double):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Latitude")
-					.message("Enter Latitude (double): ")
+					.message("Enter Latitude (double):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Longitude")
-					.message("Enter Longitude (double): ")
+					.message("Enter Longitude (double):")
 					.addPrompt();
 			promptBuilder.createConfirmPromp()
 					.name("Landing")
@@ -123,12 +123,12 @@ public class AdminPortUtils {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Port"));
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Vehicles in Port:"));
 			displayUtils.displayPorts(ports);
-			System.out.println(ansi().fg(Ansi.Color.RED).render("Step 1 of 3"));
+			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("PortsSelect")
-					.message("Enter the Port Name you would like Edit: ")
+					.message("Enter the Port Name you would like Edit:")
 					.addPrompt();
 
 			// Initialize Variables
@@ -177,7 +177,7 @@ public class AdminPortUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("PortsSelect")
-					.message("Enter the Port Name you would like Delete: ")
+					.message("Enter the Port Name you would like Delete:")
 					.addPrompt();
 
 			// Initialize Variables
@@ -242,7 +242,7 @@ public class AdminPortUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("PortsSelect")
-					.message("Enter the Port Name you would like to load: ")
+					.message("Enter the Port Name you would like to load:")
 					.addPrompt();
 			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
 			InputResult portsInput = (InputResult) result.get("PortsSelect");
@@ -265,7 +265,7 @@ public class AdminPortUtils {
 			displayUtils.displayVehicles(selectedPort.getVehicles());
 			promptBuilder.createInputPrompt()
 					.name("VehiclesSelect")
-					.message("Enter the Vehicle Name you would like to unload: ")
+					.message("Enter the Vehicle Name you would like to unload:")
 					.addPrompt();
 			result = prompt.prompt(promptBuilder.build());
 			InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
@@ -287,7 +287,7 @@ public class AdminPortUtils {
 			displayUtils.displayContainers(selectedVehicle.getContainers());
 			promptBuilder.createInputPrompt()
 					.name("ContainerSelect")
-					.message("Enter the Container Id you would like to load (int): ")
+					.message("Enter the Container Id you would like to load (int):")
 					.addPrompt();
 
 			// Initialize Variables
@@ -338,7 +338,7 @@ public class AdminPortUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("PortsSelect")
-					.message("Enter the Port Name you would like to unload: ")
+					.message("Enter the Port Name you would like to unload:")
 					.addPrompt();
 			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
 			InputResult portsInput = (InputResult) result.get("PortsSelect");
@@ -361,7 +361,7 @@ public class AdminPortUtils {
 			displayUtils.displayVehicles(selectedPort.getVehicles());
 			promptBuilder.createInputPrompt()
 					.name("VehiclesSelect")
-					.message("Enter the Vehicle Name you would like to load: ")
+					.message("Enter the Vehicle Name you would like to load:")
 					.addPrompt();
 			result = prompt.prompt(promptBuilder.build());
 			InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
@@ -384,7 +384,7 @@ public class AdminPortUtils {
 			displayUtils.displayContainers(selectedPort.getContainers());
 			promptBuilder.createInputPrompt()
 					.name("ContainerSelect")
-					.message("Enter the Container Id you would like to unload (int): ")
+					.message("Enter the Container Id you would like to unload (int):")
 					.addPrompt();
 
 			// Initialize Variables

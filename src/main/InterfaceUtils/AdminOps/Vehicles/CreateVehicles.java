@@ -24,24 +24,24 @@ public class CreateVehicles {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("Id")
-					.message("Enter new Truck Number (int): ")
+					.message("Enter new Truck Number (int):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Name")
-					.message("Enter new Truck Name: ")
+					.message("Enter new Truck Name:")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel")
-					.message("Enter Current Fuel (double): ")
+					.message("Enter Current Fuel (double):")
 					.defaultValue("0.0")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel Capacity")
-					.message("Enter Fuel Capacity (double): ")
+					.message("Enter Fuel Capacity (double):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Carry Capacity")
-					.message("Enter Carry Capacity (double): ")
+					.message("Enter Carry Capacity (double):")
 					.addPrompt();
 
 			// Initialize Variables
@@ -84,24 +84,24 @@ public class CreateVehicles {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("Id")
-					.message("Enter new Truck Number (int): ")
+					.message("Enter new Truck Number (int):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Name")
-					.message("Enter new Truck Name: ")
+					.message("Enter new Truck Name:")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel")
-					.message("Enter Current Fuel (double): ")
+					.message("Enter Current Fuel (double):")
 					.defaultValue("0.0")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel Capacity")
-					.message("Enter Fuel Capacity (double): ")
+					.message("Enter Fuel Capacity (double):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Carry Capacity")
-					.message("Enter Carry Capacity (double): ")
+					.message("Enter Carry Capacity (double):")
 					.addPrompt();
 
 			// Initialize Variables
@@ -143,24 +143,24 @@ public class CreateVehicles {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("Id")
-					.message("Enter new Truck Number (int): ")
+					.message("Enter new Truck Number (int):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Name")
-					.message("Enter new Truck Name: ")
+					.message("Enter new Truck Name:")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel")
-					.message("Enter Current Fuel (double): ")
+					.message("Enter Current Fuel (double):")
 					.defaultValue("0.0")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel Capacity")
-					.message("Enter Fuel Capacity (double): ")
+					.message("Enter Fuel Capacity (double):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Carry Capacity")
-					.message("Enter Carry Capacity (double): ")
+					.message("Enter Carry Capacity (double):")
 					.addPrompt();
 
 			// Initialize Variables
@@ -202,24 +202,24 @@ public class CreateVehicles {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("Id")
-					.message("Enter new Ship Number (int): ")
+					.message("Enter new Ship Number (int):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Name")
-					.message("Enter new Truck Name: ")
+					.message("Enter new Truck Name:")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel")
-					.message("Enter Current Fuel (double): ")
+					.message("Enter Current Fuel (double):")
 					.defaultValue("0.0")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel Capacity")
-					.message("Enter Fuel Capacity (double): ")
+					.message("Enter Fuel Capacity (double):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Carry Capacity")
-					.message("Enter Carry Capacity (double): ")
+					.message("Enter Carry Capacity (double):")
 					.addPrompt();
 
 			// Initialize Variables
