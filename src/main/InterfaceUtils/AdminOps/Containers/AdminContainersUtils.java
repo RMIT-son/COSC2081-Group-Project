@@ -8,6 +8,8 @@ import main.InterfaceUtils.Edit;
 import main.InterfaceUtils.NotFoundException;
 import main.InterfaceUtils.displayUtils;
 import main.container.Container;
+import main.porttrip.Port;
+import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
 
 import java.io.IOException;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static main.container.Container.readContainer;
+import static main.vehicle.Vehicle.readVehicle;
 import static org.fusesource.jansi.Ansi.ansi;
 import static main.InterfaceUtils.AdminOps.Containers.CreateContainer.*;
 
@@ -194,6 +197,153 @@ public class AdminContainersUtils {
 				assert selectedContainer != null;
 				selectedContainer.deleteContainer();
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("Invalid input. Please enter a non-null input."));
+		} catch (NotFoundException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("Container not found."));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void loadToVehicle() {
+		ArrayList<Container> containers = (ArrayList<Container>) readContainer();
+		try {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Load Container"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Containers:"));
+			displayUtils.displayContainers(containers);
+			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("ContainersSelect")
+					.message("Enter the Container Name you would like Edit:")
+					.addPrompt();
+
+			// Initialize Variables
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult containersInput = (InputResult) result.get("ContainersSelect");
+			int selectedContainerId = Integer.parseInt(containersInput.getInput().trim());
+			Container selectedContainer = null;
+
+			// Find Container
+			for (Container container : containers) {
+				if (container.getCNumber() == selectedContainerId) {
+					selectedContainer = container;
+					break;
+				}
+			}
+			if (selectedContainer == null) {
+				throw new NotFoundException();
+			}
+
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Vehicles:"));
+			displayUtils.displayVehicles(readVehicle());
+			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 2 of 2"));
+			prompt = new ConsolePrompt();
+			promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("VehiclesSelect")
+					.message("Enter the Vehicle Name you would like to load: ")
+					.addPrompt();
+			result = prompt.prompt(promptBuilder.build());
+			InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
+			String selectedVehicleName = vehiclesInput.getInput().trim();
+			Vehicle selectedVehicle = null;
+			// Find Vehicle
+			for (Vehicle vehicle : readVehicle()) {
+				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
+					selectedVehicle = vehicle;
+					break;
+				}
+			}
+			if (selectedVehicle == null) {
+				throw new NotFoundException();
+			}
+
+			selectedVehicle.loadContainer(selectedContainer);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("Invalid input. Please enter a non-null input."));
+		} catch (NotFoundException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("Container not found."));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void loadToPort() {
+		ArrayList<Container> containers = (ArrayList<Container>) readContainer();
+		ArrayList<Port> ports = (ArrayList<Port>) Port.readPort();
+		try {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Load Container"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Containers:"));
+			displayUtils.displayContainers(containers);
+			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("ContainersSelect")
+					.message("Enter the Container Name you would like Edit:")
+					.addPrompt();
+
+			// Initialize Variables
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult containersInput = (InputResult) result.get("ContainersSelect");
+			int selectedContainerId = Integer.parseInt(containersInput.getInput().trim());
+			Container selectedContainer = null;
+
+			// Find Container
+			for (Container container : containers) {
+				if (container.getCNumber() == selectedContainerId) {
+					selectedContainer = container;
+					break;
+				}
+			}
+			if (selectedContainer == null) {
+				throw new NotFoundException();
+			}
+
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Ports:"));
+			displayUtils.displayPorts(ports);
+			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 2 of 2"));
+			prompt = new ConsolePrompt();
+			promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("PortsSelect")
+					.message("Enter the Port Name you would like to load: ")
+					.addPrompt();
+			result = prompt.prompt(promptBuilder.build());
+			InputResult portsInput = (InputResult) result.get("PortsSelect");
+			String selectedPortName = portsInput.getInput().trim();
+			Port selectedPort = null;
+			// Find Port
+			for (Port port : ports) {
+				if (port.getName().equalsIgnoreCase(selectedPortName)) {
+					selectedPort = port;
+					break;
+				}
+			}
+			if (selectedPort == null) {
+				throw new NotFoundException();
+			}
+
+			selectedPort.loadContainerToPort(selectedContainer);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {

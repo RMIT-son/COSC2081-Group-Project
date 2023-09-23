@@ -28,4 +28,10 @@ public class Liquid extends Container {
     public double calculateFuel(Vehicle vehicle, double distance) {
         return fuelConsumption.get(vehicle) * weight * distance;
     }
+
+    public static void main (String[] args) {
+    	Liquid liquid = new Liquid();
+        Ship ship = new Ship();
+        System.out.println(liquid.calculateFuel(ship, 100));
+    }
 }

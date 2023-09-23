@@ -140,8 +140,9 @@ public class AdminTripsUtils {
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("ADate")
-					.message("Enter Arrival Date:")
+					.message("Enter Arrival Date (yyyy-MM-dd, dd/MM/yyyy, dd/MM/yy):")
 					.addPrompt();
+
 			// Initialize Variables
 			result = prompt.prompt(promptBuilder.build());
 			InputResult dDateInput = (InputResult) result.get("DDate");

@@ -173,6 +173,8 @@ public class AdminInterface {
                         .newItem("Create").text("Create New Container").add()
                         .newItem("Edit").text("Edit Containers").add()
                         .newItem("Delete").text("Delete a Container").add()
+                        .newItem("VehicleLoad").text("Load a Container to a Vehicle").add()
+                        .newItem("PortLoad").text("Load a Container to a Port").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
@@ -193,6 +195,14 @@ public class AdminInterface {
                     case "Delete":
                         System.out.println("Delete a Container has been chosen");
                         AdminContainersUtils.delete();
+                        break;
+                    case "VehicleLoad":
+                        System.out.println("Load a Container to a Vehicle has been chosen");
+                        AdminContainersUtils.loadToVehicle();
+                        break;
+                    case "PortLoad":
+                        System.out.println("Load a Container to a Port has been chosen");
+                        AdminContainersUtils.loadToPort();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Admin Main Menu..."));
@@ -307,7 +317,6 @@ public class AdminInterface {
     }
 
     public static void statOPS() {
-        //TODO: Implement Statistics menu
         statMenuState = true;
         while (statMenuState) {
             try {
