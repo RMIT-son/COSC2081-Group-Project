@@ -151,7 +151,7 @@ public class PMContainersUtils {
 	}
 
 	public static void delete() {
-		ArrayList<Container> containers = (ArrayList<Container>) portManaging.getContainers()
+		ArrayList<Container> containers = (ArrayList<Container>) portManaging.getContainers();
 		try {
 			// Delete Port Menu Setup
 			System.out.println(ansi().fg(Ansi.Color.BLUE).render("Delete Container"));
