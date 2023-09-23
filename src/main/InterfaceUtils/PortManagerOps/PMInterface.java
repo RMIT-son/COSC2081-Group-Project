@@ -213,17 +213,13 @@ public class PMInterface {
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult TResult = (ListResult) result.get("TripsOptions");
                 switch (TResult.getSelectedId()) {
+                    case "View":
+                        System.out.println("View Trips has been chosen");
+                        PMTripsUtils.view();
+                        break;
                     case "Schedule":
                         System.out.println("Schedule a new Trip has been chosen");
                         PMTripsUtils.schedule();
-                        break;
-                    case "Edit":
-                        System.out.println("Edit Trips has been chosen");
-                        PMTripsUtils.edit();
-                        break;
-                    case "Delete":
-                        System.out.println("Delete a Trip has been chosen");
-                        PMTripsUtils.delete();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Manager Main Menu..."));

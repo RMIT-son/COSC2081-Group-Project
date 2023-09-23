@@ -9,7 +9,6 @@ import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
 import main.InterfaceUtils.NotFoundException;
 import main.InterfaceUtils.displayUtils;
-import main.Users.SystemAdmin;
 import main.porttrip.Port;
 import main.porttrip.Trip;
 import main.vehicle.Vehicle;

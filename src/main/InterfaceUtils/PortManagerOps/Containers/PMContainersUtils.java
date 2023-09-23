@@ -8,7 +8,6 @@ import main.InterfaceUtils.Edit;
 import main.InterfaceUtils.NotFoundException;
 import main.InterfaceUtils.displayUtils;
 import main.container.Container;
-import main.porttrip.Port;
 import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
 
@@ -18,8 +17,6 @@ import java.util.HashMap;
 
 import static main.InterfaceUtils.PortManagerOps.PMInterface.portManaging;
 import static main.InterfaceUtils.PortManagerOps.Containers.CreateContainer.*;
-import static main.container.Container.readContainer;
-import static main.vehicle.Vehicle.readVehicle;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class PMContainersUtils {
