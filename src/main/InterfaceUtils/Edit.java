@@ -24,26 +24,27 @@ public class Edit {
 	public static void editPort(Port port) throws IOException {
 		try {
 			System.out.println(ansi().eraseScreen().fg(Ansi.Color.MAGENTA).render("Edit Port Menu"));
+			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("Name")
-					.message("Enter new Port Name: ")
+					.message("Enter new Port Name:")
 					.defaultValue(port.getName())
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Store")
-					.message("Enter Storing Capacity (double): ")
+					.message("Enter Storing Capacity (double):")
 					.defaultValue(String.valueOf(port.getStoringCapacity()))
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Latitude")
-					.message("Enter Latitude (double): ")
+					.message("Enter Latitude (double):")
 					.defaultValue(String.valueOf(port.getLatitude()))
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Longitude")
-					.message("Enter Longitude (double): ")
+					.message("Enter Longitude (double):")
 					.defaultValue(String.valueOf(port.getLongitude()))
 					.addPrompt();
 			promptBuilder.createConfirmPromp()
@@ -104,27 +105,27 @@ public class Edit {
 			// Create Prompts
 			promptBuilder.createInputPrompt()
 					.name("Id")
-					.message("Enter new Vehicle Number (int): ")
+					.message("Enter new Vehicle Number (int):")
 					.defaultValue(defaultId)
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Name")
-					.message("Enter new Vehicle Name: ")
+					.message("Enter new Vehicle Name:")
 					.defaultValue(vehicle.getName())
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel")
-					.message("Enter new Current Fuel (double): ")
+					.message("Enter new Current Fuel (double):")
 					.defaultValue(Double.toString(vehicle.getFuel()))
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel Capacity")
-					.message("Enter new Fuel Capacity (double): ")
+					.message("Enter new Fuel Capacity (double):")
 					.defaultValue(Double.toString(vehicle.getFuelCapacity()))
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Carry Capacity")
-					.message("Enter new Carry Capacity (double): ")
+					.message("Enter new Carry Capacity (double):")
 					.defaultValue(Double.toString(vehicle.getCarryCapacity()))
 					.addPrompt();
 
@@ -173,15 +174,15 @@ public class Edit {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("Id")
-					.message("Enter new Container Number (int): ")
+					.message("Enter new Container Number (int):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Weight")
-					.message("Enter new Container Weight (double): ")
+					.message("Enter new Container Weight (double):")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel")
-					.message("Enter new Container required Fuel (double): ")
+					.message("Enter new Container required Fuel (double):")
 					.addPrompt();
 
 			// Initialize Variables
@@ -220,12 +221,12 @@ public class Edit {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("Username")
-					.message("Enter new Username: ")
+					.message("Enter new Username:")
 					.defaultValue(user.getUsername())
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Password")
-					.message("Enter new Password: ")
+					.message("Enter new Password:")
 					.defaultValue(user.getPassword())
 					.addPrompt();
 

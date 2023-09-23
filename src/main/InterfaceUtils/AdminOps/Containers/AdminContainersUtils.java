@@ -57,7 +57,7 @@ public class AdminContainersUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createListPrompt()
 					.name("Type")
-					.message("Select Container Type: ")
+					.message("Select Container Type:")
 					.newItem("Dry").text("Dry Storage").add()
 					.newItem("Liquid").text("Liquid").add()
 					.newItem("OS").text("Open Side").add()
@@ -150,14 +150,14 @@ public class AdminContainersUtils {
 		try {
 			// Delete Port Menu Setup
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Delete Container"));
-			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Containers: "));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Containers:"));
 			displayUtils.displayContainers(containers);
 			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("ContainersSelect")
-					.message("Enter the Container Name you would like Edit: ")
+					.message("Enter the Container Name you would like Edit:")
 					.addPrompt();
 
 			// Initialize Variables

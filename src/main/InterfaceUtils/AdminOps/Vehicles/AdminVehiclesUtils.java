@@ -60,7 +60,7 @@ public class AdminVehiclesUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createListPrompt()
 					.name("Type")
-					.message("Select Vehicle Type: ")
+					.message("Select Vehicle Type:")
 					.newItem("Basic").text("Basic Truck").add()
 					.newItem("Reefer").text("Reefer Truck").add()
 					.newItem("Tanker").text("Tanker Truck").add()
@@ -109,7 +109,7 @@ public class AdminVehiclesUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("VehiclesSelect")
-					.message("Enter the Vehicle Name you would like Edit: ")
+					.message("Enter the Vehicle Name you would like Edit:")
 					.addPrompt();
 
 			// Initialize Variables
@@ -156,7 +156,7 @@ public class AdminVehiclesUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("VehiclesSelect")
-					.message("Enter the Vehicle Name you would like Edit: ")
+					.message("Enter the Vehicle's Name you would like Delete: ")
 					.addPrompt();
 
 			// Initialize Variables

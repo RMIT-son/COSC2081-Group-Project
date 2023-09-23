@@ -58,7 +58,7 @@ public class AdminUsersUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createListPrompt()
 					.name("Type")
-					.message("Select User Type: ")
+					.message("Select User Type:")
 					.newItem("Admin").text("Admin").add()
 					.newItem("Port Manager").text("Port Manager").add()
 					.newItem("Back").text("Back").add()
@@ -99,7 +99,7 @@ public class AdminUsersUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("UsersSelect")
-					.message("Enter the User's Username you would like Edit: ")
+					.message("Enter the User's Username you would like Edit:")
 					.addPrompt();
 
 			// Initialize Variables
@@ -146,7 +146,7 @@ public class AdminUsersUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("UsersSelect")
-					.message("Enter the User Name you would like Edit: ")
+					.message("Enter the User Name you would like Delete:")
 					.addPrompt();
 
 			// Initialize Variables

@@ -78,7 +78,7 @@ public class AdminTripsUtils {
 			String vehicleName = vehicleInput.getInput().trim();
 			Vehicle vehicle = null;
 			for (Vehicle v : vehicles) {
-				if (v.getName().equals(vehicleName)) {
+				if (v.getName().equalsIgnoreCase(vehicleName)) {
 					vehicle = v;
 				}
 			}
@@ -86,24 +86,30 @@ public class AdminTripsUtils {
 				throw new NotFoundException();
 			}
 
-			displayUtils.displayPorts(ports);
-			prompt = new ConsolePrompt();
-			promptBuilder = prompt.getPromptBuilder();
-			promptBuilder.createInputPrompt()
-					.name("DPort")
-					.message("Enter Departure Port name:")
-					.addPrompt();
-			result = prompt.prompt(promptBuilder.build());
-			InputResult dPortInput = (InputResult) result.get("DPort");
-			String dPortName = dPortInput.getInput().trim();
-			Port dPort = null;
-			for (Port p : ports) {
-				if (p.getName().equalsIgnoreCase(dPortName)) {
-					dPort = p;
+			// Get Departure Port if not specified
+			Port dPort;
+			if (vehicle.getCurrentPort() == null) {
+				displayUtils.displayPorts(ports);
+				prompt = new ConsolePrompt();
+				promptBuilder = prompt.getPromptBuilder();
+				promptBuilder.createInputPrompt()
+						.name("DPort")
+						.message("Enter Departure Port name:")
+						.addPrompt();
+				result = prompt.prompt(promptBuilder.build());
+				InputResult dPortInput = (InputResult) result.get("DPort");
+				String dPortName = dPortInput.getInput().trim();
+				dPort = null;
+				for (Port p : ports) {
+					if (p.getName().equalsIgnoreCase(dPortName)) {
+						dPort = p;
+					}
 				}
-			}
-			if (dPort == null) {
-				throw new NotFoundException();
+				if (dPort == null) {
+					throw new NotFoundException();
+				}
+			} else {
+				dPort = vehicle.getCurrentPort();
 			}
 
 			displayUtils.displayPorts(ports);
