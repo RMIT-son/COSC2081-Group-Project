@@ -235,6 +235,11 @@ public class Port implements Serializable, PortOperations {
 		return vehicles;
 	}
 
+	public void addTrip(Trip trip) {
+		this.getTraffic().add(trip);
+		this.updatePort();
+	}
+
 
 	public Collection<Vehicle> removeVehicle(Vehicle vehicle) {
 		for (Vehicle v : vehicles) {

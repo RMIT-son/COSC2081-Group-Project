@@ -171,6 +171,8 @@ public class AdminTripsUtils {
 
 			// Create Trip
 			Trip newTrip = new Trip(vehicle, parsedDDate, parsedADate, dPort, aPort);
+			dPort.addTrip(newTrip);
+			aPort.addTrip(newTrip);
 			newTrip.createTrip();
 
 		} catch (NumberFormatException e) {
