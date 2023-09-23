@@ -225,7 +225,7 @@ public class AdminContainersUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("ContainersSelect")
-					.message("Enter the Container Name you would like Edit:")
+					.message("Enter the Container Name you would like Load:")
 					.addPrompt();
 
 			// Initialize Variables
@@ -299,7 +299,7 @@ public class AdminContainersUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("ContainersSelect")
-					.message("Enter the Container Name you would like Edit:")
+					.message("Enter the Container Name you would like Load:")
 					.addPrompt();
 
 			// Initialize Variables

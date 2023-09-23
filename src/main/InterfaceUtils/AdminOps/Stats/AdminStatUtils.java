@@ -62,10 +62,7 @@ public class AdminStatUtils {
 			result = prompt.prompt(promptBuilder.build());
 			InputResult distanceInput = (InputResult) result.get("Distance");
 			double distance = Double.parseDouble(distanceInput.getInput().trim());
-			System.out.println(vehicle.getContainers());
-			System.out.println(distance);
 			double fuel1Day = getFuelConsumptionADay(vehicle, distance);
-			System.out.println(fuel1Day);
 
 			// Continue Prompt
 			while (true) {

@@ -60,7 +60,6 @@ public class displayUtils {
 	}
 
 	public static void displayTrips(Collection<Trip> trips) {
-		// TODO Finish displayTrips
 		System.out.println(AsciiTable.getTable(trips, Arrays.asList(
 				new Column().header("Trips").with(Trip::toString),
 				new Column().header("Status").with(Trip::getStatus))));

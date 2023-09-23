@@ -159,7 +159,6 @@ public class AdminUsersUtils {
 			for (User user : users) {
 				if (user.getUsername().equalsIgnoreCase(selectedUsername)) {
 					selectedUser = user;
-					Edit.editUser(selectedUser);
 					break;
 				}
 			}

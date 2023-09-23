@@ -225,7 +225,7 @@ public class Port implements Serializable, PortOperations {
 
 	public Collection<Vehicle> addVehicle(Vehicle vehicle) {
 		if (!findVehicle(vehicle.getName())) {
-			this.getVehicles().add(vehicle);
+			this.vehicles.add(vehicle);
 			vehicle.setCurrentPort(this);
 			this.updatePort();
 		}

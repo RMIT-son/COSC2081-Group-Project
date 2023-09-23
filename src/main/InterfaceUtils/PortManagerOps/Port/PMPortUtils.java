@@ -18,17 +18,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import static main.InterfaceUtils.PortManagerOps.PMInterface.portManaging;
+import static main.container.Container.readContainer;
+import static main.porttrip.Port.readPort;
+import static main.vehicle.Vehicle.readVehicle;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class PMPortUtils {
 	public static void view() throws IOException {
 		boolean viewMenuSwitch = true;
+		List<Port> viewPortsFileList = readPort();
+		for (Port port : viewPortsFileList) {
+			if (port.getPNumber() == portManaging.getPNumber()) {
+				portManaging = port;
+				break;
+			}
+		}
 		ArrayList<Port> viewPortsList = new ArrayList<>(Collections.singleton(portManaging));
 		while (viewMenuSwitch) {
 			try {
-				// View Vehicle Menu Setup
 				displayUtils.displayPorts(viewPortsList);
 				ConsolePrompt prompt = new ConsolePrompt();
 				PromptBuilder promptBuilder = prompt.getPromptBuilder();
@@ -54,6 +64,13 @@ public class PMPortUtils {
 	}
 
 	public static void loadMenu() {
+		List<Port> viewPortsList = readPort();
+		for (Port port : viewPortsList) {
+			if (port.getPNumber() == portManaging.getPNumber()) {
+				portManaging = port;
+				break;
+			}
+		}
 		try {
 			Port selectedPort = portManaging;
 			ConsolePrompt prompt = new ConsolePrompt();
@@ -126,7 +143,15 @@ public class PMPortUtils {
 
 
 	public static void unloadMenu() {
-		// TODO implement delete Port interface
+		List<Port> viewPortsList = readPort();
+		List<Vehicle> viewVehiclesList = readVehicle();
+		List<Container> viewContainersList = readContainer();
+		for (Port port : viewPortsList) {
+			if (port.getPNumber() == portManaging.getPNumber()) {
+				portManaging = port;
+				break;
+			}
+		}
 		try {
 			Port selectedPort = portManaging;
 			ConsolePrompt prompt = new ConsolePrompt();
@@ -141,8 +166,9 @@ public class PMPortUtils {
 			String selectedVehicleName = vehiclesInput.getInput().trim();
 			Vehicle selectedVehicle = null;
 
+
 			// Find Vehicle
-			for (Vehicle vehicle : selectedPort.getVehicles()) {
+			for (Vehicle vehicle : viewVehiclesList) {
 				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
 					selectedVehicle = vehicle;
 					break;
@@ -167,7 +193,7 @@ public class PMPortUtils {
 			Container selectedContainer = null;
 
 			// Find Container
-			for (Container container : selectedVehicle.getContainers()) {
+			for (Container container : viewContainersList) {
 				if (container.getCNumber() == selectedContainerId) {
 					selectedContainer = container;
 					break;
@@ -196,5 +222,4 @@ public class PMPortUtils {
 			}
 		}
 	}
-
 }

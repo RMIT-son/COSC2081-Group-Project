@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static main.Users.User.readUser;
+import static main.porttrip.Trip.deleteTripsCompletedAfter7Days;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class Interface {
@@ -58,12 +59,11 @@ public class Interface {
 				// create a prompt for username and password
 				promptBuilder.createInputPrompt()
 						.name("Username")
-						.message("Please enter your username")
-						.addCompleter(new StringsCompleter("manager", "admin"))
+						.message("Please enter your Username:")
 						.addPrompt();
 				promptBuilder.createInputPrompt()
 						.name("Password")
-						.message("Please enter your Password")
+						.message("Please enter your Password:")
 						.mask('*')
 						.addPrompt();
 
@@ -119,6 +119,7 @@ public class Interface {
 
 	public static void mainMenuAdmin() {
 		boolean menuState = true;
+//		deleteTripsCompletedAfter7Days();
 		while (menuState) {
 			try {
 				ConsolePrompt prompt = new ConsolePrompt();
@@ -180,6 +181,7 @@ public class Interface {
 
 	public static void mainMenuPortManager() {
 		boolean menuState = true;
+//		deleteTripsCompletedAfter7Days();
 		while (menuState) {
 			try {
 				ConsolePrompt prompt = new ConsolePrompt();
