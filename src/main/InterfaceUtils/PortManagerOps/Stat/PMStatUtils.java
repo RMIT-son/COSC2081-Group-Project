@@ -1,4 +1,4 @@
-package main.InterfaceUtils.AdminOps.Stats;
+package main.InterfaceUtils.PortManagerOps.Stat;
 
 import de.codeshelf.consoleui.elements.ConfirmChoice;
 import de.codeshelf.consoleui.prompt.*;
@@ -20,18 +20,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static main.InterfaceUtils.AdminOps.Stats.ContainerWeight.*;
+
+import static main.InterfaceUtils.PortManagerOps.PMInterface.portManaging;
+import static main.InterfaceUtils.PortManagerOps.Stat.ContainerWeight.*;
 import static main.porttrip.Trip.getFuelConsumptionADay;
 import static main.porttrip.Trip.listTripsBetweenDates;
-import static main.vehicle.Vehicle.readVehicle;
 import static org.fusesource.jansi.Ansi.ansi;
 
-public class AdminStatUtils {
+public class PMStatUtils {
 	public static void calcFuel() throws IOException {
-		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) readVehicle();
+		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) portManaging.getVehicles();
 		try {
 			// Vehicle Prompt
-			System.out.println(ansi().fg(Ansi.Color.RED).render("Calculate Fuel Consumption"));
+			System.out.println(ansi().fg(Ansi.Color.BLUE).render("Calculate Fuel Consumption"));
 			displayUtils.displayVehicles(vehicles);
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
@@ -85,7 +86,7 @@ public class AdminStatUtils {
 		} catch (NumberFormatException e) {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter the correctly specified value type."));
 		} catch (NullPointerException e) {
-//			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null value"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null value"));
 			e.printStackTrace();
 		} catch (NotFoundException e) {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Specified Item Not Found"));
@@ -101,7 +102,7 @@ public class AdminStatUtils {
 	public static void calcWeight() throws IOException {
 		// Menu Setup
 		try {
-			System.out.println(ansi().fg(Ansi.Color.RED).render("Calculate Container Weight"));
+			System.out.println(ansi().fg(Ansi.Color.BLUE).render("Calculate Container Weight"));
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createListPrompt()
@@ -151,7 +152,7 @@ public class AdminStatUtils {
 	public static void calcDistance() throws IOException {
 		ArrayList<Port> ports = (ArrayList<Port>) Port.readPort();
 		try {
-			System.out.println(ansi().fg(Ansi.Color.RED).render("Calculate Distance between Ports"));
+			System.out.println(ansi().fg(Ansi.Color.BLUE).render("Calculate Distance between Ports"));
 			displayUtils.displayPorts(ports);
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
@@ -228,31 +229,10 @@ public class AdminStatUtils {
 	}
 
 	public static void listShips() throws IOException {
-		ArrayList<Port> ports = (ArrayList<Port>) Port.readPort();
-		try {
-			System.out.println(ansi().fg(Ansi.Color.RED).render("List Ships at Port"));
-			displayUtils.displayPorts(ports);
-			ConsolePrompt prompt = new ConsolePrompt();
-			PromptBuilder promptBuilder = prompt.getPromptBuilder();
-			promptBuilder.createInputPrompt()
-					.name("Port")
-					.message("Enter Port name:")
-					.addPrompt();
-			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
-			InputResult portInput = (InputResult) result.get("Port");
-			String portName = portInput.getInput().trim();
-			Port port = null;
-			for (Port p : ports) {
-				if (p.getName().equalsIgnoreCase(portName)) {
-					port = p;
-				}
-			}
-			if (port == null) {
-				throw new NotFoundException();
-			}
 
+		try {
 			ArrayList<Vehicle> ships = new ArrayList<>();
-			for (Vehicle v : port.getVehicles()) {
+			for (Vehicle v : portManaging.getVehicles()) {
 				if (v instanceof Ship) {
 					ships.add(v);
 				}
@@ -261,14 +241,14 @@ public class AdminStatUtils {
 			while (true) {
 				System.out.println(ansi().fg(Ansi.Color.GREEN).render("Ships at Port: "));
 				displayUtils.displayVehicles(ships);
-				prompt = new ConsolePrompt();
-				promptBuilder = prompt.getPromptBuilder();
+				ConsolePrompt prompt = new ConsolePrompt();
+				PromptBuilder promptBuilder = prompt.getPromptBuilder();
 				promptBuilder.createConfirmPromp()
 						.name("Continue")
 						.message("Continue?")
 						.defaultValue(ConfirmChoice.ConfirmationValue.NO)
 						.addPrompt();
-				result = prompt.prompt(promptBuilder.build());
+				HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
 				ConfirmResult continueResult = (ConfirmResult) result.get("Continue");
 				boolean cont = continueResult.getConfirmed() == ConfirmChoice.ConfirmationValue.YES;
 				if (!cont) {
@@ -279,8 +259,6 @@ public class AdminStatUtils {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter the correctly specified value type."));
 		} catch (NullPointerException e) {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null value"));
-		} catch (NotFoundException e) {
-			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Specified Item Not Found"));
 		} finally {
 			try {
 				TerminalFactory.get().restore();
@@ -292,7 +270,7 @@ public class AdminStatUtils {
 
 	public static void listTrips1Day() throws IOException {
 		try {
-			System.out.println(ansi().fg(Ansi.Color.RED).render("List Trips on Date"));
+			System.out.println(ansi().fg(Ansi.Color.BLUE).render("List Trips on Date"));
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
@@ -355,16 +333,17 @@ public class AdminStatUtils {
 
 	public static void listTripsMulti() throws IOException {
 		try {
-		ConsolePrompt prompt = new ConsolePrompt();
-		PromptBuilder promptBuilder = prompt.getPromptBuilder();
-		promptBuilder.createInputPrompt()
-				.name("SDate")
-				.message("Enter Start Date (yyyy-MM-dd, dd/MM/yyyy, dd/MM/yy):")
-				.addPrompt();
-		promptBuilder.createInputPrompt()
-				.name("EDate")
-				.message("Enter End Date (yyyy-MM-dd, dd/MM/yyyy, dd/MM/yy):")
-				.addPrompt();
+			System.out.println(ansi().fg(Ansi.Color.BLUE).render("List Trips between Dates"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("SDate")
+					.message("Enter Start Date (yyyy-MM-dd, dd/MM/yyyy, dd/MM/yy):")
+					.addPrompt();
+			promptBuilder.createInputPrompt()
+					.name("EDate")
+					.message("Enter End Date (yyyy-MM-dd, dd/MM/yyyy, dd/MM/yy):")
+					.addPrompt();
 			// Initialize Variables
 			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
 			InputResult dDateInput = (InputResult) result.get("SDate");

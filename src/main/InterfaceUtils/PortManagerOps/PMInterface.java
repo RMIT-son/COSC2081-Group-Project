@@ -1,23 +1,21 @@
 package main.InterfaceUtils.PortManagerOps;
 
 import de.codeshelf.consoleui.prompt.ConsolePrompt;
-import de.codeshelf.consoleui.prompt.InputResult;
 import de.codeshelf.consoleui.prompt.ListResult;
 import de.codeshelf.consoleui.prompt.PromtResultItemIF;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
-import main.InterfaceUtils.AdminOps.Containers.AdminContainersUtils;
-import main.InterfaceUtils.AdminOps.Vehicles.AdminVehiclesUtils;
+
+import main.InterfaceUtils.Edit;
 import main.InterfaceUtils.PortManagerOps.Containers.PMContainersUtils;
 import main.InterfaceUtils.PortManagerOps.Port.PMPortUtils;
+import main.InterfaceUtils.PortManagerOps.Stat.PMStatUtils;
 import main.InterfaceUtils.PortManagerOps.Trips.PMTripsUtils;
 import main.InterfaceUtils.PortManagerOps.Vehicles.PMVehiclesUtils;
 import main.InterfaceUtils.displayUtils;
 import main.Users.PortManager;
 import main.container.Container;
 import main.porttrip.Port;
-import main.vehicle.Ship;
-import main.vehicle.Truck;
 import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
 
@@ -43,17 +41,16 @@ public class PMInterface {
         portMenuState = true;
         while (portMenuState) {
             try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Port CRUD Manager Menu"));
+                System.out.println(ansi().fg(Ansi.Color.BLUE).render("Port CRUD Manager Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
                         .name("PortOptions")
                         .message("Which action would you like to do?")
                         .newItem("View").text("View Port Details").add()
-                        .newItem("Name").text("Edit Port Name").add()
-                        .newItem("Coords").text("Edit Port Coordinates").add()
-                        .newItem("Capacity").text("Edit Storing Capacity").add()
-                        .newItem("Landing").text("Edit Landing Ability").add()
+                        .newItem("Edit").text("Edit Port Details").add()
+                        .newItem("Load").text("Load Container to Port").add()
+                        .newItem("Unload").text("Unload Container from Port").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
@@ -61,24 +58,21 @@ public class PMInterface {
                 switch (POResult.getSelectedId()) {
                     case "View":
                         System.out.println("View Port Details has been chosen");
-                        displayUtils.displayPorts(List.of(portManaging));
+                        PMPortUtils.view();
                         break;
-                    case "Name":
-                        System.out.println("Edit Port Name has been chosen");
-                        PMPortUtils.editName();
+                    case "Edit":
+                        System.out.println("Edit Port Details has been chosen");
+                        Edit.editPort(portManaging);
                         break;
-                    case "Coords":
-                        System.out.println("Edit Port Coords has been chosen");
-                        PMPortUtils.editCoords();
+                    case "Load":
+                        System.out.println("Load Container to Port has been chosen");
+                        PMPortUtils.loadMenu();
                         break;
-                    case "Capacity":
-                        System.out.println("Edit Port Capacity has been chosen");
-                        PMPortUtils.editCapacity();
+                    case "Unload":
+                        System.out.println("Unload Container from Port has been chosen");
+                        PMPortUtils.unloadMenu();
                         break;
-                    case "Landing":
-                        System.out.println("Edit Port Landing Ability has been chosen");
-                        PMPortUtils.editLanding();
-                        break;
+
                     case "Back":
                         System.out.println(ansi().render( "Returning to Admin Main Menu..."));
                         portMenuState = false;
@@ -100,7 +94,7 @@ public class PMInterface {
         vehiclesMenuState = true;
         while (vehiclesMenuState) {
             try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Vehicles CRUD Admin Menu"));
+                System.out.println(ansi().fg(Ansi.Color.BLUE).render("Vehicles CRUD Manager Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
@@ -108,6 +102,9 @@ public class PMInterface {
                         .message("Which action would you like to do?")
                         .newItem("View").text("View Vehicles in Port").add()
                         .newItem("Edit").text("Edit Vehicles").add()
+                        .newItem("Load").text("Load Container to Vehicle").add()
+                        .newItem("Unload").text("Unload Container from Vehicle").add()
+                        .newItem("Refuel").text("Refuel Vehicle").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
@@ -115,13 +112,23 @@ public class PMInterface {
                 switch (VResult.getSelectedId()) {
                     case "View":
                         System.out.println("View Vehicles in Port has been chosen");
-                        ArrayList<Vehicle> vehiclesInPort = (ArrayList<Vehicle>) portManaging.getVehicles();
-                        System.out.println(ansi().eraseScreen().fg(Ansi.Color.CYAN).render("Current Vehicles in Port:"));
-                        displayUtils.displayVehicles(vehiclesInPort);
+                        PMVehiclesUtils.view();
                         break;
                     case "Edit":
                         System.out.println("Edit Vehicles has been chosen");
                         PMVehiclesUtils.edit();
+                        break;
+                    case "Load":
+                        System.out.println("Load Container to Vehicle has been chosen");
+                        PMVehiclesUtils.loadMenu();
+                        break;
+                    case "Unload":
+                        System.out.println("Unload Container from Vehicle has been chosen");
+                        PMVehiclesUtils.unloadMenu();
+                        break;
+                    case "Refuel":
+                        System.out.println("Refuel Vehicle has been chosen");
+                        PMVehiclesUtils.refuel();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Admin Main Menu..."));
@@ -144,7 +151,7 @@ public class PMInterface {
         containersMenuState = true;
         while (containersMenuState) {
             try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Containers CRUD Manager Menu"));
+                System.out.println(ansi().fg(Ansi.Color.BLUE).render("Containers CRUD Manager Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
@@ -154,6 +161,8 @@ public class PMInterface {
                         .newItem("Create").text("Create New Container").add()
                         .newItem("Edit").text("Edit Containers").add()
                         .newItem("Delete").text("Delete a Container").add()
+                        .newItem("LoadVehicle").text("Load Container to Vehicle").add()
+                        .newItem("UnloadVehicle").text("Unload Container from Vehicle").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
@@ -161,9 +170,7 @@ public class PMInterface {
                 switch (CResult.getSelectedId()) {
                     case "View":
                         System.out.println("View Containers in Port has been chosen");
-                        ArrayList<Container> containersInPort = (ArrayList<Container>) portManaging.getContainers();
-                        System.out.println(ansi().eraseScreen().fg(Ansi.Color.CYAN).render("Current Containers in Port:"));
-                        displayUtils.displayContainers(containersInPort);
+                        PMContainersUtils.view();
                         break;
                     case "Create":
                         System.out.println("Create a New Container has been chosen");
@@ -176,6 +183,14 @@ public class PMInterface {
                     case "Delete":
                         System.out.println("Delete a Container has been chosen");
                         PMContainersUtils.delete();
+                        break;
+                    case "LoadVehicle":
+                        System.out.println("Load Container to Vehicle has been chosen");
+                        PMContainersUtils.loadToVehicle();
+                        break;
+                    case "UnloadVehicle":
+                        System.out.println("Unload Container from Vehicle has been chosen");
+                        PMContainersUtils.loadToPort();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Manager Main Menu..."));
@@ -195,35 +210,29 @@ public class PMInterface {
     }
 
     public static void tripsOPS() {
-        // TODO update tripsOPS
         tripsMenuState = true;
         while (tripsMenuState) {
             try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Trips Manager Menu"));
+                System.out.println(ansi().fg(Ansi.Color.BLUE).render("Trips Manager Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
                         .name("TripsOptions")
                         .message("Which action would you like to do?")
+                        .newItem("View").text("View Trips").add()
                         .newItem("Schedule").text("Schedule New Trip").add()
-                        .newItem("Edit").text("Edit Trip History").add()
-                        .newItem("Delete").text("Delete a Trip").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult TResult = (ListResult) result.get("TripsOptions");
                 switch (TResult.getSelectedId()) {
+                    case "View":
+                        System.out.println("View Trips has been chosen");
+                        PMTripsUtils.view();
+                        break;
                     case "Schedule":
                         System.out.println("Schedule a new Trip has been chosen");
                         PMTripsUtils.schedule();
-                        break;
-                    case "Edit":
-                        System.out.println("Edit Trips has been chosen");
-                        PMTripsUtils.edit();
-                        break;
-                    case "Delete":
-                        System.out.println("Delete a Trip has been chosen");
-                        PMTripsUtils.delete();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Manager Main Menu..."));
@@ -243,31 +252,52 @@ public class PMInterface {
     }
 
     public static void statOPS() {
-        //TODO: implement display statistics and let users choose what to do
         statMenuState = true;
         while (statMenuState) {
             try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Statistics Manager Menu"));
+                System.out.println(ansi().fg(Ansi.Color.BLUE).render("Statistics Manager Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
                         .name("StatOptions")
-                        .message("Which would you like to see?")
-                        .newItem().text("Placeholder 1").add()
-                        .newItem().text("Placeholder 2").add()
+                        .message("Which would you like to do?")
+                        .newItem("CalcFuel").text("Calculate how much fuel has been used in a day").add()
+                        .newItem("CalcWeight").text("Calculate how much weight of each type of container").add()
+                        .newItem("CalcDistance").text("Calculate how much distance has been traveled in a day").add()
+                        .newItem("ListShips").text("See all Ships in a Port").add()
+                        .newItem("ListTrip1Day").text("See all Trips in a day").add()
+                        .newItem("ListTripMulti").text("See all Trips in a set time").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
                 ListResult SResult = (ListResult) result.get("StatOptions");
                 switch (SResult.getSelectedId()) {
-                    case "Placeholder 1":
-                        System.out.println("Placeholder 1 has been chosen");
+                    case "CalcFuel":
+                        System.out.println("Calculate Fuel has been chosen");
+                        PMStatUtils.calcFuel();
                         break;
-                    case "Placeholder 2":
-                        System.out.println("Placeholder 2 has been chosen");
+                    case "CalcWeight":
+                        System.out.println("Calculate Weight has been chosen");
+                        PMStatUtils.calcWeight();
+                        break;
+                    case "CalcDistance":
+                        System.out.println("Calculate Distance has been chosen");
+                        PMStatUtils.calcDistance();
+                        break;
+                    case "ListShips":
+                        System.out.println("List Ships has been chosen");
+                        PMStatUtils.listShips();
+                        break;
+                    case "ListTrip1Day":
+                        System.out.println("List Trips in a day has been chosen");
+                        PMStatUtils.listTrips1Day();
+                        break;
+                    case "ListTripMulti":
+                        System.out.println("List Trips in a set time has been chosen");
+                        PMStatUtils.listTripsMulti();
                         break;
                     case "Back":
-                        System.out.println(ansi().render( "Returning to Manager Main Menu..."));
+                        System.out.println(ansi().render( "Returning to Admin Main Menu..."));
                         statMenuState = false;
                         break;
                 }

@@ -263,6 +263,8 @@ public class AdminVehiclesUtils {
 				throw new NotFoundException();
 			}
 			selectedVehicle.movePort(selectedPort);
+			selectedPort.addVehicle(selectedVehicle);
+			selectedPort.updatePort();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {

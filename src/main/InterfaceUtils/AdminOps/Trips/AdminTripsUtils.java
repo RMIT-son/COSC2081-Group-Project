@@ -9,7 +9,6 @@ import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
 import main.InterfaceUtils.NotFoundException;
 import main.InterfaceUtils.displayUtils;
-import main.Users.SystemAdmin;
 import main.porttrip.Port;
 import main.porttrip.Trip;
 import main.vehicle.Vehicle;
@@ -140,8 +139,9 @@ public class AdminTripsUtils {
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("ADate")
-					.message("Enter Arrival Date:")
+					.message("Enter Arrival Date (yyyy-MM-dd, dd/MM/yyyy, dd/MM/yy):")
 					.addPrompt();
+
 			// Initialize Variables
 			result = prompt.prompt(promptBuilder.build());
 			InputResult dDateInput = (InputResult) result.get("DDate");
@@ -170,6 +170,8 @@ public class AdminTripsUtils {
 
 			// Create Trip
 			Trip newTrip = new Trip(vehicle, parsedDDate, parsedADate, dPort, aPort);
+			dPort.addTrip(newTrip);
+			aPort.addTrip(newTrip);
 			newTrip.createTrip();
 
 		} catch (NumberFormatException e) {

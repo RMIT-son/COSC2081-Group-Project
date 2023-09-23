@@ -123,7 +123,7 @@ public class Trip implements Serializable {
 	}
 
 	// List all the trips on a given day
-	public List<Trip> listTripsOnDate(LocalDate date) {
+	public static List<Trip> listTripsOnDate(LocalDate date) {
 		List<Trip> trips = readTrip();
 		List<Trip> result = new ArrayList<>();
 
@@ -136,7 +136,7 @@ public class Trip implements Serializable {
 	}
 
 		// List all the trips from day A to day B
-		public List<Trip> listTripsBetweenDates (LocalDate startDate, LocalDate endDate){
+		public static List<Trip> listTripsBetweenDates (LocalDate startDate, LocalDate endDate){
 			List<Trip> trips = readTrip();
 			List<Trip> result = new ArrayList<>();
 

@@ -206,7 +206,7 @@ public class CreateVehicles {
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Name")
-					.message("Enter new Truck Name:")
+					.message("Enter new Ship Name:")
 					.addPrompt();
 			promptBuilder.createInputPrompt()
 					.name("Fuel")
