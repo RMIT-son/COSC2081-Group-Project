@@ -222,7 +222,6 @@ public class AdminInterface {
                         .message("Which action would you like to do?")
                         .newItem("View").text("View Trips").add()
                         .newItem("Schedule").text("Schedule New Trip").add()
-                        .newItem("Delete").text("Delete a Trip").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
@@ -235,10 +234,6 @@ public class AdminInterface {
                     case "Schedule":
                         System.out.println("Schedule a new Trip has been chosen");
                         AdminTripsUtils.schedule();
-                        break;
-                    case "Delete":
-                        System.out.println("Delete a Trip has been chosen");
-                        AdminTripsUtils.delete();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Admin Main Menu..."));

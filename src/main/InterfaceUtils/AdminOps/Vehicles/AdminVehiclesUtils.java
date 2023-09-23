@@ -222,7 +222,7 @@ public class AdminVehiclesUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("VehiclesSelect")
-					.message("Enter the Vehicle Name you would like to load: ")
+					.message("Enter the Vehicle Name you would like to move: ")
 					.addPrompt();
 			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
 			InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
@@ -240,11 +240,12 @@ public class AdminVehiclesUtils {
 				throw new NotFoundException();
 			}
 
+			displayUtils.displayPorts(ports);
 			prompt = new ConsolePrompt();
 			promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("PortsSelect")
-					.message("Enter the Port Name you would like to unload: ")
+					.message("Enter the Port Name you would like to move to: ")
 					.addPrompt();
 			result = prompt.prompt(promptBuilder.build());
 			InputResult portsInput = (InputResult) result.get("PortsSelect");
@@ -289,7 +290,7 @@ public class AdminVehiclesUtils {
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
 					.name("VehiclesSelect")
-					.message("Enter the Vehicle Name you would like to unload: ")
+					.message("Enter the Vehicle Name you would like to load: ")
 					.addPrompt();
 			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
 			InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
@@ -396,7 +397,7 @@ public class AdminVehiclesUtils {
 			displayUtils.displayContainers(selectedVehicle.getContainers());
 			promptBuilder.createInputPrompt()
 					.name("ContainerSelect")
-					.message("Enter the Container Id you would like to load (int): ")
+					.message("Enter the Container Id you would like to unload (int): ")
 					.addPrompt();
 
 			// Initialize Variables
