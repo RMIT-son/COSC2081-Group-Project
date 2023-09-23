@@ -26,12 +26,8 @@ public class Liquid extends Container {
 
     @Override
     public double calculateFuel(Vehicle vehicle, double distance) {
-        return fuelConsumption.get(vehicle) * weight * distance;
+        Double consumptionRate = fuelConsumption.getOrDefault(vehicle.getClass(), 0.0);
+        return consumptionRate * weight * distance;
     }
 
-    public static void main (String[] args) {
-    	Liquid liquid = new Liquid();
-        Ship ship = new Ship();
-        System.out.println(liquid.calculateFuel(ship, 100));
-    }
 }

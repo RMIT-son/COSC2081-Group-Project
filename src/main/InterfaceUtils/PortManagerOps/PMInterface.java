@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static main.InterfaceUtils.PortManagerOps.Stat.PMStatUtils.*;
 import static main.InterfaceUtils.Interface.currentUser;
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -49,6 +48,8 @@ public class PMInterface {
                         .message("Which action would you like to do?")
                         .newItem("View").text("View Port Details").add()
                         .newItem("Edit").text("Edit Port Details").add()
+                        .newItem("Load").text("Load Container to Port").add()
+                        .newItem("Unload").text("Unload Container from Port").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
@@ -61,6 +62,14 @@ public class PMInterface {
                     case "Edit":
                         System.out.println("Edit Port Details has been chosen");
                         PMPortUtils.edit();
+                        break;
+                    case "Load":
+                        System.out.println("Load Container to Port has been chosen");
+                        PMPortUtils.loadMenu();
+                        break;
+                    case "Unload":
+                        System.out.println("Unload Container from Port has been chosen");
+                        PMPortUtils.unloadMenu();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Admin Main Menu..."));
@@ -91,6 +100,8 @@ public class PMInterface {
                         .message("Which action would you like to do?")
                         .newItem("View").text("View Vehicles in Port").add()
                         .newItem("Edit").text("Edit Vehicles").add()
+                        .newItem("Load").text("Load Container to Vehicle").add()
+                        .newItem("Unload").text("Unload Container from Vehicle").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
@@ -105,6 +116,14 @@ public class PMInterface {
                     case "Edit":
                         System.out.println("Edit Vehicles has been chosen");
                         PMVehiclesUtils.edit();
+                        break;
+                    case "Load":
+                        System.out.println("Load Container to Vehicle has been chosen");
+                        PMVehiclesUtils.loadMenu();
+                        break;
+                    case "Unload":
+                        System.out.println("Unload Container from Vehicle has been chosen");
+                        PMVehiclesUtils.unloadMenu();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Admin Main Menu..."));
