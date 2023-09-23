@@ -6,6 +6,7 @@ import de.codeshelf.consoleui.prompt.PromtResultItemIF;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
 
+import main.InterfaceUtils.Edit;
 import main.InterfaceUtils.PortManagerOps.Containers.PMContainersUtils;
 import main.InterfaceUtils.PortManagerOps.Port.PMPortUtils;
 import main.InterfaceUtils.PortManagerOps.Stat.PMStatUtils;
@@ -61,7 +62,7 @@ public class PMInterface {
                         break;
                     case "Edit":
                         System.out.println("Edit Port Details has been chosen");
-                        PMPortUtils.edit();
+                        Edit.editPort(portManaging);
                         break;
                     case "Load":
                         System.out.println("Load Container to Port has been chosen");
@@ -92,7 +93,7 @@ public class PMInterface {
         vehiclesMenuState = true;
         while (vehiclesMenuState) {
             try {
-                System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Vehicles CRUD Admin Menu"));
+                System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Vehicles CRUD Manager Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
@@ -156,6 +157,8 @@ public class PMInterface {
                         .newItem("Create").text("Create New Container").add()
                         .newItem("Edit").text("Edit Containers").add()
                         .newItem("Delete").text("Delete a Container").add()
+                        .newItem("LoadVehicle").text("Load Container to Vehicle").add()
+                        .newItem("UnloadVehicle").text("Unload Container from Vehicle").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
@@ -178,6 +181,14 @@ public class PMInterface {
                     case "Delete":
                         System.out.println("Delete a Container has been chosen");
                         PMContainersUtils.delete();
+                        break;
+                    case "LoadVehicle":
+                        System.out.println("Load Container to Vehicle has been chosen");
+                        PMContainersUtils.loadToVehicle();
+                        break;
+                    case "UnloadVehicle":
+                        System.out.println("Unload Container from Vehicle has been chosen");
+                        PMContainersUtils.loadToPort();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Manager Main Menu..."));
@@ -242,7 +253,7 @@ public class PMInterface {
         statMenuState = true;
         while (statMenuState) {
             try {
-                System.out.println(ansi().fg(Ansi.Color.RED).render("Statistics Admin Menu"));
+                System.out.println(ansi().fg(Ansi.Color.BLUE).render("Statistics Manager Menu"));
                 ConsolePrompt prompt = new ConsolePrompt();
                 PromptBuilder promptBuilder = prompt.getPromptBuilder();
                 promptBuilder.createListPrompt()
