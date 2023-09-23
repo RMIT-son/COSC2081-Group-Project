@@ -3,6 +3,8 @@ package test;
 import main.Users.PortManager;
 import main.Users.SystemAdmin;
 import main.Users.User;
+import main.container.Container;
+import main.container.Liquid;
 import main.porttrip.Port;
 import main.vehicle.ReeferTruck;
 import main.vehicle.Ship;
@@ -16,9 +18,28 @@ import static main.vehicle.Vehicle.readVehicle;
 public class uiTest {
 	public static void main(String[] args) throws InterruptedException {
 		List<Port> ports = Port.readPort();
-		// Get 1st port
-		Port port = ports.get(0);
-		User newUser = new PortManager("manager", "manager", port);
-		newUser.createUser();
+		List<Vehicle> vehicles = readVehicle();
+//		 Get 1st port
+//		Vehicle newShip = new Ship(1, "Ship1", 10, 100, 100, null);
+//		newShip.createVehicle();
+//		Container newLiquid = new Liquid(1, 12, 29, null, null);
+//		newLiquid.createContainer();
+//		Port port = ports.get(0);
+//		port.loadContainerToPort(newLiquid);
+//		port.addVehicle(newShip);
+//		User newPM = new PortManager("manager", "manager", port);
+//		newPM.createUser();
+//		User newAdmin = new SystemAdmin("admin", "admin");
+//		newAdmin.createUser();
+
+//		List<User> users = User.readUser();
+//		System.out.println("Users: " + users.size());
+//		for (User user : users) {
+//			System.out.println(user);
+//		}
+
+		for (Vehicle vehicle : vehicles) {
+			System.out.println(vehicle.getContainers());
+		}
 		}
 	}

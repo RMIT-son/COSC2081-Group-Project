@@ -38,6 +38,8 @@ public class AdminInterface {
                         .newItem("Create").text("Create New Port").add()
                         .newItem("Edit").text("Edit a Port").add()
                         .newItem("Delete").text("Delete a Port").add()
+                        .newItem("Load Container").text("Load Containers").add()
+                        .newItem("Unload Container").text("Unload Containers").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
@@ -58,6 +60,14 @@ public class AdminInterface {
                     case "Delete":
                         System.out.println("Delete a Port has been chosen");
                         AdminPortUtils.delete();
+                        break;
+                    case "Load Container":
+                        System.out.println("Load Containers has been chosen");
+                        AdminPortUtils.loadContainerMenu();
+                        break;
+                    case "Unload Container":
+                        System.out.println("Unload Containers has been chosen");
+                        AdminPortUtils.unloadContainerMenu();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Admin Main Menu..."));
@@ -90,6 +100,10 @@ public class AdminInterface {
                         .newItem("Create").text("Create New Vehicle").add()
                         .newItem("Edit").text("Edit Vehicles").add()
                         .newItem("Delete").text("Delete a Vehicle").add()
+                        .newItem("Move").text("Move a Vehicle").add()
+                        .newItem("Load").text("Load a Vehicle").add()
+                        .newItem("Unload").text("Unload a Vehicle").add()
+                        .newItem("Refuel").text("Refuel a Vehicle").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
                 HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
@@ -110,6 +124,22 @@ public class AdminInterface {
                     case "Delete":
                         System.out.println("Delete a Vehicle has been chosen");
                         AdminVehiclesUtils.delete();
+                        break;
+                    case "Move":
+                        System.out.println("Move a Vehicle has been chosen");
+                        AdminVehiclesUtils.move();
+                        break;
+                    case "Load":
+                        System.out.println("Load a Vehicle has been chosen");
+                        AdminVehiclesUtils.loadMenu();
+                        break;
+                    case "Unload":
+                        System.out.println("Unload a Vehicle has been chosen");
+                        AdminVehiclesUtils.unloadMenu();
+                        break;
+                    case "Refuel":
+                        System.out.println("Refuel a Vehicle has been chosen");
+                        AdminVehiclesUtils.refuel();
                         break;
                     case "Back":
                         System.out.println(ansi().render( "Returning to Admin Main Menu..."));
@@ -192,7 +222,6 @@ public class AdminInterface {
                         .message("Which action would you like to do?")
                         .newItem("View").text("View Trips").add()
                         .newItem("Schedule").text("Schedule New Trip").add()
-                        .newItem("Edit").text("Edit Trip History").add()
                         .newItem("Delete").text("Delete a Trip").add()
                         .newItem("Back").text("Back").add()
                         .addPrompt();
@@ -201,15 +230,11 @@ public class AdminInterface {
                 switch (TResult.getSelectedId()) {
                     case "View":
                         System.out.println("View Trips has been chosen");
-                        //TODO AdminTripsUtils.view();
+                        AdminTripsUtils.view();
                         break;
                     case "Schedule":
                         System.out.println("Schedule a new Trip has been chosen");
                         AdminTripsUtils.schedule();
-                        break;
-                    case "Edit":
-                        System.out.println("Edit Trips has been chosen");
-                        AdminTripsUtils.edit();
                         break;
                     case "Delete":
                         System.out.println("Delete a Trip has been chosen");

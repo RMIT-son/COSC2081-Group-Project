@@ -23,7 +23,7 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class Edit {
 	public static void editPort(Port port) throws IOException {
 		try {
-			System.out.println(ansi().eraseScreen().fg(Ansi.Color.RED).render("Create Port Menu"));
+			System.out.println(ansi().eraseScreen().fg(Ansi.Color.MAGENTA).render("Edit Port Menu"));
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
 			promptBuilder.createInputPrompt()
@@ -86,7 +86,7 @@ public class Edit {
 	public static void editVehicle(Vehicle vehicle) throws IOException {
 		try {
 			// Edit Vehicle Menu Setup
-			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Vehicle"));
+			System.out.println(ansi().fg(Ansi.Color.MAGENTA).render("Edit Vehicle"));
 			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
@@ -167,7 +167,7 @@ public class Edit {
 	public static void editContainer(Container container) throws IOException {
 		try {
 			// Edit Container Menu Setup
-			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Container"));
+			System.out.println(ansi().fg(Ansi.Color.MAGENTA).render("Edit Container"));
 			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
@@ -214,7 +214,7 @@ public class Edit {
 	public static void editUser(User user) throws IOException {
 		try {
 			// Edit Container Menu Setup
-			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit Container"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Edit User"));
 			System.out.println(ansi().fg(Ansi.Color.GREEN).render("Step 2 of 2"));
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();

@@ -5,7 +5,10 @@ import de.codeshelf.consoleui.prompt.*;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
 import main.InterfaceUtils.Edit;
+import main.InterfaceUtils.NotFoundException;
 import main.InterfaceUtils.displayUtils;
+import main.container.Container;
+import main.porttrip.Port;
 import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
 
@@ -14,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static main.InterfaceUtils.AdminOps.Vehicles.CreateVehicles.*;
+import static main.porttrip.Port.readPort;
 import static main.vehicle.Vehicle.readVehicle;
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -169,7 +173,7 @@ public class AdminVehiclesUtils {
 				}
 			}
 			if (selectedVehicle == null) {
-				System.out.println(ansi().fg(Ansi.Color.RED).render("Vehicle not found"));
+				throw new NotFoundException();
 			}
 
 			// Delete Port Confirmation
@@ -186,7 +190,6 @@ public class AdminVehiclesUtils {
 
 			// Delete Port
 			if (confirmResult.getConfirmed() == ConfirmChoice.ConfirmationValue.YES) {
-				assert selectedVehicle != null;
 				selectedVehicle.deleteVehicle();
 			}
 		} catch (IOException e) {
@@ -195,6 +198,294 @@ public class AdminVehiclesUtils {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
 		} catch (NullPointerException e) {
 			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("Invalid input. Please enter a non-null input."));
+		} catch (NotFoundException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("Vehicle not found."));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void move() throws IOException {
+		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) readVehicle();
+		ArrayList<Port> ports = (ArrayList<Port>) readPort();
+		try {
+			// Delete Vehicle Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Move Vehicle"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Vehicles:"));
+			displayUtils.displayVehicles(vehicles);
+			System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Step 1 of 2"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("VehiclesSelect")
+					.message("Enter the Vehicle Name you would like to load: ")
+					.addPrompt();
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
+			String selectedVehicleName = vehiclesInput.getInput().trim();
+			Vehicle selectedVehicle = null;
+
+			// Find Vehicle
+			for (Vehicle vehicle : vehicles) {
+				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
+					selectedVehicle = vehicle;
+					break;
+				}
+			}
+			if (selectedVehicle == null) {
+				throw new NotFoundException();
+			}
+
+			prompt = new ConsolePrompt();
+			promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("PortsSelect")
+					.message("Enter the Port Name you would like to unload: ")
+					.addPrompt();
+			result = prompt.prompt(promptBuilder.build());
+			InputResult portsInput = (InputResult) result.get("PortsSelect");
+			String selectedPortName = portsInput.getInput().trim();
+			Port selectedPort = null;
+
+			// Find Port
+			for (Port port : ports) {
+				if (port.getName().equalsIgnoreCase(selectedPortName)) {
+					selectedPort = port;
+					break;
+				}
+			}
+			if (selectedPort == null) {
+				throw new NotFoundException();
+			}
+			selectedVehicle.movePort(selectedPort);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null input."));
+		} catch (NotFoundException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Selected Input not found"));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public static void loadMenu() {
+		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) readVehicle();
+		try {
+			// Delete Vehicle Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Load Container to Vehicle"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Vehicles:"));
+			displayUtils.displayVehicles(vehicles);
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("VehiclesSelect")
+					.message("Enter the Vehicle Name you would like to unload: ")
+					.addPrompt();
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
+			String selectedVehicleName = vehiclesInput.getInput().trim();
+			Vehicle selectedVehicle = null;
+			// Find Vehicle
+			for (Vehicle vehicle : readVehicle()) {
+				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
+					selectedVehicle = vehicle;
+					break;
+				}
+			}
+			if (selectedVehicle == null) {
+				throw new NotFoundException();
+			}
+
+			prompt = new ConsolePrompt();
+			promptBuilder = prompt.getPromptBuilder();
+			displayUtils.displayContainers(selectedVehicle.getContainers());
+			promptBuilder.createInputPrompt()
+					.name("ContainerSelect")
+					.message("Enter the Container Id you would like to load (int): ")
+					.addPrompt();
+
+			// Initialize Variables
+			result = prompt.prompt(promptBuilder.build());
+			InputResult containerInput = (InputResult) result.get("ContainerSelect");
+			int selectedContainerId = Integer.parseInt(containerInput.getInput().trim());
+			Container selectedContainer = null;
+
+			// Find Container
+			for (Container container : selectedVehicle.getContainers()) {
+				if (container.getCNumber() == selectedContainerId) {
+					selectedContainer = container;
+					break;
+				}
+			}
+			if (selectedContainer == null) {
+				throw new NotFoundException();
+			}
+
+			Port currentVehiclePort = null;
+
+			for (Port port : readPort()) {
+				if (port.getName().equalsIgnoreCase(selectedVehicle.getCurrentPort().getName())) {
+					currentVehiclePort = port;
+					break;
+				}
+			}
+			if (currentVehiclePort == null) {
+				throw new NotFoundException();
+			}
+
+			// Load Container
+			currentVehiclePort.unloadContainerFromPort(selectedContainer);
+			selectedVehicle.loadContainer(selectedContainer);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null input."));
+		} catch (NotFoundException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Selected Input not found"));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public static void unloadMenu() {
+		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) readVehicle();
+		try {
+			// Delete Vehicle Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Unload Container from Vehicle"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Vehicles:"));
+			displayUtils.displayVehicles(vehicles);
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("VehiclesSelect")
+					.message("Enter the Vehicle Name you would like to unload: ")
+					.addPrompt();
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
+			String selectedVehicleName = vehiclesInput.getInput().trim();
+			Vehicle selectedVehicle = null;
+			// Find Vehicle
+			for (Vehicle vehicle : readVehicle()) {
+				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
+					selectedVehicle = vehicle;
+					break;
+				}
+			}
+			if (selectedVehicle == null) {
+				throw new NotFoundException();
+			}
+
+			prompt = new ConsolePrompt();
+			promptBuilder = prompt.getPromptBuilder();
+			displayUtils.displayContainers(selectedVehicle.getContainers());
+			promptBuilder.createInputPrompt()
+					.name("ContainerSelect")
+					.message("Enter the Container Id you would like to load (int): ")
+					.addPrompt();
+
+			// Initialize Variables
+			result = prompt.prompt(promptBuilder.build());
+			InputResult containerInput = (InputResult) result.get("ContainerSelect");
+			int selectedContainerId = Integer.parseInt(containerInput.getInput().trim());
+			Container selectedContainer = null;
+
+			// Find Container
+			for (Container container : selectedVehicle.getContainers()) {
+				if (container.getCNumber() == selectedContainerId) {
+					selectedContainer = container;
+					break;
+				}
+			}
+			if (selectedContainer == null) {
+				throw new NotFoundException();
+			}
+
+			Port currentVehiclePort = null;
+
+			for (Port port : readPort()) {
+				if (port.getName().equalsIgnoreCase(selectedVehicle.getCurrentPort().getName())) {
+					currentVehiclePort = port;
+					break;
+				}
+			}
+			if (currentVehiclePort == null) {
+				throw new NotFoundException();
+			}
+
+			// Load Container
+			selectedVehicle.unloadContainer(selectedContainer);
+			currentVehiclePort.loadContainerToPort(selectedContainer);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null input."));
+		} catch (NotFoundException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Selected Input not found"));
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public static void refuel() {
+		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) readVehicle();
+		try {
+			// Delete Vehicle Menu Setup
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Refuel Vehicle"));
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Vehicles:"));
+			displayUtils.displayVehicles(vehicles);
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createInputPrompt()
+					.name("VehiclesSelect")
+					.message("Enter the Vehicle Name you would like to refuel: ")
+					.addPrompt();
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			InputResult vehiclesInput = (InputResult) result.get("VehiclesSelect");
+			String selectedVehicleName = vehiclesInput.getInput().trim();
+			Vehicle selectedVehicle = null;
+
+			// Find Vehicle
+			for (Vehicle vehicle : readVehicle()) {
+				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
+					selectedVehicle = vehicle;
+					break;
+				}
+			}
+			if (selectedVehicle == null) {
+				throw new NotFoundException();
+			}
+
+			// Refuel Vehicle
+			selectedVehicle.refuel();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NumberFormatException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
+		} catch (NullPointerException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null input."));
+		} catch (NotFoundException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Selected Input not found"));
 		} finally {
 			try {
 				TerminalFactory.get().restore();

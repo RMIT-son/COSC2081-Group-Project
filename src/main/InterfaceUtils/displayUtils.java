@@ -56,7 +56,7 @@ public class displayUtils {
 				new Column().header("Weight").with(container -> Double.toString(container.getWeight())),
 				new Column().header("Fuel Required").with(container -> Double.toString(container.getRequiredFuel())),
 				new Column().header("Current Port").with(container -> container.getCurrentPort() != null ? container.getCurrentPort().toString() : "N/A"),
-				new Column().header("Current Trip").with(container -> container.getCurrentVehicle() != null ? container.getCurrentVehicle().toString() : "N/A"))));
+				new Column().header("Current Vehicle").with(container -> container.getCurrentVehicle() != null ? container.getCurrentVehicle().toString() : "N/A"))));
 	}
 
 	public static void displayTrips(Collection<Trip> trips) {

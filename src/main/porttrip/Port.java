@@ -2,6 +2,7 @@ package main.porttrip;
 
 import main.vehicle.Vehicle;
 import main.container.Container;
+import org.fusesource.jansi.Ansi;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.List;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class Port implements Serializable, PortOperations {
 	protected int pNumber;
@@ -166,10 +169,8 @@ public class Port implements Serializable, PortOperations {
 		for (Vehicle v : vehicles) {
 
 			// Checking record by id Number
-			if (Objects.equals(v.getName(), vname)) {
-				System.out.println(v);
+			if (v.getName().equalsIgnoreCase(vname)) {
 				return true;
-
 			}
 		}
 		return false;
@@ -190,10 +191,10 @@ public class Port implements Serializable, PortOperations {
 					container.setCurrentPort(this);
 					this.updatePort();
 				} else {
-					System.out.println("The capicity is overdosed");
+					System.out.println(ansi().fg(Ansi.Color.RED).render("The capacity is overdosed"));
 				}
 			} else {
-				System.out.println("The container already in the port");
+				System.out.println(ansi().fg(Ansi.Color.RED).render("The container already in the port"));
 			}
 		}
 		return containers;
@@ -225,10 +226,11 @@ public class Port implements Serializable, PortOperations {
 	public Collection<Vehicle> addVehicle(Vehicle vehicle) {
 		if (!findVehicle(vehicle.getName())) {
 			this.getVehicles().add(vehicle);
+			vehicle.setCurrentPort(this);
 			this.updatePort();
 		}
 		else {
-			System.out.println("The container already in the port");
+			System.out.println(ansi().fg(Ansi.Color.RED).render("The Vehicle already in the port"));
 		}
 		return vehicles;
 	}
@@ -242,6 +244,7 @@ public class Port implements Serializable, PortOperations {
 		}
 		if (vehicle != null) {
 			this.getVehicles().remove(vehicle);
+			vehicle.setCurrentPort(null);
 			this.updatePort();
 		}
 		else {

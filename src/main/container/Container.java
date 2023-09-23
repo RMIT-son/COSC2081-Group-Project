@@ -125,7 +125,7 @@ public class Container implements Serializable {
 		saveContainer(containers);
 	}
 	// save
-	public void saveContainer(Collection<Container> containers) {
+	private void saveContainer(Collection<Container> containers) {
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
 			oos.writeObject(containers);
 		} catch (IOException e) {

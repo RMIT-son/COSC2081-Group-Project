@@ -5,6 +5,7 @@ import de.codeshelf.consoleui.prompt.*;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
 import main.InterfaceUtils.Edit;
+import main.InterfaceUtils.NotFoundException;
 import main.InterfaceUtils.displayUtils;
 import main.Users.User;
 import org.fusesource.jansi.Ansi;
@@ -163,7 +164,7 @@ public class AdminUsersUtils {
 				}
 			}
 			if (selectedUser == null) {
-				System.out.println(ansi().fg(Ansi.Color.RED).render("User not found"));
+				throw new NotFoundException();
 			}
 
 			// Delete Port Confirmation
@@ -189,6 +190,8 @@ public class AdminUsersUtils {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
 		} catch (NullPointerException e) {
 			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("Invalid input. Please enter a non-null input."));
+		} catch (NotFoundException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("User not found."));
 		} finally {
 			try {
 				TerminalFactory.get().restore();

@@ -51,7 +51,7 @@ public class User implements Serializable {
 		saveUser(users);
 	}
 	// save
-	public void saveUser(Collection<User> users) {
+	private void saveUser(Collection<User> users) {
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
 			oos.writeObject(users);
 		} catch (IOException e) {

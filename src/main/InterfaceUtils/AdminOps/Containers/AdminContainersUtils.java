@@ -5,6 +5,7 @@ import de.codeshelf.consoleui.prompt.*;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
 import main.InterfaceUtils.Edit;
+import main.InterfaceUtils.NotFoundException;
 import main.InterfaceUtils.displayUtils;
 import main.container.Container;
 import org.fusesource.jansi.Ansi;
@@ -173,7 +174,7 @@ public class AdminContainersUtils {
 				}
 			}
 			if (selectedContainer == null) {
-				System.out.println(ansi().fg(Ansi.Color.RED).render("Container not found"));
+				throw new NotFoundException();
 			}
 
 			// Delete Port Confirmation
@@ -199,6 +200,8 @@ public class AdminContainersUtils {
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a valid input."));
 		} catch (NullPointerException e) {
 			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("Invalid input. Please enter a non-null input."));
+		} catch (NotFoundException e) {
+			System.out.println(ansi().fg(Ansi.Color.RED).bold().render("Container not found."));
 		} finally {
 			try {
 				TerminalFactory.get().restore();

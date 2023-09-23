@@ -2,9 +2,12 @@ package main.vehicle;
 
 import main.container.Container;
 import main.porttrip.Port;
+import org.fusesource.jansi.Ansi;
 
 import java.io.*;
 import java.util.*;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class Vehicle implements Serializable, VehicleOperations {
 
@@ -125,12 +128,11 @@ public class Vehicle implements Serializable, VehicleOperations {
 					container.setCurrentVehicle(this);
 					this.updateVehicle();
 				}
-
-			}else{
-				System.out.println("The capicity is overdosed");
+			} else {
+				System.out.println(ansi().fg(Ansi.Color.RED).render("The capacity is overdosed"));
 			}
-		}else {
-			System.out.println("The container already on the vehicle");
+		} else {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("The container already on the vehicle"));
 		}
 	}
 
@@ -221,7 +223,7 @@ public class Vehicle implements Serializable, VehicleOperations {
 		}
 	}
 	//Read
-	public static List<Vehicle> readFile() {
+	private static List<Vehicle> readFile() {
 		try {
 			FileInputStream fileIn = new FileInputStream(FILENAME);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -261,30 +263,6 @@ public class Vehicle implements Serializable, VehicleOperations {
 	public static List<Vehicle> readVehicle() {
 		List<Vehicle> vehicles = readFile();
 		return vehicles;
-	}
-
-
-
-	//main test crud
-	public static void main(String[] args) {
-		System.out.println("Starting tests...");
-
-		// Initialize a port
-		Port port1 = new Port();
-		port1.setStoringCapacity(1000);  // Assuming setter method.
-
-		// Create a Vehicle
-		Vehicle vehicle1 = new Vehicle("Truck1", 50, 100, 500, port1);
-		Vehicle vehicle2 = new Vehicle("Truck2", 90, 100, 500, port1);
-
-
-		// CRU[D] operations on Vehicle
-		vehicle1.createVehicle();
-		vehicle2.createVehicle();
-		List<Vehicle> newss = readVehicle();
-		System.out.println(newss);
-		vehicle1.deleteVehicle();
-		vehicle2.deleteVehicle();
 	}
 }
 
