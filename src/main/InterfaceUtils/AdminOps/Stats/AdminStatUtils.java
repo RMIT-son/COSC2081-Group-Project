@@ -1,14 +1,12 @@
 package main.InterfaceUtils.AdminOps.Stats;
 
 import de.codeshelf.consoleui.elements.ConfirmChoice;
-import de.codeshelf.consoleui.prompt.ConfirmResult;
-import de.codeshelf.consoleui.prompt.ConsolePrompt;
-import de.codeshelf.consoleui.prompt.InputResult;
-import de.codeshelf.consoleui.prompt.PromtResultItemIF;
+import de.codeshelf.consoleui.prompt.*;
 import de.codeshelf.consoleui.prompt.builder.PromptBuilder;
 import jline.TerminalFactory;
 import main.InterfaceUtils.NotFoundException;
 import main.InterfaceUtils.displayUtils;
+import main.container.Container;
 import main.vehicle.Vehicle;
 import org.fusesource.jansi.Ansi;
 
@@ -20,6 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static main.InterfaceUtils.AdminOps.Stats.ContainerWeight.*;
+import static main.container.Container.readContainer;
 import static main.porttrip.Trip.getFuelConsumptionADay;
 import static main.vehicle.Vehicle.readVehicle;
 import static org.fusesource.jansi.Ansi.ansi;
@@ -29,6 +29,7 @@ public class AdminStatUtils {
 		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) readVehicle();
 		try {
 			// Vehicle Prompt
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Calculate Fuel Consumption"));
 			displayUtils.displayVehicles(vehicles);
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
@@ -92,8 +93,54 @@ public class AdminStatUtils {
 		}
 	}
 
-	public static void calcWeight() {
-		// TODO
+	public static void calcWeight() throws IOException {
+		// Menu Setup
+		try {
+			System.out.println(ansi().fg(Ansi.Color.RED).render("Calculate Container Weight"));
+			ConsolePrompt prompt = new ConsolePrompt();
+			PromptBuilder promptBuilder = prompt.getPromptBuilder();
+			promptBuilder.createListPrompt()
+					.name("Type")
+					.message("Select Container Type:")
+					.newItem("Dry").text("Dry Storage").add()
+					.newItem("Liquid").text("Liquid").add()
+					.newItem("OS").text("Open Side").add()
+					.newItem("OT").text("Open Top").add()
+					.newItem("Ref").text("Refrigerated").add()
+					.newItem("Back").text("Back").add()
+					.addPrompt();
+
+			// Initialize Variables
+			HashMap<String, ? extends PromtResultItemIF> result = prompt.prompt(promptBuilder.build());
+			ListResult typeResult = (ListResult) result.get("Type");
+
+			//Menu Switch
+			switch (typeResult.getSelectedId()) {
+				case "Dry":
+					dryMenu();
+					break;
+				case "Liquid":
+					liquidMenu();
+					break;
+				case "OS":
+					osMenu();
+					break;
+				case "OT":
+					otMenu();
+					break;
+				case "Ref":
+					refMenu();
+					break;
+				case "Back":
+					break;
+			}
+		} finally {
+			try {
+				TerminalFactory.get().restore();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void calcDistance() {
@@ -111,5 +158,4 @@ public class AdminStatUtils {
 	public static void listTripsMulti() {
 		// TODO
 	}
-
 }
