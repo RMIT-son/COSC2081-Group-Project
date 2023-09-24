@@ -25,7 +25,13 @@ public class DryStorage extends Container {
 
     @Override
     public double calculateFuel(Vehicle vehicle, double distance) {
-        Double consumptionRate = fuelConsumption.getOrDefault(vehicle.getClass(), 0.0);
+        Double consumptionRate = 0.0;
+        for (Map.Entry<Class<? extends Vehicle>, Double> entry : fuelConsumption.entrySet()) {
+            if (entry.getKey().isAssignableFrom(vehicle.getClass())) {
+                consumptionRate = entry.getValue();
+                break;
+            }
+        }
         return consumptionRate * weight * distance;
     }
 }
