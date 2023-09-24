@@ -41,6 +41,6 @@ public class Query {
 		for (Trip trip : trips) {
 			System.out.println(trip);
 		}
-		System.out.println("Done");
+		System.out.println("\nDone");
 	}
 }
