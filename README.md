@@ -6,7 +6,7 @@ A Container Port Logistics Management system done by Group 16
 [Repo](https://github.com/RMIT-son/COSC2081-Group-Project)  
 
 ## Youtube Video Link  
-[Video]()  
+[Video](https://www.youtube.com/watch?v=MWcRustbc3k)  
 
 ## Draft Diagram
 ![Draft Diagram](logistics.png)
