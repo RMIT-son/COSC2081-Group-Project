@@ -8,5 +8,20 @@ A Container Port Logistics Management system done by Group 16
 ## Youtube Video Link  
 [Video](https://www.youtube.com/watch?v=MWcRustbc3k)  
 
-## Draft Diagram
+## Diagram
 ![Draft Diagram](logistics.png)
+
+## Java Files to run
+Main.java: Main class  
+Wipe.java: Wipe all data in the database  
+Seed.java: Seed data into the database  
+
+## User Credentials
+### Admin
+Username: admin1  
+Password: admin123  
+
+### Port Manager
+Username: pm1  
+Password: pm123
+
