@@ -1,6 +1,9 @@
 package main.porttrip;
 
+import main.container.Refrigerated;
+import main.vehicle.ReeferTruck;
 import main.vehicle.Ship;
+import main.vehicle.Truck;
 import main.vehicle.Vehicle;
 import main.container.Container;
 
@@ -233,4 +236,5 @@ public class Trip implements Serializable {
 				i.printStackTrace();
 			}
 		}
+
 	}
