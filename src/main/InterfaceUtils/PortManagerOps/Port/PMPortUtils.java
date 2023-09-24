@@ -64,6 +64,7 @@ public class PMPortUtils {
 	}
 
 	public static void loadMenu() {
+		// TODO fix logic of loading and unloading using DB refs
 		List<Port> viewPortsList = readPort();
 		for (Port port : viewPortsList) {
 			if (port.getPNumber() == portManaging.getPNumber()) {
@@ -71,11 +72,26 @@ public class PMPortUtils {
 				break;
 			}
 		}
+
+		ArrayList<Vehicle> vehiclesInPort = (ArrayList<Vehicle>) portManaging.getVehicles();
+		ArrayList<Vehicle> vehiclesInFile = (ArrayList<Vehicle>) readVehicle();
+		ArrayList<Vehicle> vehicles = new ArrayList<>();
+
+		ArrayList<Container> containersInFile = (ArrayList<Container>) Container.readContainer();
+		ArrayList<Container> containers = new ArrayList<>();
+
+		for (Vehicle vehicle : vehiclesInFile) {
+			for (Vehicle vehicleInPort : vehiclesInPort) {
+				if (vehicleInPort.getName().equalsIgnoreCase(vehicle.getName())) {
+					vehicles.add(vehicle);
+				}
+			}
+		}
+
 		try {
-			Port selectedPort = portManaging;
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
-			displayUtils.displayVehicles(selectedPort.getVehicles());
+			displayUtils.displayVehicles(vehicles);
 			promptBuilder.createInputPrompt()
 					.name("VehiclesSelect")
 					.message("Enter the Vehicle Name you would like to unload:")
@@ -86,7 +102,7 @@ public class PMPortUtils {
 			Vehicle selectedVehicle = null;
 
 			// Find Vehicle
-			for (Vehicle vehicle : selectedPort.getVehicles()) {
+			for (Vehicle vehicle : vehicles) {
 				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
 					selectedVehicle = vehicle;
 					break;
@@ -96,9 +112,17 @@ public class PMPortUtils {
 				throw new NotFoundException();
 			}
 
+			for (Container container : containersInFile) {
+				for (Container containerInVehicle : selectedVehicle.getContainers()) {
+					if (containerInVehicle.getCNumber() == container.getCNumber()) {
+						containers.add(container);
+					}
+				}
+			}
+
 			prompt = new ConsolePrompt();
 			promptBuilder = prompt.getPromptBuilder();
-			displayUtils.displayContainers(selectedVehicle.getContainers());
+			displayUtils.displayContainers(containers);
 			promptBuilder.createInputPrompt()
 					.name("ContainerSelect")
 					.message("Enter the Container Id you would like to load (int):")
@@ -111,7 +135,7 @@ public class PMPortUtils {
 			Container selectedContainer = null;
 
 			// Find Container
-			for (Container container : selectedVehicle.getContainers()) {
+			for (Container container : containers) {
 				if (container.getCNumber() == selectedContainerId) {
 					selectedContainer = container;
 					break;
@@ -123,7 +147,7 @@ public class PMPortUtils {
 
 			// Load Container
 			selectedVehicle.unloadContainer(selectedContainer);
-			selectedPort.loadContainerToPort(selectedContainer);
+			portManaging.loadContainerToPort(selectedContainer);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {
@@ -144,19 +168,42 @@ public class PMPortUtils {
 
 	public static void unloadMenu() {
 		List<Port> viewPortsList = readPort();
-		List<Vehicle> viewVehiclesList = readVehicle();
-		List<Container> viewContainersList = readContainer();
 		for (Port port : viewPortsList) {
 			if (port.getPNumber() == portManaging.getPNumber()) {
 				portManaging = port;
 				break;
 			}
 		}
+
+		ArrayList<Vehicle> vehiclesInPort = (ArrayList<Vehicle>) portManaging.getVehicles();
+		ArrayList<Vehicle> vehiclesInFile = (ArrayList<Vehicle>) readVehicle();
+		ArrayList<Vehicle> vehicles = new ArrayList<>();
+
+		ArrayList<Container> containersInPort = (ArrayList<Container>) portManaging.getContainers();
+		ArrayList<Container> containersInFile = (ArrayList<Container>) Container.readContainer();
+		ArrayList<Container> containers = new ArrayList<>();
+
+		for (Vehicle vehicle : vehiclesInFile) {
+			for (Vehicle vehicleInPort : vehiclesInPort) {
+				if (vehicleInPort.getName().equalsIgnoreCase(vehicle.getName())) {
+					vehicles.add(vehicle);
+				}
+			}
+		}
+
+		for (Container container : containersInFile) {
+			for (Container containerInPort : containersInPort) {
+				if (containerInPort.getCNumber() == container.getCNumber()) {
+					containers.add(container);
+				}
+			}
+		}
+
 		try {
 			Port selectedPort = portManaging;
 			ConsolePrompt prompt = new ConsolePrompt();
 			PromptBuilder promptBuilder = prompt.getPromptBuilder();
-			displayUtils.displayVehicles(selectedPort.getVehicles());
+			displayUtils.displayVehicles(vehicles);
 			promptBuilder.createInputPrompt()
 					.name("VehiclesSelect")
 					.message("Enter the Vehicle Name you would like to load:")
@@ -168,7 +215,7 @@ public class PMPortUtils {
 
 
 			// Find Vehicle
-			for (Vehicle vehicle : viewVehiclesList) {
+			for (Vehicle vehicle : vehicles) {
 				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
 					selectedVehicle = vehicle;
 					break;
@@ -180,10 +227,10 @@ public class PMPortUtils {
 
 			prompt = new ConsolePrompt();
 			promptBuilder = prompt.getPromptBuilder();
-			displayUtils.displayContainers(selectedVehicle.getContainers());
+			displayUtils.displayContainers(containers);
 			promptBuilder.createInputPrompt()
 					.name("ContainerSelect")
-					.message("Enter the Container Id you would like to load (int):")
+					.message("Enter the Container Id you would like to unload (int):")
 					.addPrompt();
 
 			// Initialize Variables
@@ -193,7 +240,7 @@ public class PMPortUtils {
 			Container selectedContainer = null;
 
 			// Find Container
-			for (Container container : viewContainersList) {
+			for (Container container : containers) {
 				if (container.getCNumber() == selectedContainerId) {
 					selectedContainer = container;
 					break;

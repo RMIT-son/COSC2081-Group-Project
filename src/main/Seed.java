@@ -1,5 +1,6 @@
 package main;
 
+import main.Users.PortManager;
 import main.Users.SystemAdmin;
 import main.Users.User;
 import main.container.*;
@@ -116,108 +117,80 @@ public class Seed {
 
 		// Sample data for Trips using Ships
 		Trip trip1 = new Trip(ship1, LocalDate.parse("2023-09-25"), LocalDate.parse("2023-09-28"), port1, port2);
-		trip1.scheduleTrip(ship1, port1, port2, LocalDate.parse("2023-09-25"), LocalDate.parse("2023-09-28"));
 		trip1.createTrip();
 
 		Trip trip2 = new Trip(ship2, LocalDate.parse("2023-09-26"), LocalDate.parse("2023-09-30"), port2, port3);
-		trip2.scheduleTrip(ship2, port2, port3, LocalDate.parse("2023-09-26"), LocalDate.parse("2023-09-30"));
 		trip2.createTrip();
 
 		Trip trip3 = new Trip(ship3, LocalDate.parse("2023-09-27"), LocalDate.parse("2023-09-30"), port3, port4);
-		trip3.scheduleTrip(ship3, port3, port4, LocalDate.parse("2023-09-27"), LocalDate.parse("2023-09-30"));
 		trip3.createTrip();
 
 		Trip trip4 = new Trip(ship4, LocalDate.parse("2023-10-01"), LocalDate.parse("2023-10-04"), port4, port5);
-		trip4.scheduleTrip(ship4, port4, port5, LocalDate.parse("2023-10-01"), LocalDate.parse("2023-10-04"));
 		trip4.createTrip();
 
 		Trip trip5 = new Trip(ship5, LocalDate.parse("2023-10-02"), LocalDate.parse("2023-10-06"), port5, port1);
-		trip5.scheduleTrip(ship5, port5, port1, LocalDate.parse("2023-10-02"), LocalDate.parse("2023-10-06"));
 		trip5.createTrip();
 
 		Trip trip6 = new Trip(reefer1, LocalDate.parse("2023-10-03"), LocalDate.parse("2023-10-04"), port1, port2);
-		trip6.scheduleTrip(reefer1, port1, port2, LocalDate.parse("2023-10-03"), LocalDate.parse("2023-10-04"));
 		trip6.createTrip();
 
 		Trip trip7 = new Trip(reefer2, LocalDate.parse("2023-10-05"), LocalDate.parse("2023-10-06"), port2, port3);
-		trip7.scheduleTrip(reefer2, port2, port3, LocalDate.parse("2023-10-05"), LocalDate.parse("2023-10-06"));
 		trip7.createTrip();
 
 		Trip trip8 = new Trip(reefer3, LocalDate.parse("2023-10-07"), LocalDate.parse("2023-10-08"), port3, port4);
-		trip8.scheduleTrip(reefer3, port3, port4, LocalDate.parse("2023-10-07"), LocalDate.parse("2023-10-08"));
 		trip8.createTrip();
 
 		Trip trip9 = new Trip(reefer4, LocalDate.parse("2023-10-09"), LocalDate.parse("2023-10-10"), port4, port5);
-		trip9.scheduleTrip(reefer4, port4, port5, LocalDate.parse("2023-10-09"), LocalDate.parse("2023-10-10"));
 		trip9.createTrip();
 
 		Trip trip10 = new Trip(reefer5, LocalDate.parse("2023-10-11"), LocalDate.parse("2023-10-12"), port5, port1);
-		trip10.scheduleTrip(reefer5, port5, port1, LocalDate.parse("2023-10-11"), LocalDate.parse("2023-10-12"));
 		trip10.createTrip();
 
 		Trip trip11 = new Trip(basic1, LocalDate.parse("2023-10-13"), LocalDate.parse("2023-10-14"), port1, port2);
-		trip11.scheduleTrip(basic1, port1, port2, LocalDate.parse("2023-10-13"), LocalDate.parse("2023-10-14"));
 		trip11.createTrip();
 
 		Trip trip12 = new Trip(basic2, LocalDate.parse("2023-10-15"), LocalDate.parse("2023-10-16"), port2, port3);
-		trip12.scheduleTrip(basic2, port2, port3, LocalDate.parse("2023-10-15"), LocalDate.parse("2023-10-16"));
 		trip12.createTrip();
 
 		Trip trip13 = new Trip(basic3, LocalDate.parse("2023-10-17"), LocalDate.parse("2023-10-18"), port3, port4);
-		trip13.scheduleTrip(basic3, port3, port4, LocalDate.parse("2023-10-17"), LocalDate.parse("2023-10-18"));
 		trip13.createTrip();
 
 		Trip trip14 = new Trip(basic4, LocalDate.parse("2023-10-19"), LocalDate.parse("2023-10-20"), port4, port5);
-		trip14.scheduleTrip(basic4, port4, port5, LocalDate.parse("2023-10-19"), LocalDate.parse("2023-10-20"));
 		trip14.createTrip();
 
 		Trip trip15 = new Trip(basic5, LocalDate.parse("2023-10-21"), LocalDate.parse("2023-10-22"), port5, port1);
-		trip15.scheduleTrip(basic5, port5, port1, LocalDate.parse("2023-10-21"), LocalDate.parse("2023-10-22"));
 		trip15.createTrip();
 
 		Trip trip16 = new Trip(tanker1, LocalDate.parse("2023-10-23"), LocalDate.parse("2023-10-24"), port1, port2);
-		trip16.scheduleTrip(tanker1, port1, port2, LocalDate.parse("2023-10-23"), LocalDate.parse("2023-10-24"));
 		trip16.createTrip();
 
 		Trip trip17 = new Trip(tanker2, LocalDate.parse("2023-10-09"), LocalDate.parse("2023-10-11"), port2, port3);
-		trip17.scheduleTrip(tanker2, port2, port3, LocalDate.parse("2023-10-09"), LocalDate.parse("2023-10-11"));
 		trip17.createTrip();
 		
 
 		Trip trip18 = new Trip(tanker3, LocalDate.parse("2023-10-27"), LocalDate.parse("2023-10-28"), port3, port4);
-		trip18.scheduleTrip(tanker3, port3, port4, LocalDate.parse("2023-10-27"), LocalDate.parse("2023-10-28"));
 		trip18.createTrip();
 
 		Trip trip19 = new Trip(tanker4, LocalDate.parse("2023-10-29"), LocalDate.parse("2023-10-30"), port4, port5);
-		trip19.scheduleTrip(tanker4, port4, port5, LocalDate.parse("2023-10-29"), LocalDate.parse("2023-10-30"));
 		trip19.createTrip();
 
 		Trip trip20 = new Trip(tanker5, LocalDate.parse("2023-10-31"), LocalDate.parse("2023-11-01"), port5, port1);
-		trip20.scheduleTrip(tanker5, port5, port1, LocalDate.parse("2023-10-31"), LocalDate.parse("2023-11-01"));
 		trip20.createTrip();
 
 		Trip trip21 = new Trip(ship1, LocalDate.parse("2023-11-02"), LocalDate.parse("2023-11-05"), port1, port3);
-		trip21.scheduleTrip(ship1, port1, port3, LocalDate.parse("2023-11-02"), LocalDate.parse("2023-11-05"));
 		trip21.createTrip();
 
 		Trip trip22 = new Trip(reefer1, LocalDate.parse("2023-11-06"), LocalDate.parse("2023-11-07"), port1, port4);
-		trip22.scheduleTrip(reefer1, port1, port4, LocalDate.parse("2023-11-06"), LocalDate.parse("2023-11-07"));
 		trip22.createTrip();
 
 		Trip trip23 = new Trip(basic1, LocalDate.parse("2023-11-08"), LocalDate.parse("2023-11-09"), port1, port5);
-		trip23.scheduleTrip(basic1, port1, port5, LocalDate.parse("2023-11-08"), LocalDate.parse("2023-11-09"));
 		trip23.createTrip();
 
 		Trip trip24 = new Trip(tanker1, LocalDate.parse("2023-11-10"), LocalDate.parse("2023-11-11"), port1, port2);
-		trip24.scheduleTrip(tanker1, port1, port2, LocalDate.parse("2023-11-10"), LocalDate.parse("2023-11-11"));
 		trip24.createTrip();
 
 		Trip trip25 = new Trip(ship2, LocalDate.parse("2023-11-12"), LocalDate.parse("2023-11-15"), port2, port4);
-		trip25.scheduleTrip(ship2, port2, port4, LocalDate.parse("2023-11-12"), LocalDate.parse("2023-11-15"));
 		trip25.createTrip();
-
-
-
 
 
 
@@ -323,6 +296,15 @@ public class Seed {
 		tanker1.loadContainer(liquid6);
 		port2.loadContainerToPort(openTop7);
 
-
+		User pm1 = new PortManager("pm1", "pm123", port1);
+		User pm2 = new PortManager("pm2", "pm123", port2);
+		User pm3 = new PortManager("pm3", "pm123", port3);
+		User pm4 = new PortManager("pm4", "pm123", port4);
+		User pm5 = new PortManager("pm5", "pm123", port5);
+		pm1.createUser();
+		pm2.createUser();
+		pm3.createUser();
+		pm4.createUser();
+		pm5.createUser();
 	}
 }

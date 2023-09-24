@@ -320,6 +320,8 @@ public class AdminStatUtils {
 			}
 
 			List<Trip> tripsOnDate = Trip.listTripsOnDate(parsedDate);
+			System.out.println(tripsOnDate.size());
+			System.out.println(tripsOnDate);
 			// Continue Prompt
 			while (true) {
 				System.out.println(ansi().fg(Ansi.Color.GREEN).render("Trips on Date: "));
@@ -391,6 +393,8 @@ public class AdminStatUtils {
 				}
 			}
 			List<Trip> trips = listTripsBetweenDates(parsedSDate, parsedEDate);
+			System.out.println(trips.size());
+			System.out.println(trips);
 			while (true) {
 				System.out.println(ansi().fg(Ansi.Color.GREEN).render("Trips from " + dDate + " to " + aDate + ":"));
 				displayUtils.displayTrips(trips);

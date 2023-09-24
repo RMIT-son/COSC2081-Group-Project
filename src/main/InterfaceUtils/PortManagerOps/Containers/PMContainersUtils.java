@@ -20,6 +20,7 @@ import java.util.List;
 import static main.InterfaceUtils.PortManagerOps.PMInterface.portManaging;
 import static main.InterfaceUtils.PortManagerOps.Containers.CreateContainer.*;
 import static main.porttrip.Port.readPort;
+import static main.vehicle.Vehicle.readVehicle;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class PMContainersUtils {
@@ -33,12 +34,6 @@ public class PMContainersUtils {
 			}
 		}
 
-		for (Port port : viewPortsList) {
-			if (port.getPNumber() == portManaging.getPNumber()) {
-				portManaging = port;
-				break;
-			}
-		}
 
 		ArrayList<Container> containersInPort = (ArrayList<Container>) portManaging.getContainers();
 		ArrayList<Container> containersInFile = (ArrayList<Container>) Container.readContainer();
@@ -130,7 +125,24 @@ public class PMContainersUtils {
 	}
 
 	public static void edit() {
-		ArrayList<Container> containers = (ArrayList<Container>) portManaging.getContainers();
+		List<Port> viewPortsList = readPort();
+		for (Port port : viewPortsList) {
+			if (port.getPNumber() == portManaging.getPNumber()) {
+				portManaging = port;
+				break;
+			}
+		}
+
+		ArrayList<Container> containersInPort = (ArrayList<Container>) portManaging.getContainers();
+		ArrayList<Container> containersInFile = (ArrayList<Container>) Container.readContainer();
+		ArrayList<Container> containers = new ArrayList<>();
+		for (Container container : containersInFile) {
+			for (Container containerInPort : containersInPort) {
+				if (container.getCNumber() == containerInPort.getCNumber()) {
+					containers.add(container);
+				}
+			}
+		}
 		try {
 			// Edit Container Menu Setup
 			System.out.println(ansi().fg(Ansi.Color.BLUE).render("Edit Container"));
@@ -176,7 +188,25 @@ public class PMContainersUtils {
 	}
 
 	public static void delete() {
-		ArrayList<Container> containers = (ArrayList<Container>) portManaging.getContainers();
+		List<Port> viewPortsList = readPort();
+		for (Port port : viewPortsList) {
+			if (port.getPNumber() == portManaging.getPNumber()) {
+				portManaging = port;
+				break;
+			}
+		}
+
+
+		ArrayList<Container> containersInPort = (ArrayList<Container>) portManaging.getContainers();
+		ArrayList<Container> containersInFile = (ArrayList<Container>) Container.readContainer();
+		ArrayList<Container> containers = new ArrayList<>();
+		for (Container container : containersInFile) {
+			for (Container containerInPort : containersInPort) {
+				if (container.getCNumber() == containerInPort.getCNumber()) {
+					containers.add(container);
+				}
+			}
+		}
 		try {
 			System.out.println(ansi().fg(Ansi.Color.BLUE).render("Delete Container"));
 			System.out.println(ansi().fg(Ansi.Color.BLUE).render("Current Containers:"));
@@ -241,7 +271,37 @@ public class PMContainersUtils {
 	}
 
 	public static void loadToVehicle() {
-		ArrayList<Container> containers = (ArrayList<Container>) portManaging.getContainers();
+		List<Port> viewPortsList = readPort();
+		for (Port port : viewPortsList) {
+			if (port.getPNumber() == portManaging.getPNumber()) {
+				portManaging = port;
+				break;
+			}
+		}
+
+		ArrayList<Vehicle> vehiclesInPort = (ArrayList<Vehicle>) portManaging.getVehicles();
+		ArrayList<Vehicle> vehiclesInFile = (ArrayList<Vehicle>) readVehicle();
+		ArrayList<Vehicle> vehicles = new ArrayList<>();
+
+		ArrayList<Container> containersInPort = (ArrayList<Container>) portManaging.getContainers();
+		ArrayList<Container> containersInFile = (ArrayList<Container>) Container.readContainer();
+		ArrayList<Container> containers = new ArrayList<>();
+
+		for (Vehicle vehicle : vehiclesInFile) {
+			for (Vehicle vehicleInPort : vehiclesInPort) {
+				if (vehicleInPort.getName().equalsIgnoreCase(vehicle.getName())) {
+					vehicles.add(vehicle);
+				}
+			}
+		}
+
+		for (Container container : containersInFile) {
+			for (Container containerInPort : containersInPort) {
+				if (container.getCNumber() == containerInPort.getCNumber()) {
+					containers.add(container);
+				}
+			}
+		}
 		try {
 			System.out.println(ansi().fg(Ansi.Color.BLUE).render("Load Container"));
 			System.out.println(ansi().fg(Ansi.Color.BLUE).render("Current Containers:"));
@@ -285,7 +345,7 @@ public class PMContainersUtils {
 			String selectedVehicleName = vehiclesInput.getInput().trim();
 			Vehicle selectedVehicle = null;
 			// Find Vehicle
-			for (Vehicle vehicle : portManaging.getVehicles()) {
+			for (Vehicle vehicle : vehicles) {
 				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
 					selectedVehicle = vehicle;
 					break;
@@ -294,8 +354,10 @@ public class PMContainersUtils {
 			if (selectedVehicle == null) {
 				throw new NotFoundException();
 			}
+
+			// Load Container
+			portManaging.unloadContainerFromPort(selectedContainer);
 			selectedVehicle.loadContainer(selectedContainer);
-			portManaging.updatePort();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NumberFormatException e) {

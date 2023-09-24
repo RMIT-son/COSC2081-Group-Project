@@ -37,15 +37,19 @@ public class PMVehiclesUtils {
 			}
 		}
 		ArrayList<Vehicle> vehiclesInPort = (ArrayList<Vehicle>) portManaging.getVehicles();
+		System.out.println(vehiclesInPort);
 		ArrayList<Vehicle> vehiclesInFile = (ArrayList<Vehicle>) readVehicle();
+		System.out.println(vehiclesInFile);
 		ArrayList<Vehicle> vehicles = new ArrayList<>();
 
 		for (Vehicle vehicle : vehiclesInFile) {
-			if (vehiclesInPort.contains(vehicle)) {
-				vehicles.add(vehicle);
+			for (Vehicle vehicleInPort : vehiclesInPort) {
+				if (vehicleInPort.getName().equalsIgnoreCase(vehicle.getName())) {
+					vehicles.add(vehicle);
+				}
 			}
-
 		}
+		System.out.println(vehicles);
 		while (viewMenuSwitch) {
 			try {
 				// View Vehicle Menu Setup
@@ -79,8 +83,10 @@ public class PMVehiclesUtils {
 			ArrayList<Vehicle> vehicles = new ArrayList<>();
 
 			for (Vehicle vehicle : vehiclesInFile) {
-				if (vehiclesInPort.contains(vehicle)) {
-					vehicles.add(vehicle);
+				for (Vehicle vehicleInPort : vehiclesInPort) {
+					if (vehicleInPort.getName().equalsIgnoreCase(vehicle.getName())) {
+						vehicles.add(vehicle);
+					}
 				}
 			}
 			System.out.println(ansi().eraseScreen().fg(Ansi.Color.BLUE).render("Vehicle CRUD Manager Menu"));
@@ -139,18 +145,21 @@ public class PMVehiclesUtils {
 		ArrayList<Container> containers = new ArrayList<>();
 
 		for (Vehicle vehicle : vehiclesInFile) {
-			if (vehiclesInPort.contains(vehicle)) {
-				vehicles.add(vehicle);
+			for (Vehicle vehicleInPort : vehiclesInPort) {
+				if (vehicleInPort.getName().equalsIgnoreCase(vehicle.getName())) {
+					vehicles.add(vehicle);
+				}
 			}
 		}
 
 		for (Container container : containersInFile) {
-			if (containersInPort.contains(container)) {
-				containers.add(container);
+			for (Container containerInPort : containersInPort) {
+				if (containerInPort.getCNumber() == container.getCNumber()) {
+					containers.add(container);
+				}
 			}
 		}
 		try {
-			// Delete Vehicle Menu Setup
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Load Container to Vehicle"));
 			System.out.println(ansi().fg(Ansi.Color.RED).render("Current Vehicles:"));
 			displayUtils.displayVehicles(vehicles);
@@ -251,14 +260,18 @@ public class PMVehiclesUtils {
 		ArrayList<Container> containers = new ArrayList<>();
 
 		for (Vehicle vehicle : vehiclesInFile) {
-			if (vehiclesInPort.contains(vehicle)) {
-				vehicles.add(vehicle);
+			for (Vehicle vehicleInPort : vehiclesInPort) {
+				if (vehicleInPort.getName().equalsIgnoreCase(vehicle.getName())) {
+					vehicles.add(vehicle);
+				}
 			}
 		}
 
 		for (Container container : containersInFile) {
-			if (containersInPort.contains(container)) {
-				containers.add(container);
+			for (Container containerInPort : containersInPort) {
+				if (containerInPort.getCNumber() == container.getCNumber()) {
+					containers.add(container);
+				}
 			}
 		}
 		try {
@@ -349,8 +362,10 @@ public class PMVehiclesUtils {
 		ArrayList<Vehicle> vehicles = new ArrayList<>();
 
 		for (Vehicle vehicle : vehiclesInFile) {
-			if (vehiclesInPort.contains(vehicle)) {
-				vehicles.add(vehicle);
+			for (Vehicle vehicleInPort : vehiclesInPort) {
+				if (vehicleInPort.getName().equalsIgnoreCase(vehicle.getName())) {
+					vehicles.add(vehicle);
+				}
 			}
 		}
 		try {
@@ -370,7 +385,7 @@ public class PMVehiclesUtils {
 			Vehicle selectedVehicle = null;
 
 			// Find Vehicle
-			for (Vehicle vehicle : readVehicle()) {
+			for (Vehicle vehicle : vehicles) {
 				if (vehicle.getName().equalsIgnoreCase(selectedVehicleName)) {
 					selectedVehicle = vehicle;
 					break;

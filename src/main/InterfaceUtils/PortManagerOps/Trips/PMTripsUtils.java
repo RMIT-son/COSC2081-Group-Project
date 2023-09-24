@@ -141,8 +141,6 @@ public class PMTripsUtils {
 
 			// Create Trip
 			Trip newTrip = new Trip(vehicle, parsedDDate, parsedADate, portManaging, aPort);
-			portManaging.addTrip(newTrip);
-			aPort.addTrip(newTrip);
 			newTrip.createTrip();
 
 		} catch (NumberFormatException e) {

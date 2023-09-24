@@ -25,11 +25,24 @@ import java.util.HashMap;
 import java.util.List;
 
 import static main.InterfaceUtils.Interface.currentUser;
+import static main.porttrip.Port.readPort;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class PMInterface {
     static PortManager currentPortMana = (PortManager) currentUser;
-    public static Port portManaging = currentPortMana.getPortManaging();
+
+    static List<Port> ports = readPort();
+
+    public static Port portManaging = null;
+
+    static {
+        for (Port port : ports) {
+            if (port.getPNumber() == currentPortMana.getPortManaging().getPNumber()) {
+                portManaging = port;
+                break; // Exit the loop once a matching port is found
+            }
+        }
+    }
     public static boolean portMenuState;
     public static boolean vehiclesMenuState;
     public static boolean containersMenuState;
@@ -263,7 +276,7 @@ public class PMInterface {
                         .message("Which would you like to do?")
                         .newItem("CalcFuel").text("Calculate how much fuel has been used in a day").add()
                         .newItem("CalcWeight").text("Calculate how much weight of each type of container").add()
-                        .newItem("CalcDistance").text("Calculate how much distance has been traveled in a day").add()
+                        .newItem("CalcDistance").text("Calculate how much distance between 2 ports").add()
                         .newItem("ListShips").text("See all Ships in a Port").add()
                         .newItem("ListTrip1Day").text("See all Trips in a day").add()
                         .newItem("ListTripMulti").text("See all Trips in a set time").add()
