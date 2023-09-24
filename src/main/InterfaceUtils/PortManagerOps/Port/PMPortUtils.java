@@ -64,7 +64,6 @@ public class PMPortUtils {
 	}
 
 	public static void loadMenu() {
-		// TODO fix logic of loading and unloading using DB refs
 		List<Port> viewPortsList = readPort();
 		for (Port port : viewPortsList) {
 			if (port.getPNumber() == portManaging.getPNumber()) {
