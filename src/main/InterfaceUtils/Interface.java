@@ -75,9 +75,8 @@ public class Interface {
 				String password = passInput.getInput().trim();
 
 				// logging for testing
-				System.out.println("username={"+username+"}");
-				System.out.println("password={"+password+"}");
-				System.out.println("result = " + result);
+				System.out.println("Inputted username: "+username);
+				System.out.println("Inputted password: "+password);
 
 
 				for (User user : users) {

@@ -128,7 +128,10 @@ public class Trip implements Serializable {
 		List<Trip> result = new ArrayList<>();
 
 		for (Trip trip : trips) {
-			if ((!trip.getDepartureDate().isBefore(date)) && (!trip.getArrivalDate().isAfter(date))) {
+			LocalDate departureDate = trip.getDepartureDate();
+			LocalDate arrivalDate = trip.getArrivalDate();
+
+			if (!departureDate.isAfter(date) && !arrivalDate.isBefore(date)) {
 				result.add(trip);
 			}
 		}
@@ -141,88 +144,46 @@ public class Trip implements Serializable {
 			List<Trip> result = new ArrayList<>();
 
 			for (Trip trip : trips) {
-				if ((!trip.getDepartureDate().isBefore(startDate) && !trip.getDepartureDate().isAfter(endDate)) &&
-						(!trip.getArrivalDate().isBefore(startDate) && !trip.getArrivalDate().isAfter(endDate))) {
+				if ((!trip.getDepartureDate().isBefore(startDate) || trip.getDepartureDate().isEqual(startDate)) &&
+						(!trip.getArrivalDate().isAfter(endDate) || trip.getArrivalDate().isEqual(endDate))) {
 					result.add(trip);
 				}
 			}
+
 			return result;
 		}
 
-	public void scheduleTrip(Vehicle vehicle, Port departurePort, Port arrivalPort, LocalDate departureDate, LocalDate arrivalDate) {
-
-		// Check if the provided vehicle is currently at the departure port
-		if (vehicle.getCurrentPort() == null || !vehicle.getCurrentPort().equals(departurePort)) {
-			System.out.println("The vehicle is not at the departure port.");
-			return;
-		}
-
-		// Check if the vehicle can move to the arrival port
-		if (!departurePort.canMoveTo(arrivalPort)) {
-			System.out.println("The vehicle cannot move to the destination port.");
-			return;
-		}
-
-		// Check if the total weight of all containers inside the vehicle is loadable at the arrival port
-		if (vehicle.countWeight() + arrivalPort.getCurrentContainerWeightAtPort()> arrivalPort.getStoringCapacity()) {
-			System.out.println("The weight of the vehicle exceeds the destination port's storing capacity.");
-			return;
-		}
-
-		// Update the trip details with provided parameters
-		this.vehicle = vehicle;
-		this.departurePort = departurePort;
-		this.arrivalPort = arrivalPort;
-		this.departureDate = departureDate;
-		this.arrivalDate = arrivalDate;
-
+		// Deletes the history of trips that have been completed for over 7 days
+	public static void deleteTripsCompletedAfter7Days() {
+		List<Trip> trips = readTrip();
 		LocalDate currentDate = LocalDate.now();
 
-		if (currentDate.isBefore(departureDate)) {
-			System.out.println("The trip is in the future and hasn't started yet.");
-			setStatus("Scheduled");
-			return;
-		}
+		trips.removeIf(trip -> trip.isTripCompleted() &&
+				trip.getArrivalDate().plusDays(7).isBefore(currentDate));
 
-		if (currentDate.equals(departureDate) || (currentDate.isAfter(departureDate) && currentDate.isBefore(arrivalDate))) {
-			// In transit phase
-			setStatus("In Transit");
-			vehicle.setCurrentPort(null);
-			for (Container c : vehicle.getContainers()) {
-				c.setState(Container.ContainerState.Neither);
-			}
-//			departurePort.removeVehicle(vehicle); // Remove the vehicle from the current port's list of vehicles
-			System.out.println(vehicle.getName() + " is currently in transit...");
-		}
-
-		if (currentDate.equals(arrivalDate) || currentDate.isAfter(arrivalDate)) {
-			// Arrival phase
-			vehicle.setCurrentPort(arrivalPort);
-			for (Container c : vehicle.getContainers()) {
-				c.setState(Container.ContainerState.AtPort);
-			}
-//			arrivalPort.addVehicle(vehicle);  // Add the vehicle to the arrival port's list of vehicles
-			setStatus("Completed");
-			System.out.println(vehicle.getName() + " has completed its trip and arrived at " + arrivalPort.getName() + " on " + arrivalDate);
-		}
+		saveTrip(trips);
 	}
 
-		// Deletes the history of trips that have been completed for over 7 days
-		public static void deleteTripsCompletedAfter7Days() {
-			List<Trip> trips = readTrip();
-			LocalDate currentDate = LocalDate.now();
-
-			trips.removeIf(trip -> trip.isTripCompleted() &&
-					trip.getArrivalDate().plusDays(7).isBefore(currentDate));
-
-			saveTrip(trips);
-		}
-
 		// Create
-		public void createTrip (){
+		public void createTrip () {
 			List<Trip> trips = readTrip();
-			trips.add(this);
-			saveTrip(trips);
+			// Check if the provided vehicle is currently at the departure port
+			if (vehicle.getCurrentPort() == null || !vehicle.getCurrentPort().equals(departurePort)) {
+				System.out.println("The vehicle is not at the departure port.");
+				trips.remove(this);
+			}
+
+			// Check if the total weight of all containers inside the vehicle is loadable at the arrival port
+			else if (vehicle.countWeight() + arrivalPort.getCurrentContainerWeightAtPort() > arrivalPort.getStoringCapacity()) {
+				System.out.println("The weight of the vehicle exceeds the destination port's storing capacity.");
+				trips.remove(this);
+			} else {
+				setStatus("Scheduled");
+				departurePort.addTrip(this);
+				arrivalPort.addTrip(this);
+				trips.add(this);
+				saveTrip(trips);
+			}
 		}
 
 		// Read

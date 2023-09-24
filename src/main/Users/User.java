@@ -95,5 +95,9 @@ public class User implements Serializable {
 		saveUser(users);
 	}
 
+	@Override
+	public String toString() {
+		return this.username;
+	}
 }
 

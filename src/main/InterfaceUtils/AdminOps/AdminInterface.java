@@ -328,7 +328,7 @@ public class AdminInterface {
                         .message("Which would you like to do?")
                         .newItem("CalcFuel").text("Calculate how much fuel has been used in a day").add()
                         .newItem("CalcWeight").text("Calculate how much weight of each type of container").add()
-                        .newItem("CalcDistance").text("Calculate how much distance has been traveled in a day").add()
+                        .newItem("CalcDistance").text("Calculate how much distance between 2 ports").add()
                         .newItem("ListShips").text("See all Ships in a Port").add()
                         .newItem("ListTrip1Day").text("See all Trips in a day").add()
                         .newItem("ListTripMulti").text("See all Trips in a set time").add()
