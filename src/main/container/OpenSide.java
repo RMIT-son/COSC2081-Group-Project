@@ -16,21 +16,17 @@ public class OpenSide extends Container {
         fuelConsumption.put(Truck.class, 3.2);
     }
 
-//    static {
-//        fuelConsumption.put(Vehicle.Ship, 2.7);
-//        fuelConsumption.put(Vehicle.Truck, 3.2);
-//    }
-
     public OpenSide() {
         super();
     }
 
-    public OpenSide(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort, ContainerState state) {
-        super(cNumber, weight, requiredFuel, currentVehicle, currentPort, state);
+    public OpenSide(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort) {
+        super(cNumber, weight, requiredFuel, currentVehicle, currentPort);
     }
 
     @Override
     public double calculateFuel(Vehicle vehicle, double distance) {
-        return fuelConsumption.get(vehicle) * weight * distance;
+        Double consumptionRate = fuelConsumption.getOrDefault(vehicle.getClass(), 0.0);
+        return consumptionRate * weight * distance;
     }
 }

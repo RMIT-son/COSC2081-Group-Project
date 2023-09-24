@@ -13,11 +13,10 @@ public class Container implements Serializable {
 	protected int cNumber;
 	protected double weight;
 	protected double requiredFuel;
-
 	protected Vehicle currentVehicle;
 
 	protected Port currentPort;
-	private final String FILENAME = "resources/container.obj";
+	private static final String FILENAME = "resources/container.obj";
 
 	public enum ContainerState{
 		AtPort,
@@ -26,17 +25,17 @@ public class Container implements Serializable {
 
 	}
 
-	protected  ContainerState state = ContainerState.Neither;
+	protected ContainerState state;
 
 	public Container() {}
 
-	public Container(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort, ContainerState state) {
+	public Container(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort) {
 		this.cNumber = cNumber;
 		this.weight = weight;
 		this.requiredFuel = requiredFuel;
 		this.currentVehicle = currentVehicle;
 		this.currentPort = currentPort;
-		this.state = state;
+		state = ContainerState.Neither;
 	}
 
 	public ContainerState getState() {
@@ -126,7 +125,7 @@ public class Container implements Serializable {
 		saveContainer(containers);
 	}
 	// save
-	public void saveContainer(Collection<Container> containers) {
+	private void saveContainer(Collection<Container> containers) {
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
 			oos.writeObject(containers);
 		} catch (IOException e) {
@@ -134,7 +133,7 @@ public class Container implements Serializable {
 		}
 	}
 	//Read
-	public List<Container> readContainer() {
+	public static List<Container> readContainer() {
 		try {
 			FileInputStream fileIn = new FileInputStream(FILENAME);
 			ObjectInputStream in = new ObjectInputStream(fileIn);

@@ -8,11 +8,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
 	protected String username;
 	protected String password;
 
-	private final String FILENAME = "resources/user.obj";
+	private static final String FILENAME = "resources/user.obj";
 
 	public User() {
 	}
@@ -45,13 +45,13 @@ public class User {
 	//CRUD
 
 	//Create
-	public void createContainer(User user){
+	public void createUser(){
 		List<User> users = readUser();
-		users.add(user);
+		users.add(this);
 		saveUser(users);
 	}
 	// save
-	public void saveUser(Collection<User> users) {
+	private void saveUser(Collection<User> users) {
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILENAME))) {
 			oos.writeObject(users);
 		} catch (IOException e) {
@@ -59,7 +59,7 @@ public class User {
 		}
 	}
 	//Read
-	public List<User> readUser() {
+	public static List<User> readUser() {
 		try {
 			FileInputStream fileIn = new FileInputStream(FILENAME);
 			ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -89,11 +89,15 @@ public class User {
 
 
 	//Delete
-	public void deleteUser(User deletedUser) {
+	public void deleteUser() {
 		List<User> users = readUser();
-		users.removeIf(user -> Objects.equals(user.getUsername(), deletedUser.getUsername()));
+		users.removeIf(user -> Objects.equals(user.getUsername(), this.getUsername()));
 		saveUser(users);
 	}
 
+	@Override
+	public String toString() {
+		return this.username;
+	}
 }
 

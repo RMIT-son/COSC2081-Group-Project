@@ -20,12 +20,13 @@ public class Refrigerated extends Container {
     public Refrigerated() {
     }
 
-    public Refrigerated(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort, ContainerState state) {
-        super(cNumber, weight, requiredFuel, currentVehicle, currentPort, state);
+    public Refrigerated(int cNumber, double weight, double requiredFuel, Vehicle currentVehicle, Port currentPort) {
+        super(cNumber, weight, requiredFuel, currentVehicle, currentPort);
     }
 
     @Override
     public double calculateFuel(Vehicle vehicle, double distance) {
-        return fuelConsumption.get(vehicle) * weight * distance;
+        Double consumptionRate = fuelConsumption.getOrDefault(vehicle.getClass(), 0.0);
+        return consumptionRate * weight * distance;
     }
 }

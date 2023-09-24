@@ -1,2 +1,0 @@
--Link GitHub: https://github.com/2003congthinh/StoreManagement.git
--Link YouTube: https://youtu.be/d7cBDm6TXss

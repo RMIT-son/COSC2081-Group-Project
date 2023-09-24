@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static main.Users.User.readUser;
+import static main.porttrip.Trip.deleteTripsCompletedAfter7Days;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class Interface {
@@ -34,18 +36,18 @@ public class Interface {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		System.out.println(ansi().fg(Ansi.Color.CYAN).eraseScreen().render(PMS + "Ver 1.0.0"));
+		System.out.print(ansi().eraseScreen().fg(Ansi.Color.RED).render("COSC2081 Group Assignment "));
+		System.out.println(ansi().fg(Ansi.Color.YELLOW).render("Group Instructor: Mr. Minh Vu & Dr. Phong Ngo"));
+		System.out.print(ansi().fg(Ansi.Color.YELLOW).render("Group 16: "));
+		System.out.print(ansi().fg(Ansi.Color.BLUE).render("Tang Trung Son - s3978330 "));
+		System.out.print(ansi().fg(Ansi.Color.MAGENTA).render("Bui Hoang Quynh Chi - s3978316 "));
+		System.out.print(ansi().fg(Ansi.Color.GREEN).render("Than Dung Phung - s3978141 "));
+		System.out.println(ansi().fg(Ansi.Color.RED).render("Dang Quoc Thang - s3977877"));
+		System.out.println(ansi().fg(Ansi.Color.CYAN).render(PMS + "Ver 1.0.0"));
 		System.out.println(ansi().render("Please login to continue"));
 
-
-		// temp for testing for prototyping
-		Port port = new Port(1, "Hamburg", true, 53.551086, 9.993682, 1000000, null, null, null);
-		User mana = new PortManager("manager", "pwd12345", port);
-		User admin = new SystemAdmin("admin", "pwd@12345");
-		ArrayList<User> users = new ArrayList<>();
-		users.add(mana);
-		users.add(admin);
-
+		// Initialize Variables
+		ArrayList<User> users = (ArrayList<User>) readUser();
 
 		// LOGIN
 		while (true) {
@@ -57,14 +59,11 @@ public class Interface {
 				// create a prompt for username and password
 				promptBuilder.createInputPrompt()
 						.name("Username")
-						.message("Please enter your username")
-						.defaultValue("John Doe")
-						.addCompleter(new StringsCompleter("manager", "admin"))
+						.message("Please enter your Username:")
 						.addPrompt();
 				promptBuilder.createInputPrompt()
 						.name("Password")
-						.message("Please enter your Password")
-						.defaultValue("pwd12345")
+						.message("Please enter your Password:")
 						.mask('*')
 						.addPrompt();
 
@@ -76,14 +75,13 @@ public class Interface {
 				String password = passInput.getInput().trim();
 
 				// logging for testing
-				System.out.println("username={"+username+"}");
-				System.out.println("password={"+password+"}");
-				System.out.println("result = " + result);
+				System.out.println("Inputted username: "+username);
+				System.out.println("Inputted password: "+password);
 
 
 				for (User user : users) {
 					// validate user credentials
-					boolean valid = username.equals(user.getUsername()) && password.equals(user.getPassword());
+					boolean valid = username.equalsIgnoreCase(user.getUsername()) && password.equals(user.getPassword());
 					if (valid) {
 						System.out.println(ansi().fg(Ansi.Color.GREEN).eraseScreen().render("Login successful"));
 						currentUser = user;  // set the current user to the user that logged in
@@ -98,6 +96,8 @@ public class Interface {
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
+			} catch (NullPointerException e) {
+				System.out.println(ansi().fg(Ansi.Color.RED).render("Invalid input. Please enter a non-null value"));
 			} finally {
 				try {
 					TerminalFactory.get().restore();
@@ -118,6 +118,7 @@ public class Interface {
 
 	public static void mainMenuAdmin() {
 		boolean menuState = true;
+//		deleteTripsCompletedAfter7Days();
 		while (menuState) {
 			try {
 				ConsolePrompt prompt = new ConsolePrompt();
@@ -179,6 +180,7 @@ public class Interface {
 
 	public static void mainMenuPortManager() {
 		boolean menuState = true;
+//		deleteTripsCompletedAfter7Days();
 		while (menuState) {
 			try {
 				ConsolePrompt prompt = new ConsolePrompt();

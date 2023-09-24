@@ -53,14 +53,16 @@ public class displayUtils {
 	public static void displayContainers(Collection<Container> containers) {
 		System.out.println(AsciiTable.getTable(containers, Arrays.asList(
 				new Column().header("cNumber").with(container -> Integer.toString(container.getCNumber())),
-				new Column().header("Weight").with(port -> Double.toString(port.getWeight())),
-				new Column().header("Fuel Required").with(port -> Double.toString(port.getRequiredFuel())))));
+				new Column().header("Weight").with(container -> Double.toString(container.getWeight())),
+				new Column().header("Fuel Required").with(container -> Double.toString(container.getRequiredFuel())),
+				new Column().header("Current Port").with(container -> container.getCurrentPort() != null ? container.getCurrentPort().toString() : "N/A"),
+				new Column().header("Current Vehicle").with(container -> container.getCurrentVehicle() != null ? container.getCurrentVehicle().toString() : "N/A"))));
 	}
 
 	public static void displayTrips(Collection<Trip> trips) {
-		// TODO Finish displayTrips
-		System.out.println(AsciiTable.getTable(trips, Collections.singletonList(
-				new Column().header("Trips").with(Trip::toString))));
+		System.out.println(AsciiTable.getTable(trips, Arrays.asList(
+				new Column().header("Trips").with(Trip::toString),
+				new Column().header("Status").with(Trip::getStatus))));
 	}
 
 	public  static void displayUsers(Collection<User> users) {

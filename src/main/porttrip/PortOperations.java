@@ -11,13 +11,17 @@ public interface PortOperations {
     int getNumberOfContainers();
     int getNumberOfVehicles();
     boolean findContainer(int idNumber);
-    boolean findVehicle(int idNumber);
+    boolean findVehicle(String vname);
     Collection<Container> loadContainerToPort(Container container);
     Collection<Container> unloadContainerFromPort(Container container);
     double distanceTo(Port otherPort);
     boolean canMoveTo(Port otherPort);
     void createPort();
-    Collection<Port> readPort();
+
+    static Collection<Port> readPort() {
+        return null;
+    }
+
     void updatePort();
     void deletePort();
 }
