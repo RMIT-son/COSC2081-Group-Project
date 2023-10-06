@@ -37,5 +37,7 @@ public class Wipe {
 		for (Trip trip : trips) {
 			trip.deleteTrip();
 		}
+
+		System.out.println("Done");
 	}
 }

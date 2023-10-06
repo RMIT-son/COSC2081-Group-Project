@@ -221,7 +221,7 @@ public class Trip implements Serializable {
 		// Delete
 		public void deleteTrip (){
 			List<Trip> trips = readTrip();
-			trips.removeIf(trip -> Objects.equals(trip.getVehicle(), this.getVehicle()));
+			trips.removeIf(trip -> trip.getVehicle().getName().equalsIgnoreCase(this.getVehicle().getName()));
 			saveTrip(trips);
 		}
 

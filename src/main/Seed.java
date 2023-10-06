@@ -12,7 +12,6 @@ import java.time.LocalDate;
 
 public class Seed {
 	public static void main(String[] args) {
-		// TODO
 		User admin1 = new SystemAdmin("admin1", "admin123");
 		admin1.createUser();
 		User admin2 = new SystemAdmin("admin2", "admin123");
